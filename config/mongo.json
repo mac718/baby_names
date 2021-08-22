@@ -1,0 +1,13 @@
+{
+  "development": {
+    "database": "baby_names_development",
+    "host": "localhost"
+  },
+  "test": {
+    "database": "baby_names_test",
+    "host": "localhost"
+  },
+  "production": {
+    "use_env_variable": "MONGODB_URI"
+  }
+}
