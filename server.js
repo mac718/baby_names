@@ -2,6 +2,16 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose')
+const User = require('./models/user');
+
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next()
+  } else {
+    require('./mongo')().then(() => next())
+  }
+})
 
 
 app.use(cors({
@@ -13,9 +23,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post('/createUser', (req, res, next) => {
-  let user = req.body.email;
+  let email = req.body.email;
+  let user = new User({name: email});
+
+  console.log(user)
+
+  user.save((err, user) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(user);
+  });
   
-  res.cookie('user', user, {httpOnly:true});
+  res.cookie('user', email, {httpOnly:true});
   res.send();
 })
 
