@@ -57,11 +57,11 @@ const RatingButtonContainer = styled.div`
 
 const BabyNameCard = () =>{
   const names = ["Joe", 'Mary', 'Mike', 'Rebecca'];
-  
+
   let randomIndex = Math.floor(Math.random() * 3);
   const [currentName, setCurrentName] = useState(names[randomIndex]);
   const [currentRating, setCurrentRating] = useState(1);
-  const [disabled, setDisabled] = useState('true')
+  const [disabled, setDisabled] = useState(true)
   const ratingButtons = [];
   for (let i = 0; i < 10; i += 1) {
     ratingButtons.push(
