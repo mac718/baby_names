@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
-    name: {type: String},
-    ratings: {type: String}
+    name: { type: String },
+    ratings: { type: [Array] },
   },
-  {timestamps: true}
-)
+  { timestamps: true }
+);
 
 const User = mongoose.model("User", UserSchema);
 

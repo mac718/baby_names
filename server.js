@@ -46,4 +46,26 @@ app.post("/createUser", (req, res, next) => {
   res.send();
 });
 
+app.post("/saveRating", (req, res) => {
+  let { name, rating } = req.body;
+  let user = req.cookies.user;
+  console.log(req.cookies);
+
+  User.find({ name: user }, (err, user) => {
+    if (err) {
+      console.log(err);
+    }
+
+    console.log(user);
+
+    user[0].ratings.push([name, rating]);
+
+    user[0].save((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  });
+});
+
 app.listen(3001);
