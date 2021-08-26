@@ -68,4 +68,20 @@ app.post("/saveRating", (req, res) => {
   });
 });
 
+app.get("/getRatings", (req, res) => {
+  let ratings;
+  let user = req.cookies.user;
+
+  console.log("user", user);
+
+  User.find({ name: user }, (err, user) => {
+    if (err) {
+      alert(err);
+    }
+
+    ratings = user[0].ratings;
+    return res.json({ ratings });
+  });
+});
+
 app.listen(3001);
