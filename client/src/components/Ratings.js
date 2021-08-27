@@ -1,37 +1,39 @@
 import React, { useEffect, useState } from "react";
 
-const Ratings = () => {
-  const [ratings, setRatings] = useState();
-  useEffect(() => {
+class Ratings extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ratings: [],
+    };
+  }
+
+  componentDidMount() {
     fetch("http://localhost:3001/getRatings", {
+      method: "GET",
       credentials: "include",
     })
       .then((res) => {
         return res.json();
       })
       .then((json) => {
-        setRatings(json);
-        console.log(json);
+        this.setState({ ratings: json.groupDivs });
+        console.log(json.groupDivs);
       })
       .catch((err) => alert(err));
-  }, []);
+  }
 
-  let ones = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  let sevens = ratings.filter((rating) => rating[1] === 5);
-  return (
-    <div className="container">
-      <div className="container border-solid-black"></div>
-    </div>
-  );
-};
+  render() {
+    let groupDivs = this.state.ratings.map((group) => {
+      let names = group.map((name) => <li>{name}</li>);
+      return <ul>{names}</ul>;
+    });
+    return (
+      <div className="container">
+        <div className="container border-solid-black">{groupDivs}</div>
+      </div>
+    );
+  }
+}
 
 export default Ratings;

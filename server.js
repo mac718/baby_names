@@ -72,15 +72,23 @@ app.get("/getRatings", (req, res) => {
   let ratings;
   let user = req.cookies.user;
 
-  console.log("user", user);
-
   User.find({ name: user }, (err, user) => {
     if (err) {
       alert(err);
     }
 
     ratings = user[0].ratings;
-    return res.json({ ratings });
+
+    let groupDivs = [];
+
+    for (let rating = 1; rating <= 10; rating += 1) {
+      let groupRatings = ratings.filter((score) => Number(score[1]) === rating);
+      let group = groupRatings.map((score) => score[0]);
+      groupDivs.push(group);
+    }
+
+    console.log(groupDivs);
+    return res.json({ groupDivs });
   });
 });
 
