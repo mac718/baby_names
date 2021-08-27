@@ -30,7 +30,7 @@ class Ratings extends React.Component {
     });
     return (
       <div className="container">
-        <div className="container border-solid-black">{groupDivs}</div>
+        <div className="container border border-dark h-10">{groupDivs}</div>
       </div>
     );
   }

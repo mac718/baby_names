@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BabyNameCard from "./BabyNameCard";
 
 const Home = () => {
@@ -22,9 +23,18 @@ const Home = () => {
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                  Your Ratings
-                </a>
+                <Link to="/">
+                  <a class="nav-link active" aria-current="page" href="#">
+                    Rank Names
+                  </a>
+                </Link>
+              </li>
+              <li class="nav-item">
+                <Link to="/ratings">
+                  <a class="nav-link active" aria-current="page" href="#">
+                    Your Ratings
+                  </a>
+                </Link>
               </li>
             </ul>
           </div>
