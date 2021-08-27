@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 class Ratings extends React.Component {
   constructor(props) {
@@ -24,13 +24,19 @@ class Ratings extends React.Component {
   }
 
   render() {
-    let groupDivs = this.state.ratings.map((group) => {
+    let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => <li>{name}</li>);
-      return <ul>{names}</ul>;
+      return (
+        <div className="container border border-dark rounded-pill mt-2 h-10">
+          <p className="fs-2 text-center fw-light">{idx + 1}</p>
+          <ul>{names}</ul>
+        </div>
+      );
     });
+    console.log(groupDivs);
     return (
       <div className="container">
-        <div className="container border border-dark h-10">{groupDivs}</div>
+        <div className="container mt-2">{groupDivs}</div>
       </div>
     );
   }

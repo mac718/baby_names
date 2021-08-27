@@ -86,8 +86,6 @@ app.get("/getRatings", (req, res) => {
       let group = groupRatings.map((score) => score[0]);
       groupDivs.push(group);
     }
-
-    console.log(groupDivs);
     return res.json({ groupDivs });
   });
 });
