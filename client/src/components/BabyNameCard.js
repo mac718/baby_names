@@ -55,84 +55,114 @@ const RatingButtonContainer = styled.div`
   color: gray;
 `;
 
-const BabyNameCard = () => {
-  const names = ["Joe", "Mary", "Mike", "Rebecca"];
+class BabyNameCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      names: [],
+      currentName: "",
+      currentRating: 1,
+      disabled: true,
+    };
+  }
 
-  let randomIndex = Math.floor(Math.random() * 3);
-  const [currentName, setCurrentName] = useState(names[randomIndex]);
-  const [currentRating, setCurrentRating] = useState(1);
-  const [disabled, setDisabled] = useState(true);
-  const ratingButtons = [];
-  for (let i = 0; i < 10; i += 1) {
-    ratingButtons.push(
-      <RatingButtonContainer key={i}>
-        <RatingButton
-          className="form-check-input"
-          type="radio"
-          id={i + 1}
-          value={i + 1}
-          name="rating"
-          onClick={(e) => {
-            e.preventDefault();
-            let rating = e.target.value;
-            console.log(rating);
-            setCurrentRating(rating);
-            setDisabled(false);
-          }}
-        />
-        <label htmlFor={i + 1} style={{ fontSize: "0.85rem" }}>
-          {i + 1}
-        </label>
-      </RatingButtonContainer>
+  componentDidMount() {
+    fetch("http://localhost:3001/getNames", {
+      method: "GET",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        console.log(json.names);
+        let randomIndex = Math.floor(Math.random() * json.names.length);
+        this.setState({
+          ...this.state,
+          names: json.names,
+          currentName: json.names[randomIndex]["name"],
+        });
+      })
+      .catch((err) => alert(err));
+  }
+
+  render() {
+    const ratingButtons = [];
+    for (let i = 0; i < 10; i += 1) {
+      ratingButtons.push(
+        <RatingButtonContainer key={i}>
+          <RatingButton
+            className="form-check-input"
+            type="radio"
+            id={i + 1}
+            value={i + 1}
+            name="rating"
+            onClick={(e) => {
+              e.preventDefault();
+              let rating = e.target.value;
+              console.log(rating);
+              this.setState({
+                ...this.state,
+                currentRating: rating,
+                disabled: false,
+              });
+            }}
+          />
+          <label htmlFor={i + 1} style={{ fontSize: "0.85rem" }}>
+            {i + 1}
+          </label>
+        </RatingButtonContainer>
+      );
+    }
+    return (
+      <div className="App">
+        <Container className="container" style={{ height: "100vh" }}>
+          <NameBox>
+            <TopNameDiv></TopNameDiv>
+            <NameDiv>{this.state.currentName}</NameDiv>
+            <BottomNameDiv>
+              <RadioBox className="input-group">
+                {ratingButtons}
+                <div className="input-group justify-content-center mt-1">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      fetch("http://localhost:3001/saveRating", {
+                        method: "POST",
+                        body: JSON.stringify({
+                          name: this.state.currentName,
+                          rating: this.state.currentRating,
+                        }),
+                        credentials: "include",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      })
+                        .then(() => {
+                          let randomIndex = Math.floor(Math.random() * 3);
+                          this.setState({
+                            ...this.state,
+                            currentName: this.state.names[randomIndex],
+                            disabled: false,
+                          });
+                        })
+                        .catch((err) => {
+                          alert(err);
+                        });
+                    }}
+                    disabled={this.state.disabled}
+                  >
+                    Submit Rating
+                  </button>
+                </div>
+              </RadioBox>
+            </BottomNameDiv>
+          </NameBox>
+        </Container>
+      </div>
     );
   }
-  return (
-    <div className="App">
-      <Container className="container" style={{ height: "100vh" }}>
-        <NameBox>
-          <TopNameDiv></TopNameDiv>
-          <NameDiv>{currentName}</NameDiv>
-          <BottomNameDiv>
-            <RadioBox className="input-group">
-              {ratingButtons}
-              <div className="input-group justify-content-center mt-1">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    fetch("http://localhost:3001/saveRating", {
-                      method: "POST",
-                      body: JSON.stringify({
-                        name: currentName,
-                        rating: currentRating,
-                      }),
-                      credentials: "include",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                    })
-                      .then(() => {
-                        randomIndex = Math.floor(Math.random() * 3);
-                        setCurrentName(names[randomIndex]);
-                        setDisabled(true);
-                        alert(currentRating);
-                      })
-                      .catch((err) => {
-                        alert(err);
-                      });
-                  }}
-                  disabled={disabled}
-                >
-                  Submit Rating
-                </button>
-              </div>
-            </RadioBox>
-          </BottomNameDiv>
-        </NameBox>
-      </Container>
-    </div>
-  );
-};
+}
 
 export default BabyNameCard;

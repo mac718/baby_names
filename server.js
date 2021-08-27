@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const User = require("./models/user");
+const Name = require("./models/name");
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState) {
@@ -87,6 +88,16 @@ app.get("/getRatings", (req, res) => {
       groupDivs.push(group);
     }
     return res.json({ groupDivs });
+  });
+});
+
+app.get("/getNames", (req, res) => {
+  Name.find((err, names) => {
+    if (err) {
+      console.log(err);
+    }
+
+    return res.json({ names });
   });
 });
 
