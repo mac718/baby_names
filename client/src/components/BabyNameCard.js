@@ -69,6 +69,7 @@ class BabyNameCard extends React.Component {
   componentDidMount() {
     fetch("http://localhost:3001/getNames", {
       method: "GET",
+      credentials: "include",
     })
       .then((res) => {
         return res.json();
@@ -143,7 +144,7 @@ class BabyNameCard extends React.Component {
                           let randomIndex = Math.floor(
                             Math.random() * this.state.names.length
                           );
-                          alert(randomIndex);
+
                           this.setState({
                             ...this.state,
                             currentName: this.state.names[randomIndex]["name"],
