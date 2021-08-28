@@ -140,11 +140,14 @@ class BabyNameCard extends React.Component {
                         },
                       })
                         .then(() => {
-                          let randomIndex = Math.floor(Math.random() * 3);
+                          let randomIndex = Math.floor(
+                            Math.random() * this.state.names.length
+                          );
+                          alert(randomIndex);
                           this.setState({
                             ...this.state,
-                            currentName: this.state.names[randomIndex],
-                            disabled: false,
+                            currentName: this.state.names[randomIndex]["name"],
+                            disabled: true,
                           });
                         })
                         .catch((err) => {
