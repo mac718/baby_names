@@ -27,7 +27,7 @@ class Ratings extends React.Component {
     let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => <li>{name}</li>);
       return (
-        <div className="container border border-dark rounded-pill mt-2 h-10">
+        <div className="container border border-dark border-radius-10 mt-2 h-10">
           <p className="fs-2 text-center fw-light">{idx + 1}</p>
           <ul>{names}</ul>
         </div>

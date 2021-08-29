@@ -75,7 +75,7 @@ class BabyNameCard extends React.Component {
         return res.json();
       })
       .then((json) => {
-        console.log(json.names);
+        console.log(json);
         let randomIndex = Math.floor(Math.random() * json.names.length);
         this.setState({
           ...this.state,
@@ -140,14 +140,18 @@ class BabyNameCard extends React.Component {
                           "Content-Type": "application/json",
                         },
                       })
-                        .then(() => {
+                        .then((res) => {
+                          return res.json();
+                        })
+                        .then((json) => {
+                          console.log(json.names);
                           let randomIndex = Math.floor(
-                            Math.random() * this.state.names.length
+                            Math.random() * json.names.length
                           );
 
                           this.setState({
-                            ...this.state,
-                            currentName: this.state.names[randomIndex]["name"],
+                            names: json.names,
+                            currentName: json.names[randomIndex]["name"],
                             disabled: true,
                           });
                         })

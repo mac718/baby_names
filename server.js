@@ -50,7 +50,6 @@ app.post("/createUser", (req, res, next) => {
 app.post("/saveRating", (req, res) => {
   let { name, rating } = req.body;
   let user = req.cookies.user;
-  console.log(req.cookies);
 
   User.find({ name: user }, (err, user) => {
     if (err) {
@@ -61,11 +60,19 @@ app.post("/saveRating", (req, res) => {
 
     user[0].ratings.push([name, rating]);
 
-    user[0].save((err) => {
-      if (err) {
-        console.log(err);
-      }
-      return res.json();
+    Name.find((err, names) => {
+      let ratedNames = user[0].ratings.map((rating) => {
+        return rating[0];
+      });
+      names = names.filter((name) => {
+        return !ratedNames.includes(name.name);
+      });
+      user[0].save((err) => {
+        if (err) {
+          console.log(err);
+        }
+        return res.json({ names });
+      });
     });
   });
 });
