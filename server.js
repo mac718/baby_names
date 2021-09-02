@@ -58,12 +58,20 @@ app.post("/saveRating", (req, res) => {
 
     console.log(user);
 
+    if (!user.ratings) {
+      user.ratings = [];
+    }
+
     user[0].ratings.push([name, rating]);
 
     Name.find((err, names) => {
-      let ratedNames = user[0].ratings.map((rating) => {
-        return rating[0];
-      });
+      let ratedNames = [];
+      if (user.ratings) {
+        ratedNames = user[0].ratings.map((rating) => {
+          return rating[0];
+        });
+      }
+
       names = names.filter((name) => {
         return !ratedNames.includes(name.name);
       });
@@ -111,9 +119,14 @@ app.get("/getNames", (req, res) => {
         alert(err);
       }
 
-      let ratedNames = user[0].ratings.map((rating) => {
-        return rating[0];
-      });
+      let ratedNames = [];
+
+      if (user.ratings) {
+        ratedNames = user[0].ratings.map((rating) => {
+          return rating[0];
+        });
+      }
+
       names = names.filter((name) => {
         return !ratedNames.includes(name.name);
       });
