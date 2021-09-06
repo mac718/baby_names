@@ -85,6 +85,35 @@ app.post("/saveRating", (req, res) => {
   });
 });
 
+app.put("/updateRating", (req, res) => {
+  let { name, rating } = req.body;
+  let email = req.cookies.user;
+  User.find({ name: email }, (err, user) => {
+    if (err) {
+      alert(err);
+    }
+
+    user[0].ratings.forEach((combo, idx) => {
+      console.log("combo", combo);
+      if (combo[0] === name) {
+        user[0].ratings[idx][1] = rating;
+        console.log(user[0].ratings[idx]);
+      }
+    });
+
+    user[0].markModified("ratings");
+
+    user[0].save((err, user) => {
+      if (err) {
+        alert(err);
+      }
+
+      console.log(user.ratings);
+      return res.json({ user });
+    });
+  });
+});
+
 app.get("/getRatings", (req, res) => {
   let ratings;
   let user = req.cookies.user;

@@ -115,7 +115,7 @@ class BabyNameCard extends React.Component {
       );
     }
     return (
-      <div className="App">
+      <div>
         <Container className="container" style={{ height: "100vh" }}>
           <NameBox>
             <TopNameDiv></TopNameDiv>

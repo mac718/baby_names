@@ -1,4 +1,5 @@
 import React from "react";
+import RadioButtons from "./RadioButtons";
 
 class Ratings extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Ratings extends React.Component {
         return res.json();
       })
       .then((json) => {
+        console.log(json.groupDivs);
         this.setState({ ratings: json.groupDivs });
         console.log(json.groupDivs);
       })
@@ -26,7 +28,10 @@ class Ratings extends React.Component {
   render() {
     let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => (
-        <li className="list-group-item">{name}</li>
+        <li className="list-group-item">
+          {name}
+          <RadioButtons name={name} />
+        </li>
       ));
       return (
         <div className="container border border-dark rounded mt-3 h-10">
