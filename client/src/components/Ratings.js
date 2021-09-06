@@ -28,21 +28,24 @@ class Ratings extends React.Component {
   render() {
     let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => (
-        <li className="list-group-item">
+        <li className="list-group-item" key={name}>
           {name}
           <RadioButtons name={name} />
         </li>
       ));
       return (
-        <div className="container border border-dark rounded mt-3 h-10">
-          <p className="fs-2 text-center fw-light">
+        <div
+          className="container border border-dark rounded mt-3 h-10"
+          key={idx / 10}
+        >
+          <div className="fs-2 text-center fw-light">
             <div
               className="border border-dark rounded-circle m-auto mt-2"
               style={{ width: "70px", backgroundColor: "lightBlue" }}
             >
               {idx + 1}
             </div>
-          </p>
+          </div>
           <ul className="text-center fs-4 list-group list-group-flush">
             {names}
           </ul>
