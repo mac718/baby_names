@@ -6,6 +6,7 @@ class Ratings extends React.Component {
     super(props);
     this.state = {
       ratings: [],
+      hidden: true,
     };
   }
 
@@ -30,7 +31,23 @@ class Ratings extends React.Component {
       let names = group.map((name) => (
         <li className="list-group-item" key={name}>
           {name}
-          <RadioButtons name={name} />
+          <div hidden={this.state.hidden}>
+            <RadioButtons name={name} />
+          </div>
+          <div>
+            <button
+              className="btn btn-primary"
+              onClick={(e) => {
+                e.preventDefault();
+                this.setState({
+                  ...this.state,
+                  hidden: !this.state.hidden,
+                });
+              }}
+            >
+              Edit Rating
+            </button>
+          </div>
         </li>
       ));
       return (

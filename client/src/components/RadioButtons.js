@@ -67,11 +67,8 @@ const RadioButtons = ({ name }) => {
                 "Content-Type": "application/json",
               },
             })
-              .then((res) => {
-                return res.json();
-              })
-              .then((json) => {
-                console.log(json.ratings);
+              .then(() => {
+                window.location.href = "/ratings";
               })
               .catch((err) => {
                 alert(err);
