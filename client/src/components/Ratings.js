@@ -7,6 +7,7 @@ class Ratings extends React.Component {
     this.state = {
       ratings: [],
       hidden: true,
+      currentButtonsDivId: null,
     };
   }
 
@@ -31,7 +32,10 @@ class Ratings extends React.Component {
       let names = group.map((name) => (
         <li className="list-group-item" key={name}>
           {name}
-          <div hidden={this.state.hidden}>
+          <div
+            hidden={this.state.currentButtonsDivId === name ? false : true}
+            id={name}
+          >
             <RadioButtons name={name} />
           </div>
           <div>
@@ -42,6 +46,9 @@ class Ratings extends React.Component {
                 this.setState({
                   ...this.state,
                   hidden: !this.state.hidden,
+                  currentButtonsDivId: this.state.currentButtonsDivId
+                    ? null
+                    : name,
                 });
               }}
             >
