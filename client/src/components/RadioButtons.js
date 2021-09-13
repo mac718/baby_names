@@ -52,7 +52,6 @@ const RadioButtons = ({ name }) => {
       {ratingButtons}
       <div className="input-group justify-content-center mt-1">
         <button
-          type="button"
           className="btn btn-secondary"
           onClick={(e) => {
             e.preventDefault();

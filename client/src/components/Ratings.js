@@ -30,30 +30,38 @@ class Ratings extends React.Component {
   render() {
     let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => (
-        <li className="list-group-item" key={name}>
-          {name}
+        <li
+          className="list-group-item d-flex justify-content-between"
+          key={name}
+        >
+          <div className="container">
+            <div className="row">
+              <div className="col"></div>
+              <div className="col">{name}</div>
+              <div className="col">
+                <button
+                  className="btn btn-primary btn-sm float-end"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({
+                      ...this.state,
+                      hidden: !this.state.hidden,
+                      currentButtonsDivId: this.state.currentButtonsDivId
+                        ? null
+                        : name,
+                    });
+                  }}
+                >
+                  Edit Rating
+                </button>
+              </div>
+            </div>
+          </div>
           <div
             hidden={this.state.currentButtonsDivId === name ? false : true}
             id={name}
           >
             <RadioButtons name={name} />
-          </div>
-          <div>
-            <button
-              className="btn btn-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                this.setState({
-                  ...this.state,
-                  hidden: !this.state.hidden,
-                  currentButtonsDivId: this.state.currentButtonsDivId
-                    ? null
-                    : name,
-                });
-              }}
-            >
-              Edit Rating
-            </button>
           </div>
         </li>
       ));
