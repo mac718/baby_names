@@ -54,14 +54,16 @@ class Ratings extends React.Component {
                 >
                   Edit Rating
                 </button>
+                <div
+                  hidden={
+                    this.state.currentButtonsDivId === name ? false : true
+                  }
+                  id={name}
+                >
+                  <RadioButtons name={name} />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            hidden={this.state.currentButtonsDivId === name ? false : true}
-            id={name}
-          >
-            <RadioButtons name={name} />
           </div>
         </li>
       ));

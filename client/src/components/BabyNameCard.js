@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const NameBox = styled.div`
-  width: 30%;
-  height: 60%;
+  width: 350px;
+  height: 350px;
   border-radius: 5%;
   border: 1px solid black;
   background-color: turquoise;
   color: white;
+  animation-duration: 1s;
+  animation-name: offScreen;
 `;
 
 const TopNameDiv = styled.div`
@@ -87,6 +89,47 @@ class BabyNameCard extends React.Component {
   }
 
   render() {
+    const handleRatingButtonClick = (e) => {
+      e.preventDefault();
+      let rating = e.target.value;
+      console.log(rating);
+      this.setState({
+        ...this.state,
+        currentRating: rating,
+        disabled: false,
+      });
+    };
+
+    const handleSubmitRating = (e) => {
+      e.preventDefault();
+      fetch("http://localhost:3001/saveRating", {
+        method: "POST",
+        body: JSON.stringify({
+          name: this.state.currentName,
+          rating: this.state.currentRating,
+        }),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json.names);
+          let randomIndex = Math.floor(Math.random() * json.names.length);
+
+          this.setState({
+            names: json.names,
+            currentName: json.names[randomIndex]["name"],
+            disabled: true,
+          });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    };
     const ratingButtons = [];
     for (let i = 0; i < 10; i += 1) {
       ratingButtons.push(
@@ -97,16 +140,7 @@ class BabyNameCard extends React.Component {
             id={i + 1}
             value={i + 1}
             name="rating"
-            onClick={(e) => {
-              e.preventDefault();
-              let rating = e.target.value;
-              console.log(rating);
-              this.setState({
-                ...this.state,
-                currentRating: rating,
-                disabled: false,
-              });
-            }}
+            onClick={handleRatingButtonClick}
           />
           <label htmlFor={i + 1} style={{ fontSize: "0.85rem" }}>
             {i + 1}
@@ -127,38 +161,7 @@ class BabyNameCard extends React.Component {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      fetch("http://localhost:3001/saveRating", {
-                        method: "POST",
-                        body: JSON.stringify({
-                          name: this.state.currentName,
-                          rating: this.state.currentRating,
-                        }),
-                        credentials: "include",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                      })
-                        .then((res) => {
-                          return res.json();
-                        })
-                        .then((json) => {
-                          console.log(json.names);
-                          let randomIndex = Math.floor(
-                            Math.random() * json.names.length
-                          );
-
-                          this.setState({
-                            names: json.names,
-                            currentName: json.names[randomIndex]["name"],
-                            disabled: true,
-                          });
-                        })
-                        .catch((err) => {
-                          alert(err);
-                        });
-                    }}
+                    onClick={handleSubmitRating}
                     disabled={this.state.disabled}
                   >
                     Submit Rating
