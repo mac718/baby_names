@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 const NameBox = styled.div`
@@ -128,6 +129,7 @@ class BabyNameCard extends React.Component {
         })
         .catch((err) => {
           alert(err);
+          <Redirect to="/sign-up" />;
         });
     };
     const ratingButtons = [];

@@ -21,8 +21,8 @@ mongooseeder.seed({
 
       for (let alphaIdx = 0; alphaIdx < length; alphaIdx += 1) {
         let randomIndex = Math.floor(Math.random() * 26);
-        idx === 0
-          ? (name += alphabet[randomIndex].toLocaleUpperCase())
+        alphaIdx === 0
+          ? (name += alphabet[randomIndex].toUpperCase())
           : (name += alphabet[randomIndex]);
       }
 
