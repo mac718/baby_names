@@ -5,7 +5,7 @@ const RatingSchema = new Schema(
   {
     name: String,
     score: Number,
-    User: mongoose.ObjecID,
+    User: mongoose.ObjectId,
   },
   { timestamps: true }
 );

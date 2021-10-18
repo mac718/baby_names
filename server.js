@@ -25,6 +25,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const baseUrl = "api/v1/";
+
 app.use("/", user);
 app.use("/", ratings);
 app.use("/", names);

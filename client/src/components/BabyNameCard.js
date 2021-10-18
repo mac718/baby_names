@@ -107,7 +107,7 @@ class BabyNameCard extends React.Component {
         method: "POST",
         body: JSON.stringify({
           name: this.state.currentName,
-          rating: this.state.currentRating,
+          score: this.state.currentRating,
         }),
         credentials: "include",
         headers: {
@@ -118,12 +118,14 @@ class BabyNameCard extends React.Component {
           return res.json();
         })
         .then((json) => {
-          console.log(json.names);
-          let randomIndex = Math.floor(Math.random() * json.names.length);
+          console.log(json.unratedNames);
+          let randomIndex = Math.floor(
+            Math.random() * json.unratedNames.length
+          );
 
           this.setState({
             names: json.names,
-            currentName: json.names[randomIndex]["name"],
+            currentName: json.unratedNames[randomIndex]["name"],
             disabled: true,
           });
         })

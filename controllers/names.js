@@ -1,4 +1,5 @@
 const Name = require("../models/name");
+const User = require("../models/user");
 
 const getNames = (req, res) => {
   let email = req.cookies.user;
