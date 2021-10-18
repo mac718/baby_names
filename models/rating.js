@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const RatingSchema = new Schema(
   {
-    info: { type: Array },
+    name: String,
+    score: Number,
+    User: mongoose.ObjecID,
   },
   { timestamps: true }
 );
