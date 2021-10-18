@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const RatingSchema = new Schema (
+const RatingSchema = new Schema(
   {
-    info: {type: Array}
+    info: { type: Array },
   },
-  {timestamps: true}
-)
+  { timestamps: true }
+);
 
 const Rating = mongoose.model("Rating", RatingSchema);
 
