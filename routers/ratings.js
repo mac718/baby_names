@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Name = require("../models/name");
-const { saveRating } = require("../controllers/ratings");
+const { saveRating, getRatings } = require("../controllers/ratings");
 
 router.post("/saveRating", saveRating);
 
@@ -35,26 +35,26 @@ router.put("/updateRating", (req, res) => {
   });
 });
 
-router.get("/getRatings", (req, res) => {
-  let ratings;
-  let user = req.cookies.user;
+router.get("/getRatings", getRatings);
+// (req, res) => {
+//   let ratings;
+//   let user = req.cookies.user;
 
-  User.find({ name: user }, (err, user) => {
-    if (err) {
-      alert(err);
-    }
+//   User.find({ name: user }, (err, user) => {
+//     if (err) {
+//       alert(err);
+//     }
 
-    ratings = user[0].ratings;
+//     ratings = user[0].ratings;
 
-    let groupDivs = [];
+//     let groupDivs = [];
 
-    for (let rating = 1; rating <= 10; rating += 1) {
-      let groupRatings = ratings.filter((score) => Number(score[1]) === rating);
-      let group = groupRatings.map((score) => score[0]);
-      groupDivs.push(group);
-    }
-    return res.json({ groupDivs });
-  });
-});
+//     for (let rating = 1; rating <= 10; rating += 1) {
+//       let groupRatings = ratings.filter((score) => Number(score[1]) === rating);
+//       let group = groupRatings.map((score) => score[0]);
+//       groupDivs.push(group);
+//     }
+//     return res.json({ groupDivs });
+//   });
 
 module.exports = router;
