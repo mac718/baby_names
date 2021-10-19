@@ -32,9 +32,20 @@ const getRatings = async (req, res) => {
   let user = await User.find({ name: req.cookies.user });
 
   let ratings = await Rating.find({ user: user._id });
-  console.log(ratings);
   let groupDivs = groupRatings(ratings);
   res.json({ groupDivs });
 };
 
-module.exports = { saveRating, getRatings };
+const updateRating = async (req, res) => {
+  let { name, rating } = req.body;
+  console.log(rating);
+  let email = req.cookies.user;
+  let user = await User.find({ name: email });
+  let score = await Rating.find({ name, user: user._id });
+  console.log(score);
+  score[0].score = rating;
+  await score[0].save();
+  res.json();
+};
+
+module.exports = { saveRating, getRatings, updateRating };
