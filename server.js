@@ -4,8 +4,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const user = require("./routers/user");
-const ratings = require("./routers/ratings");
-const names = require("./routers/names");
+const names = require("./routes/names");
+const ratings = require("./routes/ratings");
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState) {
@@ -25,10 +25,12 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const baseUrl = "api/v1/";
+const baseUrl = "/api/v1/";
+
+// app.use(`${baseUrl}/`, user);
+app.use(`${baseUrl}ratings`, ratings);
+app.use(`${baseUrl}names`, names);
 
 app.use("/", user);
-app.use("/", ratings);
-app.use("/", names);
 
 app.listen(3001);

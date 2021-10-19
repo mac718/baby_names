@@ -12,7 +12,7 @@ class Ratings extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/getRatings", {
+    fetch("http://localhost:3001/api/v1/ratings", {
       method: "GET",
       credentials: "include",
     })

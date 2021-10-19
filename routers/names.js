@@ -4,6 +4,6 @@ const Name = require("../models/name");
 const User = require("../models/user");
 const { getNames } = require("../controllers/names");
 
-router.get("/getNames", getNames);
+router.route("/getNames").get(getNames);
 
 module.exports = router;

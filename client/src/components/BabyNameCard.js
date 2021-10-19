@@ -70,7 +70,7 @@ class BabyNameCard extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/getNames", {
+    fetch("http://localhost:3001/api/v1/names", {
       method: "GET",
       credentials: "include",
     })
@@ -103,7 +103,7 @@ class BabyNameCard extends React.Component {
 
     const handleSubmitRating = (e) => {
       e.preventDefault();
-      fetch("http://localhost:3001/saveRating", {
+      fetch("http://localhost:3001/api/v1/ratings", {
         method: "POST",
         body: JSON.stringify({
           name: this.state.currentName,
