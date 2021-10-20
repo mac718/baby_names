@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const user = require("./routers/user");
 const names = require("./routes/names");
 const ratings = require("./routes/ratings");
+const errorHandlerMiddlerware = require("./middleware/errorHandler");
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState) {
@@ -32,5 +33,7 @@ app.use(`${baseUrl}ratings`, ratings);
 app.use(`${baseUrl}names`, names);
 
 app.use("/", user);
+
+app.use(errorHandlerMiddlerware);
 
 app.listen(3001);

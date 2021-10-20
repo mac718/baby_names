@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const RatingSchema = new Schema(
   {
-    name: String,
-    score: Number,
+    name: { type: String, required: [true, "Rating must include name"] },
+    score: { type: Number, required: [true, "Rating must include score"] },
     User: mongoose.ObjectId,
   },
   { timestamps: true }
