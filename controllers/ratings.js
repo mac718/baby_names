@@ -1,8 +1,9 @@
 const Name = require("../models/name");
 const User = require("../models/user");
 const Rating = require("../models/rating");
+const asyncWrapper = require("../middleware/async");
 
-const saveRating = async (req, res) => {
+const saveRating = asyncWrapper(async (req, res) => {
   let email = req.cookies.user;
   let { name, score } = req.body;
   let user = await User.find({ name: email });
@@ -12,7 +13,7 @@ const saveRating = async (req, res) => {
   let names = await Name.find({});
   let unratedNames = names.filter((name) => !ratedNames.includes(name.name));
   res.json({ unratedNames });
-};
+});
 
 const groupRatings = (ratings) => {
   let groupDivs = [];
@@ -28,15 +29,15 @@ const groupRatings = (ratings) => {
   return groupDivs;
 };
 
-const getRatings = async (req, res) => {
+const getRatings = asyncWrapper(async (req, res) => {
   let user = await User.find({ name: req.cookies.user });
 
   let ratings = await Rating.find({ user: user._id });
   let groupDivs = groupRatings(ratings);
   res.json({ groupDivs });
-};
+});
 
-const updateRating = async (req, res) => {
+const updateRating = asyncWrapper(async (req, res) => {
   let { name, rating } = req.body;
   console.log(rating);
   let email = req.cookies.user;
@@ -46,7 +47,7 @@ const updateRating = async (req, res) => {
   score[0].score = rating;
   await score[0].save();
   res.json();
-};
+});
 
 const deleteRating = async (req, res) => {};
 
