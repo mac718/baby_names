@@ -155,7 +155,7 @@ class BabyNameCard extends React.Component {
     return (
       <div>
         <Container className="container" style={{ height: "100vh" }}>
-          <NameBox>
+          <NameBox className="shadow opacity-75">
             <TopNameDiv></TopNameDiv>
             <NameDiv>{this.state.currentName}</NameDiv>
             <BottomNameDiv>

@@ -48,4 +48,6 @@ const updateRating = async (req, res) => {
   res.json();
 };
 
+const deleteRating = async (req, res) => {};
+
 module.exports = { saveRating, getRatings, updateRating };
