@@ -7,7 +7,7 @@ const NameBox = styled.div`
   height: 350px;
   border-radius: 5%;
   border: 1px solid black;
-  background-color: turquoise;
+  background-color: ${(props) => props.color};
   color: white;
   animation-duration: 1s;
   animation-name: offScreen;
@@ -66,6 +66,7 @@ class BabyNameCard extends React.Component {
       currentName: "",
       currentRating: 1,
       disabled: true,
+      cardColor: "",
     };
   }
 
@@ -80,10 +81,15 @@ class BabyNameCard extends React.Component {
       .then((json) => {
         console.log(json);
         let randomIndex = Math.floor(Math.random() * json.names.length);
+        let cardColor;
+        cardColor =
+          json.names[randomIndex]["gender"] === "m" ? "lightBlue" : "lightPink";
+        console.log("cardColor", cardColor);
         this.setState({
           ...this.state,
           names: json.names,
           currentName: json.names[randomIndex]["name"],
+          cardColor: cardColor,
         });
       })
       .catch((err) => alert(err));
@@ -122,11 +128,18 @@ class BabyNameCard extends React.Component {
           let randomIndex = Math.floor(
             Math.random() * json.unratedNames.length
           );
+          let cardColor;
+          cardColor =
+            json.unratedNames[randomIndex]["gender"] === "m"
+              ? "lightBlue"
+              : "lightPink";
+          console.log("cardColor", cardColor);
 
           this.setState({
             names: json.names,
             currentName: json.unratedNames[randomIndex]["name"],
             disabled: true,
+            cardColor: cardColor,
           });
         })
         .catch((err) => {
@@ -155,7 +168,7 @@ class BabyNameCard extends React.Component {
     return (
       <div>
         <Container className="container" style={{ height: "100vh" }}>
-          <NameBox className="shadow opacity-75">
+          <NameBox className="shadow opacity-75" color={this.state.cardColor}>
             <TopNameDiv></TopNameDiv>
             <NameDiv>{this.state.currentName}</NameDiv>
             <BottomNameDiv>

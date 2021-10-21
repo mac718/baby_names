@@ -31,7 +31,6 @@ class Ratings extends React.Component {
     const handleDeleteRating = (e) => {
       e.preventDefault();
       let name = e.target.parentElement.parentElement.children[1].innerHTML;
-      //console.log(name);
       fetch("http://localhost:3001/api/v1/ratings", {
         method: "DELETE",
         credentials: "include",
@@ -47,6 +46,16 @@ class Ratings extends React.Component {
         })
         .catch((err) => alert(err));
     };
+
+    const handleShowRadioButtons = (e, name) => {
+      e.preventDefault();
+      this.setState({
+        ...this.state,
+        hidden: !this.state.hidden,
+        currentButtonsDivId: this.state.currentButtonsDivId ? null : name,
+      });
+    };
+
     let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => (
         <li
@@ -60,16 +69,7 @@ class Ratings extends React.Component {
               <div className="col">
                 <button
                   className="btn btn-primary btn-sm float-end m-1"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.setState({
-                      ...this.state,
-                      hidden: !this.state.hidden,
-                      currentButtonsDivId: this.state.currentButtonsDivId
-                        ? null
-                        : name,
-                    });
-                  }}
+                  onClick={(e) => handleShowRadioButtons(e, name)}
                 >
                   Edit Rating
                 </button>
