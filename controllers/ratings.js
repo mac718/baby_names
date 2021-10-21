@@ -48,9 +48,9 @@ const getRatings = asyncWrapper(async (req, res) => {
 
 const updateRating = asyncWrapper(async (req, res) => {
   let { name, rating } = req.body;
-  console.log(rating);
+  console.log("rating", rating);
   let email = req.cookies.user;
-  let user = await User.find({ name: email });
+  let user = await User.findOne({ name: email });
   let score = await Rating.find({ name, user: user._id });
   if (!score) {
     return res
