@@ -41,7 +41,11 @@ class Ratings extends React.Component {
         headers: {
           "Content-type": "application/json",
         },
-      }).catch((err) => alert(err));
+      })
+        .then(() => {
+          window.location.href = "/ratings";
+        })
+        .catch((err) => alert(err));
     };
     let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => (
