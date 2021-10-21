@@ -55,7 +55,7 @@ const RadioButtons = ({ name }) => {
           className="btn btn-secondary"
           onClick={(e) => {
             e.preventDefault();
-            fetch("http://localhost:3001/updateRating", {
+            fetch("http://localhost:3001/api/v1/ratings", {
               method: "PUT",
               body: JSON.stringify({
                 name: name,

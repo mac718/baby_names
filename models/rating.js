@@ -5,7 +5,10 @@ const RatingSchema = new Schema(
   {
     name: { type: String, required: [true, "Rating must include name"] },
     score: { type: Number, required: [true, "Rating must include score"] },
-    User: mongoose.ObjectId,
+    user: {
+      type: mongoose.ObjectId,
+      required: [true, "Rating must be associated with a user"],
+    },
   },
   { timestamps: true }
 );

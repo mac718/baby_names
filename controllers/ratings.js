@@ -5,9 +5,18 @@ const asyncWrapper = require("../middleware/async");
 
 const saveRating = asyncWrapper(async (req, res) => {
   let email = req.cookies.user;
+
   let { name, score } = req.body;
-  let user = await User.find({ name: email });
-  await Rating.create({ name, score, user: user._id });
+
+  let user = await User.findOne({ name: email });
+  console.log("name", user);
+
+  let rating = await Rating.create({
+    name,
+    score,
+    user: user._id,
+  }).catch((err) => console.log(err));
+
   let userRatings = await Rating.find({ user: user._id });
   let ratedNames = userRatings.map((rating) => rating.name);
   let names = await Name.find({});
@@ -30,7 +39,7 @@ const groupRatings = (ratings) => {
 };
 
 const getRatings = asyncWrapper(async (req, res) => {
-  let user = await User.find({ name: req.cookies.user });
+  let user = await User.findOne({ name: req.cookies.user });
 
   let ratings = await Rating.find({ user: user._id });
   let groupDivs = groupRatings(ratings);
@@ -43,12 +52,25 @@ const updateRating = asyncWrapper(async (req, res) => {
   let email = req.cookies.user;
   let user = await User.find({ name: email });
   let score = await Rating.find({ name, user: user._id });
+  if (!score) {
+    return res
+      .status(404)
+      .json({ msg: `No rating for user ${email}} and name ${name}` });
+  }
   console.log(score);
   score[0].score = rating;
   await score[0].save();
   res.json();
 });
 
-const deleteRating = async (req, res) => {};
+const deleteRating = asyncWrapper(async (req, res) => {
+  let { name } = req.body;
+  let email = req.cookies.user;
+  let user = await User.findOne({ name: email });
+  await Rating.findOneAndDelete({ name, user: user._id }).catch((err) =>
+    console.log(err)
+  );
+  res.status(201).json();
+});
 
-module.exports = { saveRating, getRatings, updateRating };
+module.exports = { saveRating, getRatings, updateRating, deleteRating };

@@ -28,6 +28,21 @@ class Ratings extends React.Component {
   }
 
   render() {
+    const handleDeleteRating = (e) => {
+      e.preventDefault();
+      let name = e.target.parentElement.parentElement.children[1].innerHTML;
+      //console.log(name);
+      fetch("http://localhost:3001/api/v1/ratings", {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify({
+          name,
+        }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }).catch((err) => alert(err));
+    };
     let groupDivs = this.state.ratings.map((group, idx) => {
       let names = group.map((name) => (
         <li
@@ -40,7 +55,7 @@ class Ratings extends React.Component {
               <div className="col">{name}</div>
               <div className="col">
                 <button
-                  className="btn btn-primary btn-sm float-end"
+                  className="btn btn-primary btn-sm float-end m-1"
                   onClick={(e) => {
                     e.preventDefault();
                     this.setState({
@@ -53,6 +68,12 @@ class Ratings extends React.Component {
                   }}
                 >
                   Edit Rating
+                </button>
+                <button
+                  className="btn btn-danger btn-sm float-end m-1"
+                  onClick={handleDeleteRating}
+                >
+                  Delete Rating
                 </button>
                 <div
                   hidden={
