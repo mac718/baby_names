@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 
@@ -58,19 +58,14 @@ const RatingButtonContainer = styled.div`
   color: gray;
 `;
 
-class BabyNameCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      names: [],
-      currentName: "",
-      currentRating: 1,
-      disabled: true,
-      cardColor: "",
-    };
-  }
+const BabyNameCard = () => {
+  const [names, setNames] = useState([]);
+  const [currentName, setCurrentName] = useState("");
+  const [currentRating, setCurrentRating] = useState(1);
+  const [disabled, setDisabled] = useState(true);
+  const [cardColor, setCardColor] = useState("");
 
-  componentDidMount() {
+  useEffect(() => {
     fetch("http://localhost:3001/api/v1/names", {
       method: "GET",
       credentials: "include",
@@ -81,116 +76,100 @@ class BabyNameCard extends React.Component {
       .then((json) => {
         console.log(json);
         let randomIndex = Math.floor(Math.random() * json.names.length);
-        let cardColor;
-        cardColor =
+        let color;
+        color =
           json.names[randomIndex]["gender"] === "m" ? "lightBlue" : "lightPink";
-        console.log("cardColor", cardColor);
-        this.setState({
-          ...this.state,
-          names: json.names,
-          currentName: json.names[randomIndex]["name"],
-          cardColor: cardColor,
-        });
+        setNames(json.names);
+        setCurrentName(json.names[randomIndex]["name"]);
+        setCardColor(color);
       })
       .catch((err) => alert(err));
-  }
+  }, []);
 
-  render() {
-    const handleRatingButtonClick = (e) => {
-      e.preventDefault();
-      let rating = e.target.value;
-      console.log(rating);
-      this.setState({
-        ...this.state,
-        currentRating: rating,
-        disabled: false,
-      });
-    };
+  const handleRatingButtonClick = (e) => {
+    e.preventDefault();
+    let rating = e.target.value;
+    setCurrentRating(rating);
+    setDisabled(false);
+  };
 
-    const handleSubmitRating = (e) => {
-      e.preventDefault();
-      fetch("http://localhost:3001/api/v1/ratings", {
-        method: "POST",
-        body: JSON.stringify({
-          name: this.state.currentName,
-          score: this.state.currentRating,
-        }),
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const handleSubmitRating = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/ratings", {
+      method: "POST",
+      body: JSON.stringify({
+        name: currentName,
+        score: currentRating,
+      }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
       })
-        .then((res) => {
-          return res.json();
-        })
-        .then((json) => {
-          console.log(json.unratedNames);
-          let randomIndex = Math.floor(
-            Math.random() * json.unratedNames.length
-          );
-          let cardColor;
-          cardColor =
-            json.unratedNames[randomIndex]["gender"] === "m"
-              ? "lightBlue"
-              : "lightPink";
-          console.log("cardColor", cardColor);
+      .then((json) => {
+        let randomIndex = Math.floor(Math.random() * json.unratedNames.length);
+        let color;
+        color =
+          json.unratedNames[randomIndex]["gender"] === "m"
+            ? "lightBlue"
+            : "lightPink";
 
-          this.setState({
-            names: json.names,
-            currentName: json.unratedNames[randomIndex]["name"],
-            disabled: true,
-            cardColor: cardColor,
-          });
-        })
-        .catch((err) => {
-          alert(err);
-          <Redirect to="/sign-up" />;
-        });
-    };
-    const ratingButtons = [];
-    for (let i = 0; i < 10; i += 1) {
-      ratingButtons.push(
-        <RatingButtonContainer key={i}>
-          <RatingButton
-            className="form-check-input"
-            type="radio"
-            id={i + 1}
-            value={i + 1}
-            name="rating"
-            onClick={handleRatingButtonClick}
-          />
-          <label htmlFor={i + 1} style={{ fontSize: "0.85rem" }}>
-            {i + 1}
-          </label>
-        </RatingButtonContainer>
-      );
-    }
-    return (
-      <div>
-        <Container className="container" style={{ height: "100vh" }}>
-          <NameBox className="shadow opacity-75" color={this.state.cardColor}>
-            <TopNameDiv></TopNameDiv>
-            <NameDiv>{this.state.currentName}</NameDiv>
-            <BottomNameDiv>
-              <RadioBox className="input-group">
-                {ratingButtons}
-                <div className="input-group justify-content-center mt-1">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={handleSubmitRating}
-                    disabled={this.state.disabled}
-                  >
-                    Submit Rating
-                  </button>
-                </div>
-              </RadioBox>
-            </BottomNameDiv>
-          </NameBox>
-        </Container>
-      </div>
+        setNames(json.names);
+        setCurrentName(json.unratedNames[randomIndex]["name"]);
+        setDisabled(true);
+        setCardColor(color);
+      })
+      .catch((err) => {
+        alert(err);
+        <Redirect to="/sign-up" />;
+      });
+  };
+  const ratingButtons = [];
+  for (let i = 0; i < 10; i += 1) {
+    ratingButtons.push(
+      <RatingButtonContainer key={i}>
+        <RatingButton
+          className="form-check-input"
+          type="radio"
+          id={i + 1}
+          value={i + 1}
+          name="rating"
+          onClick={handleRatingButtonClick}
+        />
+        <label htmlFor={i + 1} style={{ fontSize: "0.85rem" }}>
+          {i + 1}
+        </label>
+      </RatingButtonContainer>
     );
   }
-}
+  return (
+    <div>
+      <Container className="container" style={{ height: "100vh" }}>
+        <NameBox className="shadow opacity-75" color={cardColor}>
+          <TopNameDiv></TopNameDiv>
+          <NameDiv>{currentName}</NameDiv>
+          <BottomNameDiv>
+            <RadioBox className="input-group">
+              {ratingButtons}
+              <div className="input-group justify-content-center mt-1">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleSubmitRating}
+                  disabled={disabled}
+                >
+                  Submit Rating
+                </button>
+              </div>
+            </RadioBox>
+          </BottomNameDiv>
+        </NameBox>
+      </Container>
+    </div>
+  );
+};
 
 export default BabyNameCard;
