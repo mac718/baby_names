@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RadioButtons from "./RadioButtons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const Ratings = () => {
   const [ratings, setRatings] = useState([]);
@@ -55,18 +57,18 @@ const Ratings = () => {
             <div className="col"></div>
             <div className="col text-muted">{name}</div>
             <div className="col">
-              <button
-                className="btn btn-primary btn-sm float-end m-1"
+              <FontAwesomeIcon
+                icon={faEdit}
+                className="float-end m-2"
                 onClick={(e) => handleShowRadioButtons(e, name)}
-              >
-                Edit Rating
-              </button>
-              <button
-                className="btn btn-danger btn-sm float-end m-1"
+                cursor="pointer"
+              />
+              <FontAwesomeIcon
+                icon={faTrash}
+                className="float-end m-2"
                 onClick={handleDeleteRating}
-              >
-                Delete Rating
-              </button>
+                cursor="pointer"
+              />
               <div
                 hidden={currentButtonsDivId === name ? false : true}
                 id={name}
@@ -82,13 +84,22 @@ const Ratings = () => {
         </div>
       </li>
     ));
+    let rating = 11 - (idx + 1);
+    let color;
+    if (rating >= 7) {
+      color = "success";
+    } else if (rating >= 5) {
+      color = "muted";
+    } else {
+      color = "danger";
+    }
     return (
       <div
         className="container border border-dark rounded mt-3 h-10"
         key={idx / 10}
       >
         <div className="fs-2 text-center fw-light">
-          <div className="fs-1 fw-bold text-dark opacity-75 m-auto mt-2">
+          <div className={`fs-1 fw-bold text-${color} m-auto mt-2`}>
             {11 - (idx + 1)}
           </div>
         </div>
