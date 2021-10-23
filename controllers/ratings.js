@@ -60,7 +60,7 @@ const updateRating = asyncWrapper(async (req, res) => {
   console.log(score);
   score[0].score = rating;
   await score[0].save();
-  res.json();
+  res.status(200).json();
 });
 
 const deleteRating = asyncWrapper(async (req, res) => {

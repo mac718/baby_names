@@ -6,7 +6,7 @@ const Ratings = () => {
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
 
-  useEffect(() => {
+  const fetchRatings = () => {
     fetch("http://localhost:3001/api/v1/ratings", {
       method: "GET",
       credentials: "include",
@@ -15,12 +15,16 @@ const Ratings = () => {
         return res.json();
       })
       .then((json) => {
-        console.log(json.groupDivs);
+        alert(hidden);
+        setHidden(true);
         setRatings(json.groupDivs);
-        console.log(json.groupDivs);
       })
       .catch((err) => alert(err));
-  }, ratings);
+  };
+
+  useEffect(() => {
+    fetchRatings();
+  }, []);
 
   const handleDeleteRating = (e) => {
     e.preventDefault();
@@ -34,12 +38,29 @@ const Ratings = () => {
       headers: {
         "Content-type": "application/json",
       },
-    })
-      .then(() => {
-        window.location.href = "/ratings";
-      })
-      .catch((err) => alert(err));
+    }).catch((err) => alert(err));
   };
+
+  // const handleUpdateRating = (e, name) => {
+  //   e.preventDefault();
+  //   fetch("http://localhost:3001/api/v1/ratings", {
+  //     method: "PATCH",
+  //     body: JSON.stringify({
+  //       name: name,
+  //       //rating: newRating,
+  //     }),
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then(() => {
+  //       window.location.href = "/ratings";
+  //     })
+  //     .catch((err) => {
+  //       alert(err);
+  //     });
+  // };
 
   const handleShowRadioButtons = (e, name) => {
     e.preventDefault();
@@ -53,7 +74,7 @@ const Ratings = () => {
         <div className="container">
           <div className="row">
             <div className="col"></div>
-            <div className="col">{name}</div>
+            <div className="col text-muted">{name}</div>
             <div className="col">
               <button
                 className="btn btn-primary btn-sm float-end m-1"
@@ -67,11 +88,17 @@ const Ratings = () => {
               >
                 Delete Rating
               </button>
-              <div
-                hidden={currentButtonsDivId === name ? false : true}
-                id={name}
-              >
-                <RadioButtons name={name} />
+              <div hidden={hidden} id={name}>
+                <RadioButtons name={name} fetchRatings={fetchRatings}>
+                  <div>
+                    <button
+                      className="btn btn-secondary"
+                      // onClick={() => handleUpdateRating(name)}
+                    >
+                      Submit Rating
+                    </button>
+                  </div>
+                </RadioButtons>
               </div>
             </div>
           </div>
@@ -84,10 +111,7 @@ const Ratings = () => {
         key={idx / 10}
       >
         <div className="fs-2 text-center fw-light">
-          <div
-            className="border border-dark rounded-circle m-auto mt-2 opacity-75"
-            style={{ width: "65px", backgroundColor: "lightblue" }}
-          >
+          <div className="fs-1 fw-bold text-dark opacity-75 m-auto mt-2">
             {idx + 1}
           </div>
         </div>
@@ -97,7 +121,6 @@ const Ratings = () => {
       </div>
     );
   });
-  console.log(groupDivs);
   return (
     <div className="container">
       <div className="container mt-2">{groupDivs}</div>

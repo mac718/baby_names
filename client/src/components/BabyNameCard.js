@@ -65,7 +65,7 @@ const BabyNameCard = () => {
   const [disabled, setDisabled] = useState(true);
   const [cardColor, setCardColor] = useState("");
 
-  useEffect(() => {
+  const fetchNames = () => {
     fetch("http://localhost:3001/api/v1/names", {
       method: "GET",
       credentials: "include",
@@ -84,6 +84,10 @@ const BabyNameCard = () => {
         setCardColor(color);
       })
       .catch((err) => alert(err));
+  };
+
+  useEffect(() => {
+    fetchNames();
   }, []);
 
   const handleRatingButtonClick = (e) => {
@@ -148,7 +152,7 @@ const BabyNameCard = () => {
   return (
     <div>
       <Container className="container" style={{ height: "100vh" }}>
-        <NameBox className="shadow opacity-75" color={cardColor}>
+        <NameBox className="shadow" color={cardColor}>
           <TopNameDiv></TopNameDiv>
           <NameDiv>{currentName}</NameDiv>
           <BottomNameDiv>

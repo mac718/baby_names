@@ -1,4 +1,6 @@
+import React from "react";
 import styled from "styled-components";
+import { Redirect } from "react-router";
 const { useState } = require("react");
 
 const RadioBox = styled.div`
@@ -19,10 +21,11 @@ const RatingButtonContainer = styled.div`
   color: gray;
 `;
 
-const RadioButtons = ({ name }) => {
+const RadioButtons = ({ name, fetchRatings }) => {
   const [newRating, setNewRating] = useState(5);
   const [disabled, setDisabled] = useState(true);
   const ratingButtons = [];
+
   for (let i = 0; i < 10; i += 1) {
     ratingButtons.push(
       <RatingButtonContainer key={i}>
@@ -67,7 +70,7 @@ const RadioButtons = ({ name }) => {
               },
             })
               .then(() => {
-                window.location.href = "/ratings";
+                fetchRatings();
               })
               .catch((err) => {
                 alert(err);
