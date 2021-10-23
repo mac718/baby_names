@@ -41,27 +41,6 @@ const Ratings = () => {
     }).catch((err) => alert(err));
   };
 
-  // const handleUpdateRating = (e, name) => {
-  //   e.preventDefault();
-  //   fetch("http://localhost:3001/api/v1/ratings", {
-  //     method: "PATCH",
-  //     body: JSON.stringify({
-  //       name: name,
-  //       //rating: newRating,
-  //     }),
-  //     credentials: "include",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then(() => {
-  //       window.location.href = "/ratings";
-  //     })
-  //     .catch((err) => {
-  //       alert(err);
-  //     });
-  // };
-
   const handleShowRadioButtons = (e, name) => {
     e.preventDefault();
     setHidden(!hidden);
@@ -91,12 +70,7 @@ const Ratings = () => {
               <div hidden={hidden} id={name}>
                 <RadioButtons name={name} fetchRatings={fetchRatings}>
                   <div>
-                    <button
-                      className="btn btn-secondary"
-                      // onClick={() => handleUpdateRating(name)}
-                    >
-                      Submit Rating
-                    </button>
+                    <button className="btn btn-secondary">Submit Rating</button>
                   </div>
                 </RadioButtons>
               </div>
