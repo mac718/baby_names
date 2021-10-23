@@ -67,7 +67,10 @@ const Ratings = () => {
               >
                 Delete Rating
               </button>
-              <div hidden={hidden} id={name}>
+              <div
+                hidden={currentButtonsDivId === name ? false : true}
+                id={name}
+              >
                 <RadioButtons name={name} fetchRatings={fetchRatings}>
                   <div>
                     <button className="btn btn-secondary">Submit Rating</button>
@@ -86,7 +89,7 @@ const Ratings = () => {
       >
         <div className="fs-2 text-center fw-light">
           <div className="fs-1 fw-bold text-dark opacity-75 m-auto mt-2">
-            {idx + 1}
+            {11 - (idx + 1)}
           </div>
         </div>
         <ul className="text-center fs-4 list-group list-group-flush">

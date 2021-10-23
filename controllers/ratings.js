@@ -27,7 +27,7 @@ const saveRating = asyncWrapper(async (req, res) => {
 const groupRatings = (ratings) => {
   let groupDivs = [];
 
-  for (let score = 1; score <= 10; score += 1) {
+  for (let score = 10; score >= 1; score -= 1) {
     let groupRatings = ratings.filter(
       (rating) => Number(rating.score) === score
     );
