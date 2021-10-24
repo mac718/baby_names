@@ -17,8 +17,7 @@ const Ratings = () => {
         return res.json();
       })
       .then((json) => {
-        alert(hidden);
-        setHidden(true);
+        setCurrentButtonsDivId(null);
         setRatings(json.groupDivs);
       })
       .catch((err) => alert(err));

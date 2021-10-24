@@ -9,13 +9,15 @@ const saveRating = asyncWrapper(async (req, res) => {
   let { name, score } = req.body;
 
   let user = await User.findOne({ name: email });
-  console.log("name", user);
+  if (!user) {
+    return createCustomError("No user with that email found.", 404);
+  }
 
-  let rating = await Rating.create({
+  await Rating.create({
     name,
     score,
     user: user._id,
-  }).catch((err) => console.log(err));
+  });
 
   let userRatings = await Rating.find({ user: user._id });
   let ratedNames = userRatings.map((rating) => rating.name);
@@ -40,6 +42,9 @@ const groupRatings = (ratings) => {
 
 const getRatings = asyncWrapper(async (req, res) => {
   let user = await User.findOne({ name: req.cookies.user });
+  if (!user) {
+    return createCustomError("No user with that email found.", 404);
+  }
 
   let ratings = await Rating.find({ user: user._id });
   let groupDivs = groupRatings(ratings);
@@ -51,13 +56,16 @@ const updateRating = asyncWrapper(async (req, res) => {
   console.log("rating", rating);
   let email = req.cookies.user;
   let user = await User.findOne({ name: email });
+  if (!user) {
+    return createCustomError("No user with that email found.", 404);
+  }
   let score = await Rating.find({ name, user: user._id });
   if (!score) {
-    return res
-      .status(404)
-      .json({ msg: `No rating for user ${email}} and name ${name}` });
+    return createCustomError(
+      `No rating for user ${email}} and name ${name}`,
+      404
+    );
   }
-  console.log(score);
   score[0].score = rating;
   await score[0].save();
   res.status(200).json();
