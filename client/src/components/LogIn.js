@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
@@ -18,6 +19,17 @@ const LogIn = () => {
             setDisabled(false);
           }}
         />
+        <label htmlFor="password">Password</label>
+        <input
+          className="form-control"
+          type="text"
+          id="password"
+          onChange={(e) => {
+            let value = e.target.value;
+            setPassword(value);
+            setDisabled(false);
+          }}
+        />
         <div
           className="d-flex justify-content-center align-items-center"
           style={{ width: "100%" }}
@@ -27,7 +39,7 @@ const LogIn = () => {
             disabled={disabled}
             onClick={(e) => {
               e.preventDefault();
-              fetch("http://localhost:3001/createUser", {
+              fetch("http://localhost:3001/api/v1/users/register", {
                 method: "POST",
                 body: JSON.stringify({ email }),
                 credentials: "include",

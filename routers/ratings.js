@@ -7,10 +7,11 @@ const {
   getRatings,
   updateRating,
 } = require("../controllers/ratings");
+const checkToken = require("../middleware/auth");
 
-router.post("/saveRating", saveRating);
+router.post("/saveRating", checkToken, saveRating);
 
-router.put("/updateRating", updateRating);
+router.put("/updateRating", checkToken, updateRating);
 // (req, res) => {
 //   let { name, rating } = req.body;
 //   let email = req.cookies.user;
