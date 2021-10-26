@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Ratings from "./components/Ratings";
 import BabyNameCard from "./components/BabyNameCard";
 import NavBar from "./components/NavBar";
+import { withAuth } from "./components/withAuth";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       <Router>
         <Route path="/" exact component={BabyNameCard} />
         <Route path="/sign-up" component={LogIn} />
-        <Route path="/ratings" component={Ratings} />
+        <Route path="/ratings" component={withAuth(Ratings)} />
       </Router>
     </div>
   );

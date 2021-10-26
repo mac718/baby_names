@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [redirect, setRedirect] = useState(false);
+
+  if (redirect) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <form className="mh-25 h-auto w-25 border border-secondary rounded p-3">
@@ -23,7 +28,7 @@ const LogIn = () => {
         <label htmlFor="password">Password</label>
         <input
           className="form-control"
-          type="text"
+          type="password"
           id="password"
           onChange={(e) => {
             let value = e.target.value;
@@ -40,7 +45,7 @@ const LogIn = () => {
             disabled={disabled}
             onClick={(e) => {
               e.preventDefault();
-              fetch("http://localhost:3001/api/v1/users/register", {
+              fetch("http://localhost:3001/api/v1/users/login", {
                 method: "POST",
                 body: JSON.stringify({ email, password }),
                 credentials: "include",
@@ -48,7 +53,11 @@ const LogIn = () => {
                   "Content-Type": "application/json",
                 },
               })
-                .then(() => {})
+                .then((res) => {
+                  if (res.status === 200) {
+                    setRedirect(true);
+                  }
+                })
                 .catch((err) => {
                   console.log(err);
                 });

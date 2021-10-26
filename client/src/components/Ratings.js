@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import RadioButtons from "./RadioButtons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { Redirect } from "react-router-dom";
 
 const Ratings = () => {
   const [ratings, setRatings] = useState([]);
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
   const fetchRatings = () => {
     fetch("http://localhost:3001/api/v1/ratings", {
@@ -91,6 +93,9 @@ const Ratings = () => {
       color = "muted";
     } else {
       color = "danger";
+    }
+    if (redirect) {
+      <Redirect to="/login" />;
     }
     return (
       <div

@@ -21,6 +21,7 @@ const createUser = asyncWrapper(async (req, res) => {
 
 const login = asyncWrapper(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email, password);
   const user = await User.findOne({ name: email });
   if (!user) {
     return next(createCustomError(`No user with email ${email}.`, 401));
