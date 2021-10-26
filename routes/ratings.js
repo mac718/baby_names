@@ -8,11 +8,13 @@ const {
 const router = express.Router();
 const checkToken = require("../middleware/auth");
 
+router.use("/", checkToken);
+
 router
   .route("/")
-  .get(checkToken, getRatings)
-  .post(checkToken, saveRating)
-  .patch(checkToken, updateRating)
-  .delete(checkToken, deleteRating);
+  .get(getRatings)
+  .post(saveRating)
+  .patch(updateRating)
+  .delete(deleteRating);
 
 module.exports = router;

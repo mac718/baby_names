@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { createCustomError } = require("../errors/customAPIError");
+const asyncWrapper = require("../middleware/async");
 
 const checkToken = asyncWrapper(async (req, res, next) => {
   const token = req.cookies.token;
@@ -17,6 +18,7 @@ const checkToken = asyncWrapper(async (req, res, next) => {
       next(createCustomError("Unauthorized: no token", 401));
     }
     req.user = verifiedUser;
+    console.log(verifiedUser);
     next();
   });
 });

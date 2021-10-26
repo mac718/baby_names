@@ -41,14 +41,16 @@ const groupRatings = (ratings) => {
 };
 
 const getRatings = asyncWrapper(async (req, res) => {
-  let user = await User.findOne({ name: req.cookies.user });
+  let user = await User.findOne({ _id: req.user.id });
+  console.log(user);
   if (!user) {
     return createCustomError("No user with that email found.", 404);
   }
 
-  let ratings = await Rating.find({ user: user._id });
+  let ratings = await Rating.find({ user: req.user.id });
+  console.log(ratings);
   let groupDivs = groupRatings(ratings);
-  res.json({ groupDivs });
+  res.status(200).json({ groupDivs });
 });
 
 const updateRating = asyncWrapper(async (req, res) => {

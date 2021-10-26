@@ -4,6 +4,7 @@ const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const [redirect, setRedirect] = useState(false);
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <form className="mh-25 h-auto w-25 border border-secondary rounded p-3">
@@ -41,14 +42,16 @@ const LogIn = () => {
               e.preventDefault();
               fetch("http://localhost:3001/api/v1/users/register", {
                 method: "POST",
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email, password }),
                 credentials: "include",
                 headers: {
                   "Content-Type": "application/json",
                 },
-              }).catch((err) => {
-                console.log(err);
-              });
+              })
+                .then(() => {})
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
           >
             Sign Up!
