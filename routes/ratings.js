@@ -6,12 +6,13 @@ const {
   deleteRating,
 } = require("../controllers/ratings");
 const router = express.Router();
+const checkToken = require("../middleware/auth");
 
 router
   .route("/")
-  .get(getRatings)
-  .post(saveRating)
-  .patch(updateRating)
-  .delete(deleteRating);
+  .get(checkToken, getRatings)
+  .post(checkToken, saveRating)
+  .patch(checkToken, updateRating)
+  .delete(checkToken, deleteRating);
 
 module.exports = router;
