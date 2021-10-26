@@ -7,7 +7,9 @@ export function withAuth(ComponentToProtect) {
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
-      fetch("/checkToken")
+      fetch("http://localhost:3001/api/v1/users/checkToken", {
+        credentials: "include",
+      })
         .then((res) => {
           if (res.status === 200) {
             setLoading(false);

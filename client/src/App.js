@@ -11,7 +11,7 @@ function App() {
     <div className="container">
       <NavBar />
       <Router>
-        <Route path="/" exact component={BabyNameCard} />
+        <Route path="/" exact component={withAuth(BabyNameCard)} />
         <Route path="/sign-up" component={LogIn} />
         <Route path="/ratings" component={withAuth(Ratings)} />
       </Router>
