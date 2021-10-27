@@ -58,9 +58,8 @@ const LogIn = () => {
                 .then((res) => {
                   if (res.status === 200) {
                     setRedirect(true);
-                  } else {
-                    return res.json();
                   }
+                  return res;
                 })
                 .then((json) => {
                   if (json.msg) {
