@@ -83,7 +83,7 @@ const BabyNameCard = () => {
         setCurrentName(json.names[randomIndex]["name"]);
         setCardColor(color);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {

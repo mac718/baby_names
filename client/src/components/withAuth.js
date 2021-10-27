@@ -15,17 +15,16 @@ export function withAuth(ComponentToProtect) {
             setLoading(false);
           } else {
             const error = new Error(res.error);
-            alert(error);
             throw error;
           }
         })
         .catch((err) => {
           console.error(err);
-          alert(err);
+          alert("Please log in.");
           setLoading(false);
           setRedirect(true);
         });
-    });
+    }, []);
     if (loading) {
       return null;
     }
