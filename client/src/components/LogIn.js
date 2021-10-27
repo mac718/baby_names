@@ -13,6 +13,11 @@ const LogIn = () => {
   }
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
+      {error && (
+        <div id="error" className="text-color-danger">
+          {error}
+        </div>
+      )}
       <form className="mh-25 h-auto w-25 border border-secondary rounded p-3">
         <div className="fs-2 text-center">Sign Up!</div>
         <div>{error}</div>
@@ -58,11 +63,12 @@ const LogIn = () => {
                 .then((res) => {
                   if (res.status === 200) {
                     setRedirect(true);
+                  } else {
+                    return res.json();
                   }
-                  return res;
                 })
                 .then((json) => {
-                  if (json.msg) {
+                  if (json) {
                     setError(json.msg);
                   }
                 })
