@@ -6,8 +6,9 @@ const createCustomError = require("../errors/customAPIError");
 const jwt = require("jsonwebtoken");
 
 const getNames = asyncWrapper(async (req, res) => {
-  let token = req.cookies.token;
-  let userInfo = jwt.verify(token, process.env.JWT_SECRET);
+  // let token = req.cookies.token;
+  // let userInfo = jwt.verify(token, process.env.JWT_SECRET);
+  let userInfo = req.user;
 
   let user = await User.findOne({ _id: userInfo.id });
 
