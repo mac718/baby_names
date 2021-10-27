@@ -5,6 +5,7 @@ export function withAuth(ComponentToProtect) {
   return function () {
     const [loading, setLoading] = useState(true);
     const [redirect, setRedirect] = useState(false);
+    const [errMessage, setErrMessage] = useState("");
 
     useEffect(() => {
       fetch("http://localhost:3001/api/v1/users/checkToken", {
@@ -20,7 +21,7 @@ export function withAuth(ComponentToProtect) {
         })
         .catch((err) => {
           console.error(err);
-          alert("Please log in.");
+          setErrMessage("Please log in.");
           setLoading(false);
           setRedirect(true);
         });
@@ -29,7 +30,9 @@ export function withAuth(ComponentToProtect) {
       return null;
     }
     if (redirect) {
-      return <Redirect to="/sign-up" />;
+      return (
+        <Redirect to={{ pathname: "/sign-up", state: { error: errMessage } }} />
+      );
     }
     return <ComponentToProtect />;
   };

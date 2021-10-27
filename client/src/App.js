@@ -12,7 +12,7 @@ function App() {
       <NavBar />
       <Router>
         <Route path="/" exact component={withAuth(BabyNameCard)} />
-        <Route path="/sign-up" component={LogIn} />
+        <Route path="/sign-up" render={(props) => <LogIn {...props} />} />
         <Route path="/ratings" component={withAuth(Ratings)} />
       </Router>
     </div>

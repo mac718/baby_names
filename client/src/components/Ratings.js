@@ -9,6 +9,7 @@ const Ratings = () => {
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
   const [redirect, setRedirect] = useState(false);
+  const [error, setError] = useState("");
 
   const fetchRatings = () => {
     fetch("http://localhost:3001/api/v1/ratings", {
@@ -22,7 +23,7 @@ const Ratings = () => {
         setCurrentButtonsDivId(null);
         setRatings(json.groupDivs);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {

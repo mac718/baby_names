@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router";
 
-const LogIn = () => {
+const LogIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [redirect, setRedirect] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(props.location.state.error || "");
 
   if (redirect) {
     return <Redirect to="/" />;
   }
   return (
-    <div className="container vh-100 d-flex justify-content-center align-items-center">
-      {error && (
-        <div id="error" className="text-color-danger">
-          {error}
-        </div>
-      )}
+    <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
       <form className="mh-25 h-auto w-25 border border-secondary rounded p-3">
         <div className="fs-2 text-center">Sign Up!</div>
-        <div>{error}</div>
+        {error && (
+          <div
+            id="error"
+            className="text-danger fw-bold text-center w-90 bg-light border border-info rounded"
+          >
+            {error}
+          </div>
+        )}
         <label htmlFor="email">Email</label>
         <input
           className="form-control"
