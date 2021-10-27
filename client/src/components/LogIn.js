@@ -14,7 +14,7 @@ const LogIn = (props) => {
   return (
     <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
       <form className="mh-25 h-auto w-25 border border-secondary rounded p-3">
-        <div className="fs-2 text-center">Sign Up!</div>
+        <div className="fs-2 text-center">Log In</div>
         {error && (
           <div
             id="error"

@@ -51,6 +51,17 @@ const Ratings = () => {
     setCurrentButtonsDivId(currentButtonsDivId ? null : name);
   };
 
+  const setRatingNumberColor = (idx) => {
+    let rating = 11 - (idx + 1);
+    if (rating >= 7) {
+      return "success";
+    } else if (rating >= 5) {
+      return "muted";
+    } else {
+      return "danger";
+    }
+  };
+
   let groupDivs = ratings.map((group, idx) => {
     let names = group.map((name) => (
       <li className="list-group-item d-flex justify-content-between" key={name}>
@@ -86,15 +97,7 @@ const Ratings = () => {
         </div>
       </li>
     ));
-    let rating = 11 - (idx + 1);
-    let color;
-    if (rating >= 7) {
-      color = "success";
-    } else if (rating >= 5) {
-      color = "muted";
-    } else {
-      color = "danger";
-    }
+    let color = setRatingNumberColor(idx);
     if (redirect) {
       <Redirect to="/login" />;
     }
