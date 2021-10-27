@@ -8,8 +8,8 @@ const {
 } = require("../errors/customAPIError");
 
 const createUser = asyncWrapper(async (req, res) => {
-  const { name, password } = req.body;
-  let user = new User({ name, password });
+  const { firstName, lastName, email, password } = req.body;
+  let user = new User({ firstName, lastName, email, password });
   let registeredUser = await user.save().catch((err) => console.log(err));
   console.log(registeredUser);
 
@@ -21,8 +21,7 @@ const createUser = asyncWrapper(async (req, res) => {
 
 const login = asyncWrapper(async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
-  const user = await User.findOne({ name: email });
+  const user = await User.findOne({ email });
   if (!user) {
     return next(createCustomError(`No user with email ${email}.`, 401));
   }

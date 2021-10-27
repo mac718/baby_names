@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Redirect } from "react-router";
 
 const SignUp = () => {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
@@ -40,7 +40,7 @@ const SignUp = () => {
           id="fname"
           onChange={(e) => {
             let value = e.target.value;
-            setFname(value);
+            setFirstName(value);
             value ? setEnteredFname(true) : setEnteredFname(false);
             if (setEnteredAllFields) {
               setDisabled(false);
@@ -54,7 +54,7 @@ const SignUp = () => {
           id="lname"
           onChange={(e) => {
             let value = e.target.value;
-            setLname(value);
+            setLastName(value);
             value ? setEnteredLname(true) : setEnteredLname(false);
 
             if (setEnteredAllFields) {
@@ -101,7 +101,7 @@ const SignUp = () => {
               e.preventDefault();
               fetch("http://localhost:3001/api/v1/users/register", {
                 method: "POST",
-                body: JSON.stringify({ fname, lname, email, password }),
+                body: JSON.stringify({ firstName, lastName, email, password }),
                 credentials: "include",
                 headers: {
                   "Content-Type": "application/json",
