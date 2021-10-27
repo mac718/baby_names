@@ -5,6 +5,7 @@ import Ratings from "./components/Ratings";
 import BabyNameCard from "./components/BabyNameCard";
 import NavBar from "./components/NavBar";
 import { withAuth } from "./components/withAuth";
+import SignUp from "./components/SignUp";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <NavBar />
       <Router>
         <Route path="/" exact component={withAuth(BabyNameCard)} />
-        <Route path="/sign-up" render={(props) => <LogIn {...props} />} />
+        <Route path="/login" render={(props) => <LogIn {...props} />} />
+        <Route path="/sign-up" component={SignUp} />
         <Route path="/ratings" component={withAuth(Ratings)} />
       </Router>
     </div>
