@@ -15,11 +15,13 @@ export function withAuth(ComponentToProtect) {
             setLoading(false);
           } else {
             const error = new Error(res.error);
+            alert(error);
             throw error;
           }
         })
         .catch((err) => {
           console.error(err);
+          alert(err);
           setLoading(false);
           setRedirect(true);
         });

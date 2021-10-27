@@ -3,10 +3,14 @@ const Name = require("../models/name");
 const User = require("../models/user");
 const Rating = require("../models/rating");
 const createCustomError = require("../errors/customAPIError");
+const jwt = require("jsonwebtoken");
 
 const getNames = asyncWrapper(async (req, res) => {
-  let email = req.cookies.user;
-  let user = await User.findOne({ name: email });
+  let token = req.cookies.token;
+  let userInfo = jwt.verify(token, process.env.JWT_SECRET);
+
+  let user = await User.findOne({ _id: userInfo.id });
+
   if (!user) {
     return createCustomError("No user with that email found.", 404);
   }

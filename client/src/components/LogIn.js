@@ -6,6 +6,7 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [redirect, setRedirect] = useState(false);
+  const [error, setError] = useState("");
 
   if (redirect) {
     return <Redirect to="/" />;
@@ -14,6 +15,7 @@ const LogIn = () => {
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <form className="mh-25 h-auto w-25 border border-secondary rounded p-3">
         <div className="fs-2 text-center">Sign Up!</div>
+        <div>{error}</div>
         <label htmlFor="email">Email</label>
         <input
           className="form-control"
@@ -56,14 +58,23 @@ const LogIn = () => {
                 .then((res) => {
                   if (res.status === 200) {
                     setRedirect(true);
+                  } else {
+                    return res.json();
+                  }
+                })
+                .then((json) => {
+                  if (json.msg) {
+                    setError(json.msg);
                   }
                 })
                 .catch((err) => {
+                  alert(err);
                   console.log(err);
+                  setError(err);
                 });
             }}
           >
-            Sign Up!
+            Log In
           </button>
         </div>
       </form>
