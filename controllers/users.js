@@ -35,4 +35,13 @@ const login = asyncWrapper(async (req, res, next) => {
   res.cookie("token", token, { httpOnly: true }).sendStatus(200);
 });
 
-module.exports = { createUser, login };
+const getUser = asyncWrapper(async (req, res) => {
+  const userInfo = req.user;
+  console.log(userInfo);
+  const user = await User.findOne({ _id: userInfo.id });
+  const { firstName, lastName, email, password } = user;
+
+  res.status(200).json({ firstName, lastName, email, password });
+});
+
+module.exports = { createUser, login, getUser };

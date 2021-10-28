@@ -7,7 +7,8 @@ const AccountDetails = () => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost/api/v1/users/getUser", {
+    fetch("http://localhost:3001/api/v1/users/getUser", {
+      method: "GET",
       credentials: "include",
     })
       .then((res) => res.json())
@@ -16,16 +17,17 @@ const AccountDetails = () => {
         setLastName(json.lastName);
         setEmail(json.email);
         setPassword(json.password);
-      });
+      })
+      .catch((err) => console.log(err));
   }, []);
   return (
     <div className="container">
       <div className="fs-1 text-center">Account Details</div>
       <div className="container w-50">
-        <div>First Name</div>
-        <div>Last Name</div>
-        <div>Email</div>
-        <div>Password</div>
+        <div>{firstName}</div>
+        <div>{lastName}</div>
+        <div>{email}</div>
+        <div>{password}</div>
       </div>
     </div>
   );
