@@ -5,6 +5,8 @@ const AccountDetails = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [hidden, setHidden] = useState(true);
+  const [editEmail, setEditEmail] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/users/getUser", {
@@ -22,13 +24,60 @@ const AccountDetails = () => {
   }, []);
   return (
     <div className="container">
-      <div className="fs-1 text-center">Account Details</div>
-      <div className="container w-50">
-        <div>{firstName}</div>
-        <div>{lastName}</div>
-        <div>{email}</div>
-        <div>{password}</div>
-      </div>
+      <div className="fs-1 text-center mt-5 mb-5">Account Details</div>
+      <ul className="list-group-flush w-50 m-auto">
+        <li className="list-group-item">
+          <div className="fw-bold">First Name</div>
+          <div>{firstName}</div>
+        </li>
+        <li className="list-group-item">
+          <div className="fw-bold">Last Name</div>
+          <div>{lastName}</div>
+        </li>
+        <li className="list-group-item">
+          <div className="fw-bold">Email</div>
+          <div className="d-flex justify-content-between">
+            {editEmail ? email : <input type="email" defaultValue={email} />}
+            <button
+              className="btn text-primary"
+              onClick={() => setEditEmail(!editEmail)}
+            >
+              edit email
+            </button>
+          </div>
+        </li>
+        <li className="list-group-item">
+          <button
+            className="btn btn-success fw-bold"
+            onClick={() => setHidden(!hidden)}
+          >
+            Change Password
+          </button>
+          <div hidden={hidden}>
+            <label htmlFor="currentPassword">Current Password</label>
+            <input
+              className="form-control w-50 me-1 mb-4"
+              type="password"
+              id="currentPassword"
+            />
+            <label htmlFor="newPassword">New Password</label>
+            <input
+              className="form-control w-50 me-1 mb-1"
+              type="password"
+              id="newPassword"
+            />
+            <label htmlFor="confirmPassword">Confirm New Password</label>
+            <input
+              className="form-control w-50 me-1 mt-1"
+              type="password"
+              id="confirmPassword"
+            />
+            <button className="btn btn-primary mt-3 m-auto">
+              Save Password
+            </button>
+          </div>
+        </li>
+      </ul>
     </div>
   );
 };
