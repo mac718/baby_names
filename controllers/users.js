@@ -7,16 +7,17 @@ const {
   createCustomError,
 } = require("../errors/customAPIError");
 
-const createUser = asyncWrapper(async (req, res) => {
+const createUser = asyncWrapper(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
   let user = new User({ firstName, lastName, email, password });
-  let registeredUser = await user.save().catch((err) => console.log(err));
-  console.log(registeredUser);
+  let registeredUser = await user.save();
 
   let payload = { id: registeredUser._id, email: registeredUser.name };
   let token = jwt.sign(payload, process.env.JWT_SECRET);
 
-  res.status(200).json({ token });
+  res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+
+  // res.status(200).json({ token });
 });
 
 const login = asyncWrapper(async (req, res, next) => {

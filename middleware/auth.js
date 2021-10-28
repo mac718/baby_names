@@ -19,7 +19,6 @@ const checkToken = asyncWrapper(async (req, res, next) => {
       next(createCustomError("Unauthorized: no token", 401));
     }
     req.user = verifiedUser;
-    console.log(verifiedUser);
     next();
   });
 });

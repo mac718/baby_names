@@ -4,10 +4,18 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
-    firstName = {type: String, required: true, trim: true},
-    lastName = {type: String, required: true, trim: true},
+    firstName: {
+      type: String,
+      required: [true, "Must enter last name"],
+      trim: true,
+    },
+    lastName: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, minLength: 5 }
+    password: {
+      type: String,
+      required: [true, "Must enter a password"],
+      minLength: 5,
+    },
   },
   { timestamps: true }
 );
@@ -18,7 +26,6 @@ UserSchema.pre("validate", function (next) {
     console.log("document", document);
     bcrypt.hash(document.password, 10, function (err, hashedPassword) {
       if (err) {
-        console.log(err);
         next(err);
       } else {
         document.password = hashedPassword;

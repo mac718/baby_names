@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router";
+import { Redirect, Link } from "react-router-dom";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [enteredFname, setEnteredFname] = useState(false);
   const [enteredLname, setEnteredLname] = useState(false);
@@ -65,7 +65,7 @@ const SignUp = () => {
         <label htmlFor="email">Email</label>
         <input
           className="form-control"
-          type="text"
+          type="email"
           id="email"
           onChange={(e) => {
             let value = e.target.value;
@@ -108,6 +108,7 @@ const SignUp = () => {
                 },
               })
                 .then((res) => {
+                  console.log("thing", res);
                   if (res.status === 200) {
                     setRedirect(true);
                   } else {
@@ -116,18 +117,24 @@ const SignUp = () => {
                 })
                 .then((json) => {
                   if (json) {
-                    //setError(json.msg);
+                    setError(json.msg);
                   }
                 })
                 .catch((err) => {
                   alert(err);
                   console.log(err);
-                  //setError(err);
+                  setError(err);
                 });
             }}
           >
             Sign Up!
           </button>
+        </div>
+        <div className="mt-2">
+          Already have an account? Log in{" "}
+          <Link to="/login" class="text-decoration-none fw-bold">
+            here!
+          </Link>
         </div>
       </form>
     </div>

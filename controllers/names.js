@@ -2,11 +2,12 @@ const asyncWrapper = require("../middleware/async");
 const Name = require("../models/name");
 const User = require("../models/user");
 const Rating = require("../models/rating");
-const createCustomError = require("../errors/customAPIError");
+const { createCustomError } = require("../errors/customAPIError");
 const jwt = require("jsonwebtoken");
 
 const getNames = asyncWrapper(async (req, res) => {
   let userInfo = req.user;
+  console.log(userInfo);
 
   let user = await User.findOne({ _id: userInfo.id });
 
