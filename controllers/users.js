@@ -16,8 +16,6 @@ const createUser = asyncWrapper(async (req, res, next) => {
   let token = jwt.sign(payload, process.env.JWT_SECRET);
 
   res.cookie("token", token, { httpOnly: true }).sendStatus(200);
-
-  // res.status(200).json({ token });
 });
 
 const login = asyncWrapper(async (req, res, next) => {
