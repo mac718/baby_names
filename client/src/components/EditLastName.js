@@ -12,10 +12,10 @@ const EditLastName = ({ currentLastName }) => {
 
   return (
     <section id="editLastName">
-      <div className="fw-bold">First Name</div>
+      <div className="fw-bold">Last Name</div>
       <div className="d-flex justify-content-between">
         {editLastName ? (
-          <div>
+          <div className="d-flex">
             <input
               type="text"
               defaultValue={currentLastName}

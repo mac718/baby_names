@@ -14,9 +14,9 @@ const EditAccountEmail = ({ currentEmail }) => {
       <div className="fw-bold">Email</div>
       <div className="d-flex justify-content-between">
         {editEmail ? (
-          <div>
+          <div className="d-flex">
             <input
-              type="email"
+              type="text"
               defaultValue={currentEmail}
               onChange={handleEmailChange}
             />

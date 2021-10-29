@@ -11,8 +11,8 @@ import AccountDetails from "./components/AccountDetails";
 function App() {
   return (
     <div className="container">
-      <NavBar />
       <Router>
+        <NavBar />
         <Route path="/" exact component={withAuth(BabyNameCard)} />
         <Route path="/login" render={(props) => <LogIn {...props} />} />
         <Route path="/sign-up" component={SignUp} />

@@ -15,7 +15,7 @@ const EditFirstName = ({ currentFirstName }) => {
       <div className="fw-bold">First Name</div>
       <div className="d-flex justify-content-between">
         {editFirstName ? (
-          <div>
+          <div className="d-flex">
             <input
               type="text"
               defaultValue={currentFirstName}
