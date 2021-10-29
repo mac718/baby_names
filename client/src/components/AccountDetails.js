@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import EditAccountEmail from "./EditAccountEmail";
 import EditFirstName from "./EditFirstName";
+import EditLastName from "./EditLastName";
 
 const AccountDetails = () => {
   const [firstName, setFirstName] = useState("");
@@ -33,8 +34,7 @@ const AccountDetails = () => {
           <EditFirstName currentFirstName={firstName} />
         </li>
         <li className="list-group-item">
-          <div className="fw-bold">Last Name</div>
-          <div>{lastName}</div>
+          <EditLastName currentLastName={lastName} />
         </li>
         <li className="list-group-item">
           <EditAccountEmail currentEmail={email} />

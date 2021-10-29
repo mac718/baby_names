@@ -17,11 +17,11 @@ const EditFirstName = ({ currentFirstName }) => {
         {editFirstName ? (
           <div>
             <input
-              type="email"
+              type="text"
               defaultValue={currentFirstName}
               onChange={() => handleFirstNameChange}
             />
-            <button className="btn btn-success ms-2">Save Email</button>
+            <button className="btn btn-success ms-2">Save First Name</button>
           </div>
         ) : (
           currentFirstName
