@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import EditAccountEmail from "./EditAccountEmail";
 
 const AccountDetails = () => {
   const [firstName, setFirstName] = useState("");
@@ -22,6 +23,12 @@ const AccountDetails = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleEmailChange = (e) => {
+    let value = e.target.value;
+    setEmail(value);
+    console.log(email);
+  };
   return (
     <div className="container">
       <div className="fs-1 text-center mt-5 mb-5">Account Details</div>
@@ -35,16 +42,7 @@ const AccountDetails = () => {
           <div>{lastName}</div>
         </li>
         <li className="list-group-item">
-          <div className="fw-bold">Email</div>
-          <div className="d-flex justify-content-between">
-            {editEmail ? email : <input type="email" defaultValue={email} />}
-            <button
-              className="btn text-primary"
-              onClick={() => setEditEmail(!editEmail)}
-            >
-              edit email
-            </button>
-          </div>
+          <EditAccountEmail currentEmail={email} />
         </li>
         <li className="list-group-item">
           <button
