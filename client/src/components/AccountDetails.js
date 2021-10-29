@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import EditAccountEmail from "./EditAccountEmail";
+import EditFirstName from "./EditFirstName";
 
 const AccountDetails = () => {
   const [firstName, setFirstName] = useState("");
@@ -24,18 +25,12 @@ const AccountDetails = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleEmailChange = (e) => {
-    let value = e.target.value;
-    setEmail(value);
-    console.log(email);
-  };
   return (
     <div className="container">
       <div className="fs-1 text-center mt-5 mb-5">Account Details</div>
       <ul className="list-group-flush w-50 m-auto">
         <li className="list-group-item">
-          <div className="fw-bold">First Name</div>
-          <div>{firstName}</div>
+          <EditFirstName currentFirstName={firstName} />
         </li>
         <li className="list-group-item">
           <div className="fw-bold">Last Name</div>
@@ -46,7 +41,7 @@ const AccountDetails = () => {
         </li>
         <li className="list-group-item">
           <button
-            className="btn btn-success fw-bold"
+            className="btn btn-info fw-bold"
             onClick={() => setHidden(!hidden)}
           >
             Change Password

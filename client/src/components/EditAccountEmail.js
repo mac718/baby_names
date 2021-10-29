@@ -14,16 +14,16 @@ const EditAccountEmail = ({ currentEmail }) => {
       <div className="fw-bold">Email</div>
       <div className="d-flex justify-content-between">
         {editEmail ? (
-          currentEmail
-        ) : (
           <div>
             <input
               type="email"
               defaultValue={currentEmail}
               onChange={handleEmailChange}
             />
-            <button className="btn btn-success">Save Email</button>
+            <button className="btn btn-success ms-2">Save Email</button>
           </div>
+        ) : (
+          currentEmail
         )}
         <button
           className="btn text-primary"
