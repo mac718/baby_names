@@ -31,7 +31,7 @@ export function withAuth(ComponentToProtect) {
     }
     if (redirect) {
       return (
-        <Redirect to={{ pathname: "/sign-up", state: { error: errMessage } }} />
+        <Redirect to={{ pathname: "/login", state: { error: errMessage } }} />
       );
     }
     return <ComponentToProtect />;
