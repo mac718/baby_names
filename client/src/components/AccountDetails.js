@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import EditEmail from "./EditEmail";
 import EditFirstName from "./EditFirstName";
 import EditLastName from "./EditLastName";
+import EditPassword from "./EditPassword";
 
 const AccountDetails = () => {
   const [firstName, setFirstName] = useState("");
@@ -50,35 +51,7 @@ const AccountDetails = () => {
           <EditEmail currentEmail={email} getCurrentUser={getCurrentUser} />
         </li>
         <li className="list-group-item">
-          <button
-            className="btn btn-info fw-bold"
-            onClick={() => setHidden(!hidden)}
-          >
-            Change Password
-          </button>
-          <div hidden={hidden}>
-            <label htmlFor="currentPassword">Current Password</label>
-            <input
-              className="form-control w-50 me-1 mb-4"
-              type="password"
-              id="currentPassword"
-            />
-            <label htmlFor="newPassword">New Password</label>
-            <input
-              className="form-control w-50 me-1 mb-1"
-              type="password"
-              id="newPassword"
-            />
-            <label htmlFor="confirmPassword">Confirm New Password</label>
-            <input
-              className="form-control w-50 me-1 mt-1"
-              type="password"
-              id="confirmPassword"
-            />
-            <button className="btn btn-primary mt-3 m-auto">
-              Save Password
-            </button>
-          </div>
+          <EditPassword getCurrentUser={getCurrentUser} />
         </li>
       </ul>
     </div>
