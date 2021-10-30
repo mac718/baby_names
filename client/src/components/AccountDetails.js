@@ -41,7 +41,10 @@ const AccountDetails = () => {
           />
         </li>
         <li className="list-group-item">
-          <EditLastName currentLastName={lastName} />
+          <EditLastName
+            currentLastName={lastName}
+            getCurrentUser={getCurrentUser}
+          />
         </li>
         <li className="list-group-item">
           <EditAccountEmail currentEmail={email} />

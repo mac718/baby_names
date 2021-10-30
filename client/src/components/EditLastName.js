@@ -1,13 +1,30 @@
 import { useState } from "react";
 
-const EditLastName = ({ currentLastName }) => {
-  const [newLasttName, setNewLastName] = useState("");
+const EditLastName = ({ currentLastName, getCurrentUser }) => {
+  const [newLastName, setNewLastName] = useState("");
   const [editLastName, setEditLastName] = useState(false);
   console.log(editLastName);
 
   const handleLastNameChange = (e) => {
     let value = e.target.value;
     setNewLastName(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/users", {
+      method: "PATCH",
+      body: JSON.stringify({ property: "lastName", lastName: newLastName }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then(() => {
+        setEditLastName(false);
+        getCurrentUser();
+      })
+      .catch((err) => alert(err));
   };
 
   return (
@@ -19,9 +36,11 @@ const EditLastName = ({ currentLastName }) => {
             <input
               type="text"
               defaultValue={currentLastName}
-              onChange={() => handleLastNameChange}
+              onChange={handleLastNameChange}
             />
-            <button className="btn btn-success ms-2">Save Last Name</button>
+            <button className="btn btn-success ms-2" onClick={handleSubmit}>
+              Save Last Name
+            </button>
           </div>
         ) : (
           currentLastName

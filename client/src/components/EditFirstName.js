@@ -21,7 +21,10 @@ const EditFirstName = ({ currentFirstName, getCurrentUser }) => {
       },
       credentials: "include",
     })
-      .then(() => getCurrentUser())
+      .then(() => {
+        setEditFirstName(false);
+        getCurrentUser();
+      })
       .catch((err) => alert(err));
   };
 
@@ -33,7 +36,7 @@ const EditFirstName = ({ currentFirstName, getCurrentUser }) => {
           <div className="d-flex">
             <input
               type="text"
-              //defaultValue={currentFirstName}
+              defaultValue={currentFirstName}
               onChange={handleFirstNameChange}
             />
             <button className="btn btn-success ms-2" onClick={handleSubmit}>
