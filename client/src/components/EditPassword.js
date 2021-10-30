@@ -5,6 +5,7 @@ const EditPassword = ({ getCurrentUser }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState();
 
   const handleCurrentPasswordChange = (e) => {
     let value = e.target.value;
@@ -38,6 +39,7 @@ const EditPassword = ({ getCurrentUser }) => {
     })
       .then(() => {
         setHidden(!hidden);
+        setSuccessMessage("Password successfully changed!");
         getCurrentUser();
       })
       .catch((err) => alert(err));
@@ -76,6 +78,7 @@ const EditPassword = ({ getCurrentUser }) => {
           Save Password
         </button>
       </div>
+      {successMessage && <div className="text-success">{successMessage}</div>}
     </div>
   );
 };
