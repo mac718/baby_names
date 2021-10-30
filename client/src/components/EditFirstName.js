@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const EditFirstName = ({ currentFirstName }) => {
+const EditFirstName = ({ currentFirstName, getCurrentUser }) => {
   const [newFirstName, setNewFirstName] = useState("");
   const [editFirstName, setEditFirstName] = useState(false);
   console.log(editFirstName);
@@ -8,6 +8,21 @@ const EditFirstName = ({ currentFirstName }) => {
   const handleFirstNameChange = (e) => {
     let value = e.target.value;
     setNewFirstName(value);
+    console.log(newFirstName);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/users", {
+      method: "PATCH",
+      body: JSON.stringify({ property: "firstName", firstName: newFirstName }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then(() => getCurrentUser())
+      .catch((err) => alert(err));
   };
 
   return (
@@ -18,10 +33,12 @@ const EditFirstName = ({ currentFirstName }) => {
           <div className="d-flex">
             <input
               type="text"
-              defaultValue={currentFirstName}
-              onChange={() => handleFirstNameChange}
+              //defaultValue={currentFirstName}
+              onChange={handleFirstNameChange}
             />
-            <button className="btn btn-success ms-2">Save First Name</button>
+            <button className="btn btn-success ms-2" onClick={handleSubmit}>
+              Save First Name
+            </button>
           </div>
         ) : (
           currentFirstName

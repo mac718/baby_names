@@ -11,7 +11,7 @@ const AccountDetails = () => {
   const [hidden, setHidden] = useState(true);
   const [editEmail, setEditEmail] = useState(false);
 
-  useEffect(() => {
+  const getCurrentUser = () => {
     fetch("http://localhost:3001/api/v1/users/getUser", {
       method: "GET",
       credentials: "include",
@@ -24,6 +24,10 @@ const AccountDetails = () => {
         setPassword(json.password);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getCurrentUser();
   }, []);
 
   return (
@@ -31,7 +35,10 @@ const AccountDetails = () => {
       <div className="fs-1 text-center mt-5 mb-5">Account Details</div>
       <ul className="list-group-flush w-50 m-auto">
         <li className="list-group-item">
-          <EditFirstName currentFirstName={firstName} />
+          <EditFirstName
+            currentFirstName={firstName}
+            getCurrentUser={getCurrentUser}
+          />
         </li>
         <li className="list-group-item">
           <EditLastName currentLastName={lastName} />

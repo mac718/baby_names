@@ -37,11 +37,23 @@ const login = asyncWrapper(async (req, res, next) => {
 
 const getUser = asyncWrapper(async (req, res) => {
   const userInfo = req.user;
-  console.log(userInfo);
   const user = await User.findOne({ _id: userInfo.id });
   const { firstName, lastName, email, password } = user;
 
   res.status(200).json({ firstName, lastName, email, password });
 });
 
-module.exports = { createUser, login, getUser };
+const updateUser = asyncWrapper(async (req, res) => {
+  const userInfo = req.user;
+  const body = req.body;
+  console.log("prop", body.firstName);
+  const user = await User.findOneAndUpdate(
+    { _id: userInfo.id },
+    { [body.property]: body[body.property] },
+    { new: true, useFindAndModify: false }
+  );
+  console.log(user);
+  res.sendStatus(200);
+});
+
+module.exports = { createUser, login, getUser, updateUser };
