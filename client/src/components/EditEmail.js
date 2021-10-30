@@ -1,12 +1,29 @@
 import { useState } from "react";
 
-const EditAccountEmail = ({ currentEmail }) => {
+const EditEmail = ({ currentEmail, getCurrentUser }) => {
   const [editEmail, setEditEmail] = useState(false);
   const [newEmail, setNewEmail] = useState("");
 
   const handleEmailChange = (e) => {
     let value = e.target.value;
     setNewEmail(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/users", {
+      method: "PATCH",
+      body: JSON.stringify({ property: "email", email: newEmail }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then(() => {
+        setEditEmail(false);
+        getCurrentUser();
+      })
+      .catch((err) => alert(err));
   };
 
   return (
@@ -20,7 +37,9 @@ const EditAccountEmail = ({ currentEmail }) => {
               defaultValue={currentEmail}
               onChange={handleEmailChange}
             />
-            <button className="btn btn-success ms-2">Save Email</button>
+            <button className="btn btn-success ms-2" onClick={handleSubmit}>
+              Save Email
+            </button>
           </div>
         ) : (
           currentEmail
@@ -36,4 +55,4 @@ const EditAccountEmail = ({ currentEmail }) => {
   );
 };
 
-export default EditAccountEmail;
+export default EditEmail;

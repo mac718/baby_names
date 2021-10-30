@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import EditAccountEmail from "./EditAccountEmail";
+import EditEmail from "./EditEmail";
 import EditFirstName from "./EditFirstName";
 import EditLastName from "./EditLastName";
 
@@ -47,7 +47,7 @@ const AccountDetails = () => {
           />
         </li>
         <li className="list-group-item">
-          <EditAccountEmail currentEmail={email} />
+          <EditEmail currentEmail={email} getCurrentUser={getCurrentUser} />
         </li>
         <li className="list-group-item">
           <button
