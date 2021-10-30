@@ -20,6 +20,28 @@ const EditPassword = ({ getCurrentUser }) => {
     let value = e.target.value;
     setConfirmPassword(value);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/users", {
+      method: "PATCH",
+      body: JSON.stringify({
+        property: "password",
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then(() => {
+        setHidden(!hidden);
+        getCurrentUser();
+      })
+      .catch((err) => alert(err));
+  };
   return (
     <div>
       <button
@@ -50,7 +72,9 @@ const EditPassword = ({ getCurrentUser }) => {
           id="confirmPassword"
           onChange={handleConfirmPasswordChange}
         />
-        <button className="btn btn-primary mt-3 m-auto">Save Password</button>
+        <button className="btn btn-primary mt-3 m-auto" onClick={handleSubmit}>
+          Save Password
+        </button>
       </div>
     </div>
   );

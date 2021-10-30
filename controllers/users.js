@@ -43,16 +43,32 @@ const getUser = asyncWrapper(async (req, res) => {
   res.status(200).json({ firstName, lastName, email, password });
 });
 
-const updateUser = asyncWrapper(async (req, res) => {
+const updateUser = asyncWrapper(async (req, res, next) => {
   const userInfo = req.user;
   const body = req.body;
-  console.log("prop", body.firstName);
-  const user = await User.findOneAndUpdate(
-    { _id: userInfo.id },
-    { [body.property]: body[body.property] },
-    { new: true, useFindAndModify: false }
-  );
-  console.log(user);
+
+  if (body.property === "password") {
+    const user = await User.findOne({ _id: userInfo.id });
+    let match = await bcrypt.compare(body.currentPassword, user.password);
+    if (!match) {
+      return next(createCustomError("Current password is not correct", 401));
+    } else if (body.newPassword !== body.confirmPassword) {
+      return next(
+        createCustomError("Confirm password does not match new password", 401)
+      );
+    }
+    let newPassword = await bcrypt.hash(body.newPassword, 10);
+    await user.update({ password: newPassword });
+  } else {
+    console.log("prop", body.firstName);
+    const user = await User.findOneAndUpdate(
+      { _id: userInfo.id },
+      { [body.property]: body[body.property] },
+      { new: true, useFindAndModify: false }
+    );
+    console.log(user);
+  }
+
   res.sendStatus(200);
 });
 
