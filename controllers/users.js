@@ -49,7 +49,7 @@ const updateUser = asyncWrapper(async (req, res, next) => {
 
   if (body.property === "password") {
     const user = await User.findOne({ _id: userInfo.id });
-    let match = await bcrypt.compare(body.currentPassword, user.password);
+    const match = await bcrypt.compare(body.currentPassword, user.password);
     if (!match) {
       return next(createCustomError("Current password is not correct", 401));
     } else if (body.newPassword !== body.confirmPassword) {
@@ -57,7 +57,7 @@ const updateUser = asyncWrapper(async (req, res, next) => {
         createCustomError("Confirm password does not match new password", 401)
       );
     }
-    let newPassword = await bcrypt.hash(body.newPassword, 10);
+    const newPassword = await bcrypt.hash(body.newPassword, 10);
     await user.update({ password: newPassword });
   } else {
     console.log("prop", body.firstName);

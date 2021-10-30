@@ -6,6 +6,7 @@ const EditPassword = ({ getCurrentUser }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState();
+  const [error, setError] = useState();
 
   const handleCurrentPasswordChange = (e) => {
     let value = e.target.value;
@@ -37,10 +38,19 @@ const EditPassword = ({ getCurrentUser }) => {
       },
       credentials: "include",
     })
-      .then(() => {
-        setHidden(!hidden);
-        setSuccessMessage("Password successfully changed!");
-        getCurrentUser();
+      .then((res) => {
+        if (res.status === 200) {
+          setHidden(!hidden);
+          setSuccessMessage("Password successfully changed!");
+          getCurrentUser();
+        } else {
+          return res.json();
+        }
+      })
+      .then((json) => {
+        if (json) {
+          setError(json.msg);
+        }
       })
       .catch((err) => alert(err));
   };
@@ -79,6 +89,7 @@ const EditPassword = ({ getCurrentUser }) => {
         </button>
       </div>
       {successMessage && <div className="text-success">{successMessage}</div>}
+      {error && <div className="text-danger">{error}</div>}
     </div>
   );
 };
