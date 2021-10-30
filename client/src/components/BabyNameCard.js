@@ -1,6 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
+
+const pop = keyframes`
+  from {
+    opacity: 1;
+    top: 0;
+  }
+  to {
+    opacity: 0;
+    top: -2rem;
+  }
+`;
+
+const RatingOverlay = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 3rem;
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: ${(props) =>
+    props.animate &&
+    css`
+      ${pop} 0.3s linear 1
+    `};
+`;
 
 const NameBox = styled.div`
   width: 350px;
@@ -9,8 +37,7 @@ const NameBox = styled.div`
   border: 1px solid black;
   background-color: ${(props) => props.color};
   color: white;
-  animation-duration: 1s;
-  animation-name: offScreen;
+  position: relative;
 `;
 
 const TopNameDiv = styled.div`
@@ -64,6 +91,8 @@ const BabyNameCard = () => {
   const [currentRating, setCurrentRating] = useState(1);
   const [disabled, setDisabled] = useState(true);
   const [cardColor, setCardColor] = useState("");
+  const [animate, setAnimate] = useState(false);
+  const [hidden, setHidden] = useState(true);
 
   const fetchNames = () => {
     fetch("http://localhost:3001/api/v1/names", {
@@ -88,6 +117,7 @@ const BabyNameCard = () => {
 
   useEffect(() => {
     fetchNames();
+    console.log("fetched");
   }, []);
 
   const handleRatingButtonClick = (e) => {
@@ -99,6 +129,9 @@ const BabyNameCard = () => {
 
   const handleSubmitRating = (e) => {
     e.preventDefault();
+    setHidden(!hidden);
+
+    setAnimate(!animate);
     fetch("http://localhost:3001/api/v1/ratings", {
       method: "POST",
       body: JSON.stringify({
@@ -111,6 +144,9 @@ const BabyNameCard = () => {
       },
     })
       .then((res) => {
+        setHidden(true);
+        setAnimate(false);
+
         return res.json();
       })
       .then((json) => {
@@ -152,6 +188,23 @@ const BabyNameCard = () => {
   return (
     <div>
       <Container className="container" style={{ height: "100vh" }}>
+        <RatingOverlay
+          className="fs-1 fw-bold"
+          animate={animate}
+          hidden={hidden}
+        >
+          {currentRating}
+        </RatingOverlay>
+        {/* <button
+          onClick={(e) => {
+            e.preventDefault();
+            setHidden(!hidden);
+            setAnimate(!animate);
+            console.log(hidden);
+          }}
+        >
+          thing
+        </button> */}
         <NameBox className="shadow" color={cardColor}>
           <TopNameDiv></TopNameDiv>
           <NameDiv>{currentName}</NameDiv>
