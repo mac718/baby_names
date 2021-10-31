@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
-import RatingOverlay from "./RatingOverlay";
+//import RatingOverlay from "./RatingOverlay";
 
-// const pop = keyframes`
-//   from {
-//     opacity: 1;
-//     top: 0;
-//   }
-//   to {
-//     opacity: 0;
-//     top: -10rem;
-//   }
-// `;
+const pop = keyframes`
+  from {
+    opacity: 1;
+    top: 0;
+  }
+  to {
+    opacity: 0;
+    top: -10rem;
+  }
+`;
 
-// const RatingOverlay = styled.div`
-//   position: absolute;
-//   z-index: 1;
-//   top: 3rem;
-//   width: 100%;
-//   height: 50vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: flex-end;
-//   opacity: 0;
-//   animation: ${(props) =>
-//     props.animate &&
-//     css`
-//       ${pop} 1s linear 1
-//     `};
-// `;
+const RatingOverlay = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 3rem;
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  opacity: 0;
+  animation: ${(props) =>
+    props.animate &&
+    css`
+      ${pop} 1s linear 1
+    `};
+`;
 
 const NameBox = styled.div`
   width: 350px;
@@ -146,8 +146,11 @@ const BabyNameCard = () => {
       },
     })
       .then((res) => {
-        setHidden(true);
-        setAnimate(false);
+        setTimeout(() => {
+          setHidden(true);
+          setAnimate(false);
+        }, 1000);
+
         if (res.status === 401) {
           setRedirect(true);
         }
@@ -161,11 +164,12 @@ const BabyNameCard = () => {
           json.unratedNames[randomIndex]["gender"] === "m"
             ? "lightBlue"
             : "lightPink";
-
-        setNames(json.names);
-        setCurrentName(json.unratedNames[randomIndex]["name"]);
-        setDisabled(true);
-        setCardColor(color);
+        setTimeout(() => {
+          setNames(json.names);
+          setCurrentName(json.unratedNames[randomIndex]["name"]);
+          setDisabled(true);
+          setCardColor(color);
+        }, 1000);
       })
       .catch((err) => {
         setRedirect(true);
@@ -216,10 +220,17 @@ const BabyNameCard = () => {
         </NameBox>
         <RatingOverlay
           className="fs-1 fw-bold"
+          animate={animate}
+          hidden={hidden}
+        >
+          {currentRating}
+        </RatingOverlay>
+        {/* <RatingOverlay
+          className="fs-1 fw-bold"
           animation={animate}
           isHidden={hidden}
           rating={currentRating}
-        />
+        /> */}
       </Container>
     </div>
   );
