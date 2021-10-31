@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
-//import RatingOverlay from "./RatingOverlay";
 
 const pop = keyframes`
   from {
