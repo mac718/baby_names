@@ -8,6 +8,7 @@ export function withAuth(ComponentToProtect) {
     const [errMessage, setErrMessage] = useState("");
 
     useEffect(() => {
+      console.log("hello!!!");
       fetch("http://localhost:3001/api/v1/users/checkToken", {
         credentials: "include",
       })

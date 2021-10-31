@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
+import RatingOverlay from "./RatingOverlay";
 
-const pop = keyframes`
-  from {
-    opacity: 1;
-    top: 0;
-  }
-  to {
-    opacity: 0;
-    top: -2rem;
-  }
-`;
+// const pop = keyframes`
+//   from {
+//     opacity: 1;
+//     top: 0;
+//   }
+//   to {
+//     opacity: 0;
+//     top: -10rem;
+//   }
+// `;
 
-const RatingOverlay = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 3rem;
-  width: 100%;
-  height: 25vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  animation: ${(props) =>
-    props.animate &&
-    css`
-      ${pop} 0.3s linear 1
-    `};
-`;
+// const RatingOverlay = styled.div`
+//   position: absolute;
+//   z-index: 1;
+//   top: 3rem;
+//   width: 100%;
+//   height: 50vh;
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-end;
+//   opacity: 0;
+//   animation: ${(props) =>
+//     props.animate &&
+//     css`
+//       ${pop} 1s linear 1
+//     `};
+// `;
 
 const NameBox = styled.div`
   width: 350px;
@@ -93,6 +94,7 @@ const BabyNameCard = () => {
   const [cardColor, setCardColor] = useState("");
   const [animate, setAnimate] = useState(false);
   const [hidden, setHidden] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   const fetchNames = () => {
     fetch("http://localhost:3001/api/v1/names", {
@@ -146,6 +148,9 @@ const BabyNameCard = () => {
       .then((res) => {
         setHidden(true);
         setAnimate(false);
+        if (res.status === 401) {
+          setRedirect(true);
+        }
 
         return res.json();
       })
@@ -163,8 +168,7 @@ const BabyNameCard = () => {
         setCardColor(color);
       })
       .catch((err) => {
-        alert(err);
-        <Redirect to="/sign-up" />;
+        setRedirect(true);
       });
   };
   const ratingButtons = [];
@@ -185,26 +189,12 @@ const BabyNameCard = () => {
       </RatingButtonContainer>
     );
   }
+  if (redirect) {
+    return <Redirect to="/login" />;
+  }
   return (
     <div>
       <Container className="container" style={{ height: "100vh" }}>
-        <RatingOverlay
-          className="fs-1 fw-bold"
-          animate={animate}
-          hidden={hidden}
-        >
-          {currentRating}
-        </RatingOverlay>
-        {/* <button
-          onClick={(e) => {
-            e.preventDefault();
-            setHidden(!hidden);
-            setAnimate(!animate);
-            console.log(hidden);
-          }}
-        >
-          thing
-        </button> */}
         <NameBox className="shadow" color={cardColor}>
           <TopNameDiv></TopNameDiv>
           <NameDiv>{currentName}</NameDiv>
@@ -224,6 +214,12 @@ const BabyNameCard = () => {
             </RadioBox>
           </BottomNameDiv>
         </NameBox>
+        <RatingOverlay
+          className="fs-1 fw-bold"
+          animation={animate}
+          isHidden={hidden}
+          rating={currentRating}
+        />
       </Container>
     </div>
   );

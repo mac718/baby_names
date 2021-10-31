@@ -13,7 +13,7 @@ router.use("/", checkToken);
 router
   .route("/")
   .get(getRatings)
-  .post(saveRating)
+  .post(checkToken, saveRating)
   .patch(updateRating)
   .delete(deleteRating);
 
