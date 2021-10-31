@@ -7,10 +7,14 @@ const pop = keyframes`
   from {
     opacity: 1;
     top: 0;
+    font-size: 48px;
+    color: gray;
   }
   to {
     opacity: 0;
-    top: -10rem;
+    top: -20rem;
+    font-size: 124px;
+    color: green;
   }
 `;
 
@@ -23,6 +27,7 @@ const RatingOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  font-weight: bold;
   opacity: 0;
   animation: ${(props) =>
     props.animate &&
@@ -149,7 +154,7 @@ const BabyNameCard = () => {
         setTimeout(() => {
           setHidden(true);
           setAnimate(false);
-        }, 1000);
+        }, 400);
 
         if (res.status === 401) {
           setRedirect(true);
@@ -169,7 +174,7 @@ const BabyNameCard = () => {
           setCurrentName(json.unratedNames[randomIndex]["name"]);
           setDisabled(true);
           setCardColor(color);
-        }, 1000);
+        }, 400);
       })
       .catch((err) => {
         setRedirect(true);
@@ -218,11 +223,7 @@ const BabyNameCard = () => {
             </RadioBox>
           </BottomNameDiv>
         </NameBox>
-        <RatingOverlay
-          className="fs-1 fw-bold"
-          animate={animate}
-          hidden={hidden}
-        >
+        <RatingOverlay animate={animate} hidden={hidden}>
           {currentRating}
         </RatingOverlay>
         {/* <RatingOverlay
