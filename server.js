@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const user = require("./routes/users");
 const names = require("./routes/names");
 const ratings = require("./routes/ratings");
+const emails = require("./routes/emails");
 const errorHandlerMiddlerware = require("./middleware/errorHandler");
 require("dotenv").config();
 
@@ -33,6 +34,7 @@ const baseUrl = "/api/v1/";
 app.use(`${baseUrl}users`, user);
 app.use(`${baseUrl}ratings`, ratings);
 app.use(`${baseUrl}names`, names);
+app.use(`${baseUrl}emails`, emails);
 
 //app.use("/", user);
 
