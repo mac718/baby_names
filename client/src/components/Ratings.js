@@ -3,6 +3,7 @@ import RadioButtons from "./RadioButtons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { Redirect } from "react-router-dom";
+import NameInfoModal from "./NameInfoModal";
 
 const Ratings = () => {
   const [ratings, setRatings] = useState([]);
@@ -71,7 +72,15 @@ const Ratings = () => {
         <div className="container">
           <div className="row">
             <div className="col"></div>
-            <div className="col text-muted">{name}</div>
+            <div
+              className="col text-muted"
+              data-bs-toggle="modal"
+              data-bs-target={`#${name}`}
+            >
+              {name}
+              <NameInfoModal name={name} />
+            </div>
+
             <div className="col">
               <FontAwesomeIcon
                 icon={faEdit}
