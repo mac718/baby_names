@@ -10,6 +10,7 @@ const Ratings = () => {
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
   const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState("");
+  const [ratingsLoading, setRatingsLoading] = useState(true);
 
   const fetchRatings = () => {
     fetch("http://localhost:3001/api/v1/ratings", {
@@ -17,11 +18,13 @@ const Ratings = () => {
       credentials: "include",
     })
       .then((res) => {
+        setRatingsLoading(true);
         return res.json();
       })
       .then((json) => {
         setCurrentButtonsDivId(null);
         setRatings(json.groupDivs);
+        setRatingsLoading(false);
       })
       .catch((err) => console.log(err));
   };
@@ -98,9 +101,6 @@ const Ratings = () => {
       </li>
     ));
     let color = setRatingNumberColor(idx);
-    if (redirect) {
-      <Redirect to="/login" />;
-    }
     return (
       <div
         className="container border border-dark rounded mt-3 h-10"
@@ -117,9 +117,27 @@ const Ratings = () => {
       </div>
     );
   });
+  const loadingDiv = (
+    <div className="d-flex justify-content-center align-items-center w-100 vh-100">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+  if (redirect) {
+    <Redirect to="/login" />;
+  }
   return (
     <div className="container">
-      <div className="container mt-2">{groupDivs}</div>
+      <div className="container mt-2">
+        {ratingsLoading ? loadingDiv : groupDivs}
+      </div>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const pop = keyframes`
   to {
     opacity: 0;
     top: -20rem;
-    font-size: 124px;
+    font-size: 250px;
     color: green;
   }
 `;
@@ -20,7 +20,7 @@ const pop = keyframes`
 const RatingOverlay = styled.div`
   position: absolute;
   z-index: 1;
-  top: 3rem;
+  top: 4rem;
   width: 100%;
   height: 50vh;
   display: flex;
@@ -31,7 +31,7 @@ const RatingOverlay = styled.div`
   animation: ${(props) =>
     props.animate &&
     css`
-      ${pop} 1s linear 1
+      ${pop} 0.5s linear 1
     `};
 `;
 
