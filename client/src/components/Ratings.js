@@ -4,6 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { Redirect } from "react-router-dom";
 import NameInfoModal from "./NameInfoModal";
+import styled from "styled-components";
+
+const NameSpan = styled.div`
+  &:hover {
+    font-weight: bold;
+  }
+  cursor: pointer;
+`;
 
 const Ratings = () => {
   const [ratings, setRatings] = useState([]);
@@ -77,7 +85,7 @@ const Ratings = () => {
               data-bs-toggle="modal"
               data-bs-target={`#${name}`}
             >
-              {name}
+              <NameSpan>{name}</NameSpan>
               <NameInfoModal name={name} />
             </div>
 

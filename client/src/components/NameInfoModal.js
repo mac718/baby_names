@@ -36,19 +36,18 @@ const NameInfoModal = ({ name }) => {
           <div className="modal-body">
             <div className="fs-1 fw-bold">{name}</div>
             <div>Meaning:</div>
-            <div>gender: {nameRecord.gender}</div>
+            <div>
+              gender: <span className="fw-bold">{nameRecord.gender}</span>
+            </div>
             <div>Origin:</div>
           </div>
           <div className="modal-footer">
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-primary"
               data-bs-dismiss="modal"
             >
               Close
-            </button>
-            <button type="button" className="btn btn-primary">
-              Save changes
             </button>
           </div>
         </div>
