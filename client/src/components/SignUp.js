@@ -5,15 +5,11 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(null);
-  const [disabled, setDisabled] = useState(true);
+  const [password, setPassword] = useState("");
   const [enteredFname, setEnteredFname] = useState(false);
   const [enteredLname, setEnteredLname] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState(false);
   const [enteredPassword, setEnteredPassword] = useState(false);
-  const [enteredAllFields, setEnteredAllFields] = useState(
-    enteredFname && enteredLname && enteredEmail && enteredPassword
-  );
   const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState("");
 
@@ -40,10 +36,13 @@ const SignUp = () => {
           id="fname"
           onChange={(e) => {
             let value = e.target.value;
+
             setFirstName(value);
-            value ? setEnteredFname(true) : setEnteredFname(false);
-            if (setEnteredAllFields) {
-              setDisabled(false);
+            if (value && value !== "") {
+              console.log("fn");
+              setEnteredFname(true);
+            } else {
+              setEnteredFname(false);
             }
           }}
         />
@@ -54,11 +53,12 @@ const SignUp = () => {
           id="lname"
           onChange={(e) => {
             let value = e.target.value;
-            setLastName(value);
-            value ? setEnteredLname(true) : setEnteredLname(false);
 
-            if (setEnteredAllFields) {
-              setDisabled(false);
+            setLastName(value);
+            if (value && value !== "") {
+              setEnteredLname(true);
+            } else {
+              setEnteredLname(false);
             }
           }}
         />
@@ -69,10 +69,12 @@ const SignUp = () => {
           id="email"
           onChange={(e) => {
             let value = e.target.value;
+
             setEmail(value);
-            value ? setEnteredEmail(true) : setEnteredEmail(false);
-            if (setEnteredAllFields) {
-              setDisabled(false);
+            if (value && value !== "") {
+              setEnteredEmail(true);
+            } else {
+              setEnteredEmail(false);
             }
           }}
         />
@@ -84,9 +86,10 @@ const SignUp = () => {
           onChange={(e) => {
             let value = e.target.value;
             setPassword(value);
-            value ? setEnteredPassword(true) : setEnteredPassword(false);
-            if (setEnteredAllFields) {
-              setDisabled(false);
+            if (value && value !== "") {
+              setEnteredPassword(true);
+            } else {
+              setEnteredPassword(false);
             }
           }}
         />
@@ -96,7 +99,12 @@ const SignUp = () => {
         >
           <button
             className="btn btn-primary mt-2"
-            disabled={disabled}
+            disabled={
+              !enteredFname ||
+              !enteredLname ||
+              !enteredEmail ||
+              !enteredPassword
+            }
             onClick={(e) => {
               e.preventDefault();
               fetch("http://localhost:3001/api/v1/users/register", {

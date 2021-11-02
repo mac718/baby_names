@@ -21,6 +21,7 @@ const Ratings = () => {
   const [error, setError] = useState("");
   const [ratingsLoading, setRatingsLoading] = useState(true);
 
+  //solution to get rid of "cannot update state on unmounted component" error
   let _isMounted = useRef(true);
 
   const fetchRatings = (isMounted) => {
