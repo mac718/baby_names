@@ -22,4 +22,15 @@ const getNames = asyncWrapper(async (req, res) => {
   res.status(200).json({ names: unratedNames });
 });
 
-module.exports = { getNames };
+const getSingleName = asyncWrapper(async (req, res) => {
+  const nameRated = req.params.name;
+
+  const name = await Name.findOne({ name: nameRated });
+
+  if (!name) {
+    return createCustomError("Name not found.", 404);
+  }
+  res.status(200).json({ name });
+});
+
+module.exports = { getNames, getSingleName };

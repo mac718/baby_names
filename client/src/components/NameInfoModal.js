@@ -1,4 +1,17 @@
+import { useState, useEffect } from "react";
+
 const NameInfoModal = ({ name }) => {
+  const [nameRecord, setNameRecord] = useState("");
+  const fetchName = () => {
+    fetch(`http://localhost:3001/api/v1/names/${name}`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => setNameRecord(json.name))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => fetchName(), []);
   return (
     <div
       className="modal fade"
@@ -11,7 +24,7 @@ const NameInfoModal = ({ name }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id={name}>
-              {name}
+              {nameRecord.name}
             </h5>
             <button
               type="button"
@@ -23,7 +36,7 @@ const NameInfoModal = ({ name }) => {
           <div className="modal-body">
             <div className="fs-1 fw-bold">{name}</div>
             <div>Meaning:</div>
-            <div>gender:</div>
+            <div>gender: {nameRecord.gender}</div>
             <div>Origin:</div>
           </div>
           <div className="modal-footer">

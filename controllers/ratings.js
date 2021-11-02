@@ -83,4 +83,9 @@ const deleteRating = asyncWrapper(async (req, res) => {
   res.status(201).json();
 });
 
-module.exports = { saveRating, getRatings, updateRating, deleteRating };
+module.exports = {
+  saveRating,
+  getRatings,
+  updateRating,
+  deleteRating,
+};
