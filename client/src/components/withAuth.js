@@ -21,9 +21,9 @@ export function withAuth(ComponentToProtect) {
         .then((json) => {
           if (json) {
             setErrMessage(json.msg);
+            setLoading(false);
+            setRedirect(true);
           }
-          setLoading(false);
-          setRedirect(true);
         })
         .catch((err) => {
           console.error(err);
