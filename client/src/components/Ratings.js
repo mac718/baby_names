@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import RadioButtons from "./RadioButtons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -21,25 +21,36 @@ const Ratings = () => {
   const [error, setError] = useState("");
   const [ratingsLoading, setRatingsLoading] = useState(true);
 
-  const fetchRatings = () => {
+  let _isMounted = useRef(true);
+
+  const fetchRatings = (isMounted) => {
     fetch("http://localhost:3001/api/v1/ratings", {
       method: "GET",
       credentials: "include",
     })
       .then((res) => {
-        setRatingsLoading(true);
+        if (isMounted.current) {
+          setRatingsLoading(true);
+        }
+
         return res.json();
       })
       .then((json) => {
-        setCurrentButtonsDivId(null);
-        setRatings(json.groupDivs);
-        setRatingsLoading(false);
+        if (isMounted.current) {
+          setCurrentButtonsDivId(null);
+          setRatings(json.groupDivs);
+          setRatingsLoading(false);
+        }
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    fetchRatings();
+    _isMounted.current = true;
+    fetchRatings(_isMounted);
+    return () => {
+      _isMounted.current = false;
+    };
   }, []);
 
   const handleDeleteRating = (e) => {
