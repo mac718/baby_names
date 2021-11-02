@@ -8,7 +8,6 @@ export function withAuth(ComponentToProtect) {
     const [errMessage, setErrMessage] = useState("");
 
     useEffect(() => {
-      console.log("hello!!!");
       fetch("http://localhost:3001/api/v1/users/checkToken", {
         credentials: "include",
       })
@@ -16,9 +15,15 @@ export function withAuth(ComponentToProtect) {
           if (res.status === 200) {
             setLoading(false);
           } else {
-            const error = new Error(res.error);
-            throw error;
+            return res.json();
           }
+        })
+        .then((json) => {
+          if (json) {
+            setErrMessage(json.msg);
+          }
+          setLoading(false);
+          setRedirect(true);
         })
         .catch((err) => {
           console.error(err);

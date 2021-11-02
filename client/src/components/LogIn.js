@@ -6,7 +6,7 @@ const LogIn = (props) => {
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [redirect, setRedirect] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(props.location.state.error);
 
   const handleEmailChange = (e) => {
     let value = e.target.value;
