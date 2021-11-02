@@ -50,32 +50,34 @@ const RadioButtons = ({ name, fetchRatings }) => {
       </RatingButtonContainer>
     );
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/ratings", {
+      method: "PATCH",
+      body: JSON.stringify({
+        name: name,
+        rating: newRating,
+      }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        fetchRatings();
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
   return (
     <RadioBox className="input-group">
       {ratingButtons}
       <div className="input-group justify-content-center mt-1">
         <button
           className="btn btn-secondary"
-          onClick={(e) => {
-            e.preventDefault();
-            fetch("http://localhost:3001/api/v1/ratings", {
-              method: "PATCH",
-              body: JSON.stringify({
-                name: name,
-                rating: newRating,
-              }),
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            })
-              .then(() => {
-                fetchRatings();
-              })
-              .catch((err) => {
-                alert(err);
-              });
-          }}
+          onClick={handleSubmit}
           disabled={disabled}
         >
           Submit Rating

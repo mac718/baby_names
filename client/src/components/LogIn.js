@@ -8,6 +8,47 @@ const LogIn = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState("");
 
+  const handleEmailChange = (e) => {
+    let value = e.target.value;
+    setEmail(value);
+    setDisabled(false);
+  };
+
+  const handlePasswordChange = (e) => {
+    let value = e.target.value;
+    setPassword(value);
+    setDisabled(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/users/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setRedirect(true);
+        } else {
+          return res.json();
+        }
+      })
+      .then((json) => {
+        if (json) {
+          setError(json.msg);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err);
+        setError(err);
+      });
+  };
+
   if (redirect) {
     return <Redirect to="/" />;
   }
@@ -28,22 +69,14 @@ const LogIn = (props) => {
           className="form-control"
           type="text"
           id="email"
-          onChange={(e) => {
-            let value = e.target.value;
-            setEmail(value);
-            setDisabled(false);
-          }}
+          onChange={handleEmailChange}
         />
         <label htmlFor="password">Password</label>
         <input
           className="form-control"
           type="password"
           id="password"
-          onChange={(e) => {
-            let value = e.target.value;
-            setPassword(value);
-            setDisabled(false);
-          }}
+          onChange={handlePasswordChange}
         />
         <div
           className="d-flex justify-content-center align-items-center"
@@ -52,34 +85,7 @@ const LogIn = (props) => {
           <button
             className="btn btn-primary mt-2"
             disabled={disabled}
-            onClick={(e) => {
-              e.preventDefault();
-              fetch("http://localhost:3001/api/v1/users/login", {
-                method: "POST",
-                body: JSON.stringify({ email, password }),
-                credentials: "include",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              })
-                .then((res) => {
-                  if (res.status === 200) {
-                    setRedirect(true);
-                  } else {
-                    return res.json();
-                  }
-                })
-                .then((json) => {
-                  if (json) {
-                    setError(json.msg);
-                  }
-                })
-                .catch((err) => {
-                  alert(err);
-                  console.log(err);
-                  setError(err);
-                });
-            }}
+            onClick={handleSubmit}
           >
             Log In
           </button>
