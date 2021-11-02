@@ -225,12 +225,6 @@ const BabyNameCard = () => {
         <RatingOverlay animate={animate} hidden={hidden}>
           {currentRating}
         </RatingOverlay>
-        {/* <RatingOverlay
-          className="fs-1 fw-bold"
-          animation={animate}
-          isHidden={hidden}
-          rating={currentRating}
-        /> */}
       </Container>
     </div>
   );

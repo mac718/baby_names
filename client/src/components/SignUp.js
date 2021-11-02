@@ -13,6 +13,78 @@ const SignUp = () => {
   const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState("");
 
+  const handleFirstNameChange = (e) => {
+    let value = e.target.value;
+
+    setFirstName(value);
+    if (value && value !== "") {
+      console.log("fn");
+      setEnteredFname(true);
+    } else {
+      setEnteredFname(false);
+    }
+  };
+
+  const handleLastNameChange = (e) => {
+    let value = e.target.value;
+
+    setLastName(value);
+    if (value && value !== "") {
+      setEnteredLname(true);
+    } else {
+      setEnteredLname(false);
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    let value = e.target.value;
+
+    setEmail(value);
+    if (value && value !== "") {
+      setEnteredEmail(true);
+    } else {
+      setEnteredEmail(false);
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    let value = e.target.value;
+    setPassword(value);
+    if (value && value !== "") {
+      setEnteredPassword(true);
+    } else {
+      setEnteredPassword(false);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/users/register", {
+      method: "POST",
+      body: JSON.stringify({ firstName, lastName, email, password }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setRedirect(true);
+        } else {
+          return res.json();
+        }
+      })
+      .then((json) => {
+        if (json) {
+          setError(json.msg);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err);
+      });
+  };
+
   if (redirect) {
     return <Redirect to="/" />;
   }
@@ -34,64 +106,28 @@ const SignUp = () => {
           className="form-control"
           type="text"
           id="fname"
-          onChange={(e) => {
-            let value = e.target.value;
-
-            setFirstName(value);
-            if (value && value !== "") {
-              console.log("fn");
-              setEnteredFname(true);
-            } else {
-              setEnteredFname(false);
-            }
-          }}
+          onChange={handleFirstNameChange}
         />
         <label htmlFor="lname">Last Name</label>
         <input
           className="form-control"
           type="text"
           id="lname"
-          onChange={(e) => {
-            let value = e.target.value;
-
-            setLastName(value);
-            if (value && value !== "") {
-              setEnteredLname(true);
-            } else {
-              setEnteredLname(false);
-            }
-          }}
+          onChange={handleLastNameChange}
         />
         <label htmlFor="email">Email</label>
         <input
           className="form-control"
           type="email"
           id="email"
-          onChange={(e) => {
-            let value = e.target.value;
-
-            setEmail(value);
-            if (value && value !== "") {
-              setEnteredEmail(true);
-            } else {
-              setEnteredEmail(false);
-            }
-          }}
+          onChange={handleEmailChange}
         />
         <label htmlFor="password">Password</label>
         <input
           className="form-control"
           type="password"
           id="password"
-          onChange={(e) => {
-            let value = e.target.value;
-            setPassword(value);
-            if (value && value !== "") {
-              setEnteredPassword(true);
-            } else {
-              setEnteredPassword(false);
-            }
-          }}
+          onChange={handlePasswordChange}
         />
         <div
           className="d-flex justify-content-center align-items-center"
@@ -105,35 +141,7 @@ const SignUp = () => {
               !enteredEmail ||
               !enteredPassword
             }
-            onClick={(e) => {
-              e.preventDefault();
-              fetch("http://localhost:3001/api/v1/users/register", {
-                method: "POST",
-                body: JSON.stringify({ firstName, lastName, email, password }),
-                credentials: "include",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              })
-                .then((res) => {
-                  console.log("thing", res);
-                  if (res.status === 200) {
-                    setRedirect(true);
-                  } else {
-                    return res.json();
-                  }
-                })
-                .then((json) => {
-                  if (json) {
-                    setError(json.msg);
-                  }
-                })
-                .catch((err) => {
-                  alert(err);
-                  console.log(err);
-                  setError(err);
-                });
-            }}
+            onClick={handleSubmit}
           >
             Sign Up!
           </button>

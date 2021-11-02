@@ -9,8 +9,6 @@ const AccountDetails = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [hidden, setHidden] = useState(true);
-  const [editEmail, setEditEmail] = useState(false);
 
   const getCurrentUser = () => {
     fetch("http://localhost:3001/api/v1/users/getUser", {
