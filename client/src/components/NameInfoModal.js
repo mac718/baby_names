@@ -16,7 +16,7 @@ const NameInfoModal = ({ name }) => {
     <div
       className="modal fade"
       id={name}
-      tabindex="-1"
+      tabIndex="-1"
       aria-labelledby={name}
       aria-hidden="true"
     >

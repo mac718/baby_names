@@ -16,7 +16,8 @@ const UserSchema = new Schema(
       required: [true, "Must enter a password"],
       minLength: 5,
     },
-    link: [String],
+    pendingLinks: [],
+    link: [],
   },
 
   { timestamps: true }

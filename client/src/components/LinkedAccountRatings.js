@@ -12,7 +12,7 @@ const NameSpan = styled.div`
   cursor: pointer;
 `;
 
-const Ratings = () => {
+const LinkedAccountRatings = () => {
   const [ratings, setRatings] = useState([]);
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
@@ -165,4 +165,4 @@ const Ratings = () => {
   );
 };
 
-export default Ratings;
+export default LinkedAccountRatings;

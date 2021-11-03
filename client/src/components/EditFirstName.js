@@ -38,6 +38,7 @@ const EditFirstName = ({ currentFirstName, getCurrentUser }) => {
               type="text"
               defaultValue={currentFirstName}
               onChange={handleFirstNameChange}
+              className="min-vw-50"
             />
             <button className="btn btn-success ms-2" onClick={handleSubmit}>
               Save First Name

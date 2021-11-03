@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Redirect } from "react-router";
 const { useState } = require("react");
 
 const RadioBox = styled.div`

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import LogIn from "./components/LogIn";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Ratings from "./components/Ratings";

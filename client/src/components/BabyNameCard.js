@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
+import Filters from "./Filters";
 
 const pop = keyframes`
   from {
@@ -109,7 +110,6 @@ const BabyNameCard = () => {
         return res.json();
       })
       .then((json) => {
-        console.log(json);
         let randomIndex = Math.floor(Math.random() * json.names.length);
         let color;
         color =
@@ -123,7 +123,6 @@ const BabyNameCard = () => {
 
   useEffect(() => {
     fetchNames();
-    console.log("fetched");
   }, []);
 
   const handleRatingButtonClick = (e) => {
@@ -153,7 +152,7 @@ const BabyNameCard = () => {
         setTimeout(() => {
           setHidden(true);
           setAnimate(false);
-        }, 400);
+        }, 900);
 
         if (res.status === 401) {
           setRedirect(true);
@@ -173,7 +172,7 @@ const BabyNameCard = () => {
           setCurrentName(json.unratedNames[randomIndex]["name"]);
           setDisabled(true);
           setCardColor(color);
-        }, 400);
+        }, 900);
       })
       .catch((err) => {
         setRedirect(true);
@@ -203,6 +202,7 @@ const BabyNameCard = () => {
   return (
     <div>
       <Container className="container" style={{ height: "100vh" }}>
+        <Filters />
         <NameBox className="shadow" color={cardColor}>
           <TopNameDiv></TopNameDiv>
           <NameDiv>{currentName}</NameDiv>

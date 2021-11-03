@@ -4,7 +4,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           Baby Names
         </a>
         <button
@@ -41,6 +41,15 @@ const NavBar = () => {
                 aria-current="page"
               >
                 Account
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to="/account"
+                className="nav-link active"
+                aria-current="page"
+              >
+                Linked Account Ratings
               </Link>
             </li>
           </ul>

@@ -12,11 +12,13 @@ mongooseeder.seed({
   seeds: () => {
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
     const genders = ["m", "f", "u"];
+    const origins = ["USA", "Europe", "Africa", "Asia"];
     let names = [];
 
     for (let idx = 0; idx < 500; idx += 1) {
       let length = Math.floor(Math.random() * (15 - 2) + 3);
       let genderIndex = Math.floor(Math.random() * 2);
+      let originsIndex = Math.floor(Math.random() * 4);
       let name = "";
 
       for (let alphaIdx = 0; alphaIdx < length; alphaIdx += 1) {
@@ -26,7 +28,11 @@ mongooseeder.seed({
           : (name += alphabet[randomIndex]);
       }
 
-      names.push({ name, gender: genders[genderIndex] });
+      names.push({
+        name,
+        gender: genders[genderIndex],
+        origin: origins[originsIndex],
+      });
     }
 
     return models.Name.create(names);
