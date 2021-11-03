@@ -101,6 +101,8 @@ const BabyNameCard = () => {
   const [animate, setAnimate] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [redirect, setRedirect] = useState(false);
+  const [selectedGender, setSelectedGender] = useState("All");
+  const [selectedOrigin, setSelectedOrigin] = useState("All");
 
   const fetchNames = (genderFilter = "All", originFilter = "All") => {
     fetch("http://localhost:3001/api/v1/names", {
@@ -114,6 +116,8 @@ const BabyNameCard = () => {
         let namesToBeRated;
         namesToBeRated = json.names;
         console.log("genderFilter", genderFilter, originFilter);
+        setSelectedGender(genderFilter);
+        setSelectedOrigin(originFilter);
 
         if (genderFilter !== "All") {
           if (genderFilter === "Male") {
@@ -206,15 +210,52 @@ const BabyNameCard = () => {
         return res.json();
       })
       .then((json) => {
-        let randomIndex = Math.floor(Math.random() * json.unratedNames.length);
+        let namesToBeRated = json.unratedNames;
+        if (selectedGender !== "All") {
+          if (selectedGender === "Male") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.gender === "m"
+            );
+            console.log("mug", namesToBeRated);
+          } else if (selectedGender === "Female") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.gender === "f"
+            );
+          } else {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.gender === "b"
+            );
+          }
+        }
+
+        if (selectedOrigin !== "All") {
+          if (selectedOrigin === "USA") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "USA"
+            );
+          } else if (selectedOrigin === "Europe") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "Europe"
+            );
+          } else if (selectedOrigin === "Africa") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "Africa"
+            );
+          } else {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "Asia"
+            );
+          }
+        }
+        let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
         let color;
         color =
-          json.unratedNames[randomIndex]["gender"] === "m"
+          namesToBeRated[randomIndex]["gender"] === "m"
             ? "lightBlue"
             : "lightPink";
         setTimeout(() => {
-          setNames(json.names);
-          setCurrentName(json.unratedNames[randomIndex]["name"]);
+          setNames(namesToBeRated);
+          setCurrentName(namesToBeRated[randomIndex]["name"]);
           setDisabled(true);
           setCardColor(color);
         }, 900);
@@ -247,7 +288,7 @@ const BabyNameCard = () => {
   return (
     <div>
       <Container className="container" style={{ height: "100vh" }}>
-        <Filters fetchNames={fetchNames} />
+        <Filters fetchNames={fetchNames} className="position-fixed" />
         <NameBox className="shadow" color={cardColor}>
           <TopNameDiv></TopNameDiv>
           <NameDiv>{currentName}</NameDiv>

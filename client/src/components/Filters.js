@@ -19,10 +19,7 @@ const Filters = ({ fetchNames }) => {
     fetchNames(selectedGender, selectedOrigin);
   };
   return (
-    <form
-      className="d-flex flex-row mt-3 align-items-start"
-      onSubmit={handleSubmit}
-    >
+    <form className="d-flex flex-row mt-3" onSubmit={handleSubmit}>
       <div className="dropdown m-2">
         <a
           className="btn btn-outline-secondary dropdown-toggle"
