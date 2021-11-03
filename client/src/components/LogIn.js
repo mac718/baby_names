@@ -54,7 +54,10 @@ const LogIn = (props) => {
   }
   return (
     <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
-      <form className="mh-25 max-vh-25 border border-secondary rounded p-3 min-vw-25">
+      <form
+        className="border border-secondary rounded p-3"
+        style={{ "min-width": "25vw", "min-heigh": "25vh" }}
+      >
         <div className="fs-2 text-center">Log In</div>
         {error && (
           <div
