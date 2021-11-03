@@ -102,7 +102,7 @@ const BabyNameCard = () => {
   const [hidden, setHidden] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
-  const fetchNames = () => {
+  const fetchNames = (genderFilter = "All", originFilter = "All") => {
     fetch("http://localhost:3001/api/v1/names", {
       method: "GET",
       credentials: "include",
@@ -111,12 +111,56 @@ const BabyNameCard = () => {
         return res.json();
       })
       .then((json) => {
-        let randomIndex = Math.floor(Math.random() * json.names.length);
+        let namesToBeRated;
+        namesToBeRated = json.names;
+        console.log("genderFilter", genderFilter, originFilter);
+
+        if (genderFilter !== "All") {
+          if (genderFilter === "Male") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.gender === "m"
+            );
+            console.log("mug", namesToBeRated);
+          } else if (genderFilter === "Female") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.gender === "f"
+            );
+          } else {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.gender === "b"
+            );
+          }
+        }
+
+        if (originFilter !== "All") {
+          if (originFilter === "USA") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "USA"
+            );
+          } else if (originFilter === "Europe") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "Europe"
+            );
+          } else if (originFilter === "Africa") {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "Africa"
+            );
+          } else {
+            namesToBeRated = namesToBeRated.filter(
+              (name) => name.origin === "Asia"
+            );
+          }
+        }
+
+        console.log(namesToBeRated);
+        let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
         let color;
         color =
-          json.names[randomIndex]["gender"] === "m" ? "lightBlue" : "lightPink";
-        setNames(json.names);
-        setCurrentName(json.names[randomIndex]["name"]);
+          namesToBeRated[randomIndex]["gender"] === "m"
+            ? "lightBlue"
+            : "lightPink";
+        setNames(namesToBeRated);
+        setCurrentName(namesToBeRated[randomIndex]["name"]);
         setCardColor(color);
       })
       .catch((err) => console.log(err));
@@ -203,7 +247,7 @@ const BabyNameCard = () => {
   return (
     <div>
       <Container className="container" style={{ height: "100vh" }}>
-        <Filters />
+        <Filters fetchNames={fetchNames} />
         <NameBox className="shadow" color={cardColor}>
           <TopNameDiv></TopNameDiv>
           <NameDiv>{currentName}</NameDiv>

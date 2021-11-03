@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const Filters = () => {
-  const [selectedGender, setSelectedGender] = useState("all");
-  const [selectedOrigin, setSelectedOrigin] = useState("all");
+const Filters = ({ fetchNames }) => {
+  const [selectedGender, setSelectedGender] = useState("All");
+  const [selectedOrigin, setSelectedOrigin] = useState("All");
 
   const handleGenderChange = (e) => {
     let value = e.target.innerHTML;
@@ -14,17 +14,23 @@ const Filters = () => {
     console.log(value);
     setSelectedOrigin(value);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchNames(selectedGender, selectedOrigin);
+  };
   return (
-    <form className="d-flex flex-row mt-3">
+    <form
+      className="d-flex flex-row mt-3 align-items-start"
+      onSubmit={handleSubmit}
+    >
       <div className="dropdown m-2">
         <a
-          className="btn btn-secondary dropdown-toggle"
+          className="btn btn-outline-secondary dropdown-toggle"
           href="#"
           role="button"
           id="gender"
           data-bs-toggle="dropdown"
           aria-expanded="false"
-          value={selectedGender}
         >
           Filter Gender
         </a>
@@ -32,7 +38,6 @@ const Filters = () => {
           <li>
             <a
               className="dropdown-item active"
-              value="all"
               href="#"
               onClick={handleGenderChange}
             >
@@ -40,32 +45,17 @@ const Filters = () => {
             </a>
           </li>
           <li>
-            <a
-              className="dropdown-item"
-              value="Male"
-              href="#"
-              onClick={handleGenderChange}
-            >
+            <a className="dropdown-item" href="#" onClick={handleGenderChange}>
               Male
             </a>
           </li>
           <li>
-            <a
-              className="dropdown-item"
-              value="Female"
-              href="#"
-              onClick={handleGenderChange}
-            >
+            <a className="dropdown-item" href="#" onClick={handleGenderChange}>
               Female
             </a>
           </li>
           <li>
-            <a
-              className="dropdown-item"
-              value="Neutral"
-              href="#"
-              onClick={handleGenderChange}
-            >
+            <a className="dropdown-item" href="#" onClick={handleGenderChange}>
               Neutral
             </a>
           </li>
@@ -74,7 +64,7 @@ const Filters = () => {
       </div>
       <div className="dropdown m-2">
         <a
-          className="btn btn-secondary dropdown-toggle"
+          className="btn btn-outline-secondary dropdown-toggle"
           href="#"
           role="button"
           id="gender"
@@ -88,7 +78,6 @@ const Filters = () => {
           <li>
             <a
               className="dropdown-item active"
-              value="all"
               href="#"
               onClick={handleOriginChange}
             >
@@ -96,47 +85,35 @@ const Filters = () => {
             </a>
           </li>
           <li>
-            <a
-              className="dropdown-item"
-              value="Male"
-              href="#"
-              onClick={handleOriginChange}
-            >
+            <a className="dropdown-item" href="#" onClick={handleOriginChange}>
               Male
             </a>
           </li>
           <li>
-            <a
-              className="dropdown-item"
-              value="Female"
-              href="#"
-              onClick={handleOriginChange}
-            >
+            <a className="dropdown-item" href="#" onClick={handleOriginChange}>
               Europe
             </a>
           </li>
           <li>
-            <a
-              className="dropdown-item"
-              value="Neutral"
-              href="#"
-              onClick={handleOriginChange}
-            >
+            <a className="dropdown-item" href="#" onClick={handleOriginChange}>
               Africa
             </a>
           </li>
           <li>
-            <a
-              className="dropdown-item"
-              value="Neutral"
-              href="#"
-              onClick={handleOriginChange}
-            >
+            <a className="dropdown-item" href="#" onClick={handleOriginChange}>
               Asia
             </a>
           </li>
         </ul>
         <div>{selectedOrigin}</div>
+      </div>
+      <div>
+        <button
+          className="btn btn-outline-primary btn-sm mt-2 ms-2"
+          type="submit"
+        >
+          Apply Filters
+        </button>
       </div>
     </form>
   );
