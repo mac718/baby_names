@@ -29,7 +29,7 @@ const EditEmail = ({ currentEmail, getCurrentUser }) => {
   return (
     <section id="editEmail">
       <div className="fw-bold">Email</div>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between min-width-50vw">
         {editEmail ? (
           <div className="d-flex">
             <input
@@ -45,7 +45,7 @@ const EditEmail = ({ currentEmail, getCurrentUser }) => {
           currentEmail
         )}
         <button
-          className="btn text-primary"
+          className="btn text-primary ms-2"
           onClick={() => setEditEmail(!editEmail)}
         >
           edit email

@@ -46,7 +46,7 @@ const EditLastName = ({ currentLastName, getCurrentUser }) => {
           currentLastName
         )}
         <button
-          className="btn text-primary"
+          className="btn text-primary ms-2"
           onClick={() => setEditLastName(!editLastName)}
         >
           edit Last name

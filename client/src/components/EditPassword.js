@@ -62,7 +62,7 @@ const EditPassword = ({ getCurrentUser }) => {
       >
         Change Password
       </button>
-      <div hidden={hidden}>
+      <div hidden={hidden} style={{ "min-width": "60vw" }}>
         <label htmlFor="currentPassword">Current Password</label>
         <input
           className="form-control w-50 me-1 mb-4"
