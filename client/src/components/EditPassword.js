@@ -39,6 +39,7 @@ const EditPassword = ({ getCurrentUser }) => {
       credentials: "include",
     })
       .then((res) => {
+        setError(false);
         if (res.status === 200) {
           setHidden(!hidden);
           setSuccessMessage("Password successfully changed!");
