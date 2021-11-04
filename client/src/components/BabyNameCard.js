@@ -299,7 +299,9 @@ const BabyNameCard = () => {
   if (showNoNamesMessage) {
     return (
       <div>
-        <Filters fetchNames={fetchNames} className="position-fixed" />
+        <div className="w-100 d-flex justify-content-center">
+          <Filters fetchNames={fetchNames} className="position-fixed" />
+        </div>
         <AllNamesRanked />
       </div>
     );
