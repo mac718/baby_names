@@ -94,8 +94,6 @@ const Ratings = () => {
   let groupDivs = ratings.map((group, idx) => {
     let names = group.map((name) => (
       <ResponsiveListItem className="list-group-item" key={name}>
-        {/* <div className="container">
-          <div className="row"> */}
         <div className="col col-sm"></div>
         <div
           className="col col-sm text-muted"
@@ -126,8 +124,6 @@ const Ratings = () => {
               </div>
             </RadioButtons>
           </div>
-          {/* </div>
-          </div> */}
         </div>
       </ResponsiveListItem>
     ));

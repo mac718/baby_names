@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { ConnectionStates } = require("mongoose");
 const { createCustomError } = require("../errors/customAPIError");
 const asyncWrapper = require("../middleware/async");
 

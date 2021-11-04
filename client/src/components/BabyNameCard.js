@@ -106,6 +106,39 @@ const BabyNameCard = () => {
   const [selectedOrigin, setSelectedOrigin] = useState("All");
   const [showNoNamesMessage, setShowNoNamesMessage] = useState(false);
 
+  const filterNamesToBeRated = (genderFilter, originFilter, namesToBeRated) => {
+    if (genderFilter !== "All") {
+      if (genderFilter === "Male") {
+        namesToBeRated = namesToBeRated.filter((name) => name.gender === "m");
+        console.log("mug", namesToBeRated);
+      } else if (genderFilter === "Female") {
+        namesToBeRated = namesToBeRated.filter((name) => name.gender === "f");
+      } else {
+        namesToBeRated = namesToBeRated.filter((name) => name.gender === "b");
+      }
+    }
+
+    if (originFilter !== "All") {
+      if (originFilter === "USA") {
+        namesToBeRated = namesToBeRated.filter((name) => name.origin === "USA");
+      } else if (originFilter === "Europe") {
+        namesToBeRated = namesToBeRated.filter(
+          (name) => name.origin === "Europe"
+        );
+      } else if (originFilter === "Africa") {
+        namesToBeRated = namesToBeRated.filter(
+          (name) => name.origin === "Africa"
+        );
+      } else {
+        namesToBeRated = namesToBeRated.filter(
+          (name) => name.origin === "Asia"
+        );
+      }
+    }
+
+    return namesToBeRated;
+  };
+
   const fetchNames = (genderFilter = "All", originFilter = "All") => {
     fetch("http://localhost:3001/api/v1/names", {
       method: "GET",
@@ -115,53 +148,18 @@ const BabyNameCard = () => {
         return res.json();
       })
       .then((json) => {
-        let namesToBeRated;
-        namesToBeRated = json.names;
-        console.log("genderFilter", genderFilter, originFilter);
         setSelectedGender(genderFilter);
         setSelectedOrigin(originFilter);
 
-        if (genderFilter !== "All") {
-          if (genderFilter === "Male") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.gender === "m"
-            );
-            console.log("mug", namesToBeRated);
-          } else if (genderFilter === "Female") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.gender === "f"
-            );
-          } else {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.gender === "b"
-            );
-          }
-        }
+        const namesToBeRated = filterNamesToBeRated(
+          genderFilter,
+          originFilter,
+          json.names
+        );
 
-        if (originFilter !== "All") {
-          if (originFilter === "USA") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "USA"
-            );
-          } else if (originFilter === "Europe") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "Europe"
-            );
-          } else if (originFilter === "Africa") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "Africa"
-            );
-          } else {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "Asia"
-            );
-          }
-        }
-        console.log(namesToBeRated);
         if (namesToBeRated.length === 0) {
           setShowNoNamesMessage(true);
         } else {
-          console.log(namesToBeRated);
           let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
           let color;
           color =
@@ -217,43 +215,12 @@ const BabyNameCard = () => {
         return res.json();
       })
       .then((json) => {
-        let namesToBeRated = json.unratedNames;
-        if (selectedGender !== "All") {
-          if (selectedGender === "Male") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.gender === "m"
-            );
-            console.log("mug", namesToBeRated);
-          } else if (selectedGender === "Female") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.gender === "f"
-            );
-          } else {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.gender === "b"
-            );
-          }
-        }
+        const namesToBeRated = filterNamesToBeRated(
+          selectedGender,
+          selectedOrigin,
+          json.unratedNames
+        );
 
-        if (selectedOrigin !== "All") {
-          if (selectedOrigin === "USA") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "USA"
-            );
-          } else if (selectedOrigin === "Europe") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "Europe"
-            );
-          } else if (selectedOrigin === "Africa") {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "Africa"
-            );
-          } else {
-            namesToBeRated = namesToBeRated.filter(
-              (name) => name.origin === "Asia"
-            );
-          }
-        }
         let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
         let color;
         color =
@@ -308,8 +275,8 @@ const BabyNameCard = () => {
   }
   return (
     <div>
+      <Filters fetchNames={fetchNames} className="position-fixed" />
       <Container className="container" style={{ height: "100vh" }}>
-        <Filters fetchNames={fetchNames} className="position-fixed" />
         <NameBox className="shadow" color={cardColor}>
           <TopNameDiv></TopNameDiv>
           <NameDiv>{currentName}</NameDiv>
