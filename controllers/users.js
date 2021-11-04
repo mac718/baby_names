@@ -43,7 +43,7 @@ const getUser = asyncWrapper(async (req, res) => {
   res.status(200).json({ firstName, lastName, email, password });
 });
 
-const updatePassword = async (userInfo, body) => {
+const updatePassword = async (userInfo, body, next) => {
   const user = await User.findOne({ _id: userInfo.id });
   const match = await bcrypt.compare(body.currentPassword, user.password);
   if (!match) {
@@ -62,7 +62,7 @@ const updateUser = asyncWrapper(async (req, res, next) => {
   const body = req.body;
 
   if (body.property === "password") {
-    updatePassword(userInfo, body);
+    await updatePassword(userInfo, body, next);
   } else {
     console.log("prop", body.firstName);
     const user = await User.findOneAndUpdate(
@@ -71,9 +71,8 @@ const updateUser = asyncWrapper(async (req, res, next) => {
       { new: true, useFindAndModify: false }
     );
     console.log(user);
+    res.sendStatus(200);
   }
-
-  res.sendStatus(200);
 });
 
 module.exports = { createUser, login, getUser, updateUser };

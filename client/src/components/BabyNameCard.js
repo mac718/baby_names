@@ -110,7 +110,6 @@ const BabyNameCard = () => {
     if (genderFilter !== "All") {
       if (genderFilter === "Male") {
         namesToBeRated = namesToBeRated.filter((name) => name.gender === "m");
-        console.log("mug", namesToBeRated);
       } else if (genderFilter === "Female") {
         namesToBeRated = namesToBeRated.filter((name) => name.gender === "f");
       } else {
