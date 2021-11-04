@@ -7,6 +7,7 @@ import { withAuth } from "./components/withAuth";
 import SignUp from "./components/SignUp";
 import AccountDetails from "./components/AccountDetails";
 import LinkEmailForm from "./components/LinkEmailForm";
+import AllNamesRanked from "./components/AllNamesRanked";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/ratings" component={withAuth(Ratings)} />
         <Route path="/account" component={withAuth(AccountDetails)} />
         <Route path="/email" component={LinkEmailForm} />
+        {/* <Route path="/no-more-names" component={AllNamesRanked} /> */}
       </Router>
     </div>
   );

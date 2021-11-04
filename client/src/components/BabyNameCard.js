@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
 import Filters from "./Filters";
+import AllNamesRanked from "./AllNamesRanked";
 
 const pop = keyframes`
   from {
@@ -103,6 +104,7 @@ const BabyNameCard = () => {
   const [redirect, setRedirect] = useState(false);
   const [selectedGender, setSelectedGender] = useState("All");
   const [selectedOrigin, setSelectedOrigin] = useState("All");
+  const [showNoNamesMessage, setShowNoNamesMessage] = useState(false);
 
   const fetchNames = (genderFilter = "All", originFilter = "All") => {
     fetch("http://localhost:3001/api/v1/names", {
@@ -155,17 +157,22 @@ const BabyNameCard = () => {
             );
           }
         }
-
         console.log(namesToBeRated);
-        let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
-        let color;
-        color =
-          namesToBeRated[randomIndex]["gender"] === "m"
-            ? "lightBlue"
-            : "lightPink";
-        setNames(namesToBeRated);
-        setCurrentName(namesToBeRated[randomIndex]["name"]);
-        setCardColor(color);
+        if (namesToBeRated.length === 0) {
+          setShowNoNamesMessage(true);
+        } else {
+          console.log(namesToBeRated);
+          let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
+          let color;
+          color =
+            namesToBeRated[randomIndex]["gender"] === "m"
+              ? "lightBlue"
+              : "lightPink";
+          setShowNoNamesMessage(false);
+          setNames(namesToBeRated);
+          setCurrentName(namesToBeRated[randomIndex]["name"]);
+          setCardColor(color);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -253,12 +260,16 @@ const BabyNameCard = () => {
           namesToBeRated[randomIndex]["gender"] === "m"
             ? "lightBlue"
             : "lightPink";
-        setTimeout(() => {
-          setNames(namesToBeRated);
-          setCurrentName(namesToBeRated[randomIndex]["name"]);
-          setDisabled(true);
-          setCardColor(color);
-        }, 900);
+        if (namesToBeRated.length === 0) {
+          setShowNoNamesMessage(true);
+        } else {
+          setTimeout(() => {
+            setNames(namesToBeRated);
+            setCurrentName(namesToBeRated[randomIndex]["name"]);
+            setDisabled(true);
+            setCardColor(color);
+          }, 700);
+        }
       })
       .catch((err) => {
         setRedirect(true);
@@ -284,6 +295,14 @@ const BabyNameCard = () => {
   }
   if (redirect) {
     return <Redirect to="/login" />;
+  }
+  if (showNoNamesMessage) {
+    return (
+      <div>
+        <Filters fetchNames={fetchNames} className="position-fixed" />
+        <AllNamesRanked />
+      </div>
+    );
   }
   return (
     <div>

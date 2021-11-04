@@ -11,12 +11,11 @@ const Filters = ({ fetchNames }) => {
   };
   const handleOriginChange = (e) => {
     let value = e.target.innerHTML;
-    console.log(value);
     setSelectedOrigin(value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchNames(selectedGender, selectedOrigin);
+    fetchNames(selectedGender, selectedOrigin); //passed from BabyNameCard
   };
   return (
     <form className="d-flex flex-row mt-3" onSubmit={handleSubmit}>
@@ -83,7 +82,7 @@ const Filters = ({ fetchNames }) => {
           </li>
           <li>
             <a className="dropdown-item" href="#" onClick={handleOriginChange}>
-              Male
+              USA
             </a>
           </li>
           <li>
@@ -105,10 +104,7 @@ const Filters = ({ fetchNames }) => {
         <div>{selectedOrigin}</div>
       </div>
       <div>
-        <button
-          className="btn btn-outline-primary btn-sm mt-2 ms-2"
-          type="submit"
-        >
+        <button className="btn btn-outline-primary btn-sm m-2" type="submit">
           Apply Filters
         </button>
       </div>
