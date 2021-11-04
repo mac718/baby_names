@@ -25,6 +25,7 @@ const Ratings = () => {
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
   const [ratingsLoading, setRatingsLoading] = useState(true);
+  const [nameRecord, setNameRecord] = useState();
 
   //solution to get rid of "cannot update state on unmounted component" error
   let _isMounted = useRef(true);
@@ -80,6 +81,15 @@ const Ratings = () => {
     setCurrentButtonsDivId(currentButtonsDivId ? null : name);
   };
 
+  const handleNameClick = (name) => {
+    fetch(`http://localhost:3001/api/v1/names/${name}`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => setNameRecord(json.name))
+      .catch((err) => console.log(err));
+  };
+
   const setRatingNumberColor = (idx) => {
     let rating = 11 - (idx + 1);
     if (rating >= 7) {
@@ -100,8 +110,8 @@ const Ratings = () => {
           data-bs-toggle="modal"
           data-bs-target={`#${name}`}
         >
-          <NameSpan>{name}</NameSpan>
-          <NameInfoModal name={name} />
+          <NameSpan onClick={() => handleNameClick(name)}>{name}</NameSpan>
+          <NameInfoModal name={name} nameRecord={nameRecord} />
         </div>
 
         <div className="col col-sm">

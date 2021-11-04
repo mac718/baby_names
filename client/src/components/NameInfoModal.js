@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 
-const NameInfoModal = ({ name }) => {
-  const [nameRecord, setNameRecord] = useState("");
-  const fetchName = () => {
-    fetch(`http://localhost:3001/api/v1/names/${name}`, {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => setNameRecord(json.name))
-      .catch((err) => console.log(err));
-  };
+const NameInfoModal = ({ name, nameRecord }) => {
+  // const [nameRecord, setNameRecord] = useState("");
+  // const fetchName = () => {
+  //   fetch(`http://localhost:3001/api/v1/names/${name}`, {
+  //     credentials: "include",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => setNameRecord(json.name))
+  //     .catch((err) => console.log(err));
+  // };
 
-  useEffect(() => fetchName(), []);
+  //useEffect(() => fetchName(), []);
   return (
     <div
       className="modal fade"
@@ -23,8 +23,11 @@ const NameInfoModal = ({ name }) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id={name}>
-              {nameRecord.name}
+            <h5
+              className="modal-title"
+              id={nameRecord ? nameRecord.name : null}
+            >
+              {nameRecord ? nameRecord.name : null}
             </h5>
             <button
               type="button"
@@ -34,12 +37,22 @@ const NameInfoModal = ({ name }) => {
             ></button>
           </div>
           <div className="modal-body">
-            <div className="fs-1 fw-bold">{name}</div>
+            <div className="fs-1 fw-bold">
+              {nameRecord ? nameRecord.name : null}
+            </div>
             <div>Meaning:</div>
             <div>
-              gender: <span className="fw-bold">{nameRecord.gender}</span>
+              gender:{" "}
+              <span className="fw-bold">
+                {nameRecord ? nameRecord.gender : null}
+              </span>
             </div>
-            <div>Origin:</div>
+            <div>
+              Origin:{" "}
+              <span className="fw-bold">
+                {nameRecord ? nameRecord.origin : null}
+              </span>
+            </div>
           </div>
           <div className="modal-footer">
             <button
