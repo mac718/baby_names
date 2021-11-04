@@ -81,14 +81,14 @@ const Ratings = () => {
     setCurrentButtonsDivId(currentButtonsDivId ? null : name);
   };
 
-  const handleNameClick = (name) => {
-    fetch(`http://localhost:3001/api/v1/names/${name}`, {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => setNameRecord(json.name))
-      .catch((err) => console.log(err));
-  };
+  // const handleNameClick = (name) => {
+  //   fetch(`http://localhost:3001/api/v1/names/${name}`, {
+  //     credentials: "include",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => setNameRecord(json.name))
+  //     .catch((err) => console.log(err));
+  // };
 
   const setRatingNumberColor = (idx) => {
     let rating = 11 - (idx + 1);
@@ -110,8 +110,8 @@ const Ratings = () => {
           data-bs-toggle="modal"
           data-bs-target={`#${name}`}
         >
-          <NameSpan onClick={() => handleNameClick(name)}>{name}</NameSpan>
-          <NameInfoModal name={name} nameRecord={nameRecord} />
+          <NameSpan>{name}</NameSpan>
+          <NameInfoModal name={name} />
         </div>
 
         <div className="col col-sm">
