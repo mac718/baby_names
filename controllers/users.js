@@ -71,8 +71,8 @@ const updateUser = asyncWrapper(async (req, res, next) => {
       { new: true, useFindAndModify: false }
     );
     console.log(user);
-    res.sendStatus(200);
   }
+  res.sendStatus(200);
 });
 
 module.exports = { createUser, login, getUser, updateUser };

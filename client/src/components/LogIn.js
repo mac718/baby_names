@@ -43,7 +43,6 @@ const LogIn = (props) => {
         }
       })
       .catch((err) => {
-        alert(err);
         console.log(err);
         setError(err);
       });
@@ -56,7 +55,7 @@ const LogIn = (props) => {
     <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
       <form
         className="border border-secondary rounded p-3"
-        style={{ "min-width": "25vw", minHeight: "25vh" }}
+        style={{ minWidth: "25vw", minHeight: "25vh" }}
       >
         <div className="fs-2 text-center">Log In</div>
         {error && (
