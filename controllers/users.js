@@ -2,10 +2,12 @@ const User = require("../models/user");
 const asyncWrapper = require("../middleware/async");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const {
-  CustomAPIError,
-  createCustomError,
-} = require("../errors/customAPIError");
+// const {
+//   CustomAPIError,
+//   createCustomError,
+// } = require("../errors/customAPIError");
+
+const { BadRequestError } = require("../errors");
 
 const createUser = asyncWrapper(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
@@ -22,13 +24,15 @@ const login = asyncWrapper(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    return next(createCustomError(`No user with email ${email}.`, 401));
+    //return next(createCustomError(`No user with email ${email}.`, 401));
+    throw new BadRequestError(`No user with email ${email}.`);
   }
   const validPass = await bcrypt.compare(password, user.password);
   if (!validPass) {
-    return next(
-      createCustomError(`Email and/or password is/are incorrect.`, 401)
-    );
+    // return next(
+    //   createCustomError(`Email and/or password is/are incorrect.`, 401)
+    // );
+    throw new BadRequestError(`Email and/or password is/are incorrect.`);
   }
   const payload = { id: user._id, email };
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });

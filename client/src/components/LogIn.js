@@ -44,7 +44,7 @@ const LogIn = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        setError(err);
+        setError(err.message);
       });
   };
 
