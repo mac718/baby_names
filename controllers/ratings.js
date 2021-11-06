@@ -3,6 +3,7 @@ const User = require("../models/user");
 const Rating = require("../models/rating");
 const asyncWrapper = require("../middleware/async");
 const jwt = require("jsonwebtoken");
+const { UnauthorizedError, NotFoundError } = require("../errors");
 
 const saveRating = asyncWrapper(async (req, res) => {
   let { name, score } = req.body;
@@ -46,7 +47,8 @@ const getRatings = asyncWrapper(async (req, res) => {
   let userInfo = req.user;
   let user = await User.findOne({ _id: userInfo.id });
   if (!user) {
-    return createCustomError("No user with that email found.", 404);
+    throw new UnauthorizedError("Not authorized. Please log in.");
+    //return createCustomError("No user with that email found.", 404);
   }
 
   let ratings = await Rating.find({ user: user._id });
@@ -59,14 +61,17 @@ const updateRating = asyncWrapper(async (req, res) => {
   let userInfo = req.user;
   let user = await User.findOne({ _id: userInfo.id });
   if (!user) {
-    return createCustomError("No user with that email found.", 404);
+    throw new UnauthorizedError("Not authorized. Please log in.");
+
+    //return createCustomError("No user with that email found.", 404);
   }
   let score = await Rating.findOne({ name, user: user._id });
   if (!score) {
-    return createCustomError(
-      `No rating for user ${email}} and name ${name}`,
-      404
-    );
+    throw new NotFoundError(`No rating for user ${email}} and name ${name}`);
+    // return createCustomError(
+    //   `No rating for user ${email}} and name ${name}`,
+    //   404
+    // );
   }
   score.score = rating;
   await score.save();
