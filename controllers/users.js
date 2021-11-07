@@ -94,22 +94,22 @@ const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
   const { email } = req.body;
   const linkCode = randomString.generate(6);
 
-  const recipient = await User.findOneAndUpdate({ email });
-  const sender = await User.findOneAndUpdate(
-    { _id: userInfo.id },
-    {
-      pendingLinkedUsersSent: [
-        ...pendingLinkedUsersSent,
-        [recipient._id, linkCode],
-      ],
-    }
-  );
+  const recipient = await User.findOne({ email });
+  const sender = await User.findOne({ _id: userInfo.id });
+  await sender.update({
+    pendingLinkedUserSent: [
+      ...sender.pendingLinkedUserSent,
+      [recipient._id, linkCode],
+    ],
+  });
   await recipient.update({
-    pendingLinkedUsersReceived: [
-      ...pendingLinkedUsersReceived,
+    pendingLinkedUserReceived: [
+      ...recipient.pendingLinkedUserReceived,
       [sender._id, linkCode],
     ],
   });
+  console.log("sender recip", sender, recipient);
+  res.sendStatus(200);
 });
 
 module.exports = {

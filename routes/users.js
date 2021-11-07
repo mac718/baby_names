@@ -14,7 +14,7 @@ router.route("/register").post(createUser);
 router.route("/login").post(login);
 router.route("/request-link").get(checkToken, addPendingLinkedUserSent);
 router.route("/getUser").get(checkToken, getUser);
-router.route("/linked").get(checkToken, getLinkedUsers);
+router.route("/link").post(checkToken, addPendingLinkedUserSent);
 router.route("/").patch(checkToken, updateUser);
 router.get("/checkToken", checkToken, (req, res) => {
   res.sendStatus(200);
