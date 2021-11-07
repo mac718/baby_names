@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 
 const LinkCodeSchema = new Schema(
   {
-    user: mongoose.ObjectId,
+    sender: mongoose.ObjectId,
+    recipient: mongoose.ObjectId,
     code: String,
+    status: String,
   },
   { timestamps: true }
 );

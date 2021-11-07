@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, LinkCode } = require("../models");
 const asyncWrapper = require("../middleware/async");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -116,7 +116,17 @@ const addLinkedUser = asyncWrapper(async (req, res, next) => {
   const { code } = req.body;
   const userInfo = req.user;
 
-  const user = await User.findOne({ _id: userInfo.id });
+  const recipient = await User.findOne({ _id: userInfo.id });
+  const pendingLink = await LinkCode.findOne({ code });
+  const sender = await User.findOne({ _id: pendingLink.user });
+
+  await recipient.update({
+    linkedUsers: [...recipient.linkedUsers, sender._id],
+  });
+  await sender.update({
+    linkedUsers: [...sender.linkedUsers, recipient._id],
+  });
+  res.sendStatus(200);
 });
 
 module.exports = {
