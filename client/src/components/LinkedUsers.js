@@ -1,9 +1,29 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-const LinkedUsers = ({ users }) => {
+const LinkedUsers = () => {
+  const [users, setUsers] = useState([]);
   let userCards = <p className="fs-1">No linked users yet!</p>;
+
+  useEffect(() => {
+    const getLinkedUsers = () => {
+      fetch("http://localhost:3001/users/linked", {
+        credentials: "include",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          setUsers(json);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getLinkedUsers();
+  }, []);
 
   if (users) {
     userCards = users.map((user) => {

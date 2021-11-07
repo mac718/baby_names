@@ -80,4 +80,12 @@ const updateUser = asyncWrapper(async (req, res, next) => {
   res.sendStatus(200);
 });
 
-module.exports = { createUser, login, getUser, updateUser };
+const getLinkedUsers = asyncWrapper(async (req, res, next) => {
+  userInfo = req.user;
+
+  const user = await User.findOne({ _id: userInfo.id });
+  const linkedUsers = user.linkedUsers;
+  res.json({ linkedUsers });
+});
+
+module.exports = { createUser, login, getUser, updateUser, getLinkedUsers };

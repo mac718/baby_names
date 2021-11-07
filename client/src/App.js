@@ -20,7 +20,7 @@ function App() {
         <Route path="/ratings" component={withAuth(Ratings)} />
         <Route path="/account" component={withAuth(AccountDetails)} />
         <Route path="/email" component={LinkEmailForm} />
-        <Route path="/linked" component={LinkedUsers} />
+        <Route path="/linked" component={withAuth(LinkedUsers)} />
       </Router>
     </div>
   );
