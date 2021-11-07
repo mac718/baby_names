@@ -8,5 +8,7 @@ var models = {};
 // Load models and attach to models here
 models.User = require("./user");
 models.Name = require("./name");
+models.Ratings = require("./rating");
+models.LinkCode = require("./linkCode");
 
 module.exports = models;

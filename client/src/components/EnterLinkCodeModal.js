@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const SendLinkCodeModal = () => {
-  const [email, setEmail] = useState();
+  const [code, setCode] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users/request-link", {
+    fetch("http://localhost:3001/api/v1/users/confirm-link", {
       method: "POST",
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ code }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -14,21 +14,21 @@ const SendLinkCodeModal = () => {
     });
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleCodeChange = (e) => {
+    setCode(e.target.value);
   };
   return (
     <div
       className="modal fade"
-      id="sendLinkCodeModal"
+      id="enterLinkCodeModal"
       tabIndex="-1"
-      aria-labelledby={"sendLinkCodeModalLabel"}
+      aria-labelledby={"enterLinkCodeModalLabel"}
       aria-hidden="true"
     >
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="sendLinkCodeModal"></h5>
+            <h5 className="modal-title" id="enterLinkCodeModal"></h5>
             <button
               type="button"
               className="btn-close"
@@ -38,16 +38,16 @@ const SendLinkCodeModal = () => {
           </div>
           <div className="modal-body bg-light">
             <form onSubmit={handleSubmit}>
-              <label htmlFor="email">Enter recipient email</label>
+              <label htmlFor="email">Enter link code from email</label>
               <div className="d-flex">
                 <input
                   className="form-control"
-                  type="email"
-                  id="email"
-                  onChange={handleEmailChange}
+                  type="text"
+                  id="code"
+                  onChange={handleCodeChange}
                 />
                 <button className="btn btn-success ms-2">
-                  Send link code!
+                  Enter link code!
                 </button>
               </div>
             </form>
