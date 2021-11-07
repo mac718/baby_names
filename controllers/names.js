@@ -5,6 +5,7 @@ const Rating = require("../models/rating");
 //const { createCustomError } = require("../errors/customAPIError");
 const { UnauthorizedError, NotFoundError } = require("../errors");
 const jwt = require("jsonwebtoken");
+const { StatusCodes } = require("http-status-codes");
 
 const getNames = asyncWrapper(async (req, res) => {
   let userInfo = req.user;
@@ -21,7 +22,7 @@ const getNames = asyncWrapper(async (req, res) => {
   let ratedNames = userRatings.map((rating) => rating.name);
   let unratedNames = names.filter((name) => !ratedNames.includes(name.name));
 
-  res.status(200).json({ names: unratedNames });
+  res.status(StatusCodes.OK).json({ names: unratedNames });
 });
 
 const getSingleName = asyncWrapper(async (req, res) => {
@@ -33,7 +34,7 @@ const getSingleName = asyncWrapper(async (req, res) => {
     throw new NotFoundError("Name not found.");
     //return createCustomError("Name not found.", 404);
   }
-  res.status(200).json({ name });
+  res.status(StatusCodes.OK).json({ name });
 });
 
 module.exports = { getNames, getSingleName };

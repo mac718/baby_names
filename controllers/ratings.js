@@ -4,6 +4,7 @@ const Rating = require("../models/rating");
 const asyncWrapper = require("../middleware/async");
 const jwt = require("jsonwebtoken");
 const { UnauthorizedError, NotFoundError } = require("../errors");
+const { StatusCodes } = require("http-status-codes");
 
 const saveRating = asyncWrapper(async (req, res) => {
   let { name, score } = req.body;
@@ -26,7 +27,7 @@ const saveRating = asyncWrapper(async (req, res) => {
   let names = await Name.find({});
   let unratedNames = names.filter((name) => !ratedNames.includes(name.name));
 
-  res.json({ unratedNames });
+  res.status(StatusCodes.CREATED).json({ unratedNames });
 });
 
 const groupRatings = (ratings) => {
@@ -53,7 +54,7 @@ const getRatings = asyncWrapper(async (req, res) => {
 
   let ratings = await Rating.find({ user: user._id });
   let groupDivs = groupRatings(ratings);
-  res.status(200).json({ groupDivs });
+  res.status(StatusCodes.OK).json({ groupDivs });
 });
 
 const updateRating = asyncWrapper(async (req, res) => {
@@ -75,7 +76,7 @@ const updateRating = asyncWrapper(async (req, res) => {
   }
   score.score = rating;
   await score.save();
-  res.status(200).json();
+  res.status(StatusCodes.OK).json();
 });
 
 const deleteRating = asyncWrapper(async (req, res) => {
@@ -85,7 +86,7 @@ const deleteRating = asyncWrapper(async (req, res) => {
   await Rating.findOneAndDelete({ name, user: user._id }).catch((err) =>
     console.log(err)
   );
-  res.status(201).json();
+  res.status(StatusCodes.OK).json();
 });
 
 module.exports = {

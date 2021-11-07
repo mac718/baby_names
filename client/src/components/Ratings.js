@@ -81,15 +81,6 @@ const Ratings = () => {
     setCurrentButtonsDivId(currentButtonsDivId ? null : name);
   };
 
-  // const handleNameClick = (name) => {
-  //   fetch(`http://localhost:3001/api/v1/names/${name}`, {
-  //     credentials: "include",
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => setNameRecord(json.name))
-  //     .catch((err) => console.log(err));
-  // };
-
   const setRatingNumberColor = (idx) => {
     let rating = 11 - (idx + 1);
     if (rating >= 7) {
