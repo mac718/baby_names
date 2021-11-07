@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import SendLinkCodeModal from "./SendLinkCodeModal";
 
 const LinkedUsers = () => {
   const [users, setUsers] = useState([]);
@@ -48,9 +49,14 @@ const LinkedUsers = () => {
       w-90
       vh-100"
     >
-      <button className="btn btn-secondary btn-large">
+      <button
+        className="btn btn-secondary btn-large"
+        data-bs-toggle="modal"
+        data-bs-target={`#sendLinkCodeModal`}
+      >
         <FontAwesomeIcon icon={faPlus} /> Send Link Code!
       </button>
+      <SendLinkCodeModal />
       <div d-flex>{userCards}</div>
     </div>
   );
