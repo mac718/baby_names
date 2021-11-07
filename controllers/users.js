@@ -2,6 +2,7 @@ const User = require("../models/user");
 const asyncWrapper = require("../middleware/async");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const randomString = require("randomstring");
 // const {
 //   CustomAPIError,
 //   createCustomError,
@@ -81,11 +82,41 @@ const updateUser = asyncWrapper(async (req, res, next) => {
 });
 
 const getLinkedUsers = asyncWrapper(async (req, res, next) => {
-  userInfo = req.user;
+  const userInfo = req.user;
 
   const user = await User.findOne({ _id: userInfo.id });
   const linkedUsers = user.linkedUsers;
   res.json({ linkedUsers });
 });
 
-module.exports = { createUser, login, getUser, updateUser, getLinkedUsers };
+const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
+  const userInfo = req.user;
+  const { email } = req.body;
+  const linkCode = randomString.generate(6);
+
+  const recipient = await User.findOneAndUpdate({ email });
+  const sender = await User.findOneAndUpdate(
+    { _id: userInfo.id },
+    {
+      pendingLinkedUsersSent: [
+        ...pendingLinkedUsersSent,
+        [recipient._id, linkCode],
+      ],
+    }
+  );
+  await recipient.update({
+    pendingLinkedUsersReceived: [
+      ...pendingLinkedUsersReceived,
+      [sender._id, linkCode],
+    ],
+  });
+});
+
+module.exports = {
+  createUser,
+  login,
+  getUser,
+  updateUser,
+  getLinkedUsers,
+  addPendingLinkedUserSent,
+};

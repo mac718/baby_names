@@ -4,7 +4,7 @@ const LinkEmailForm = () => {
   const [email, setEmail] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/emails", {
+    fetch("http://localhost:3001/api/v1/users/link", {
       method: "POST",
       body: JSON.stringify({ email }),
       headers: {
