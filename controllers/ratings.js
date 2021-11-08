@@ -45,7 +45,13 @@ const groupRatings = (ratings) => {
 };
 
 const getRatings = asyncWrapper(async (req, res) => {
-  let userInfo = req.user;
+  let userInfo;
+  if (req.params.id === "id") {
+    userInfo = req.user;
+  } else {
+    userInfo = req.params;
+  }
+
   let user = await User.findOne({ _id: userInfo.id });
   if (!user) {
     throw new UnauthorizedError("Not authorized. Please log in.");

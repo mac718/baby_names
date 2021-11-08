@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router";
 import RadioButtons from "./RadioButtons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -12,17 +13,18 @@ const NameSpan = styled.div`
   cursor: pointer;
 `;
 
-const LinkedAccountRatings = () => {
+const LinkedAccountRatings = (props) => {
   const [ratings, setRatings] = useState([]);
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
   const [ratingsLoading, setRatingsLoading] = useState(true);
+  let params = useParams();
 
   //solution to get rid of "cannot update state on unmounted component" error
   let _isMounted = useRef(true);
 
   const fetchRatings = (isMounted) => {
-    fetch("http://localhost:3001/api/v1/ratings", {
+    fetch(`http://localhost:3001/api/v1/ratings/${params.id}`, {
       method: "GET",
       credentials: "include",
     })

@@ -31,7 +31,7 @@ const Ratings = () => {
   let _isMounted = useRef(true);
 
   const fetchRatings = (isMounted) => {
-    fetch("http://localhost:3001/api/v1/ratings", {
+    fetch("http://localhost:3001/api/v1/ratings/id", {
       method: "GET",
       credentials: "include",
     })

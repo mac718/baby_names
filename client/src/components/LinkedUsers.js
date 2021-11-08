@@ -49,9 +49,13 @@ const LinkedUsers = () => {
   if (users.length > 0) {
     userCards = users.map((user) => {
       return (
-        <div className="card">
+        <div className="card shadow-sm">
           <div className="card-body">
-            <Link>
+            <Link
+              to={{
+                pathname: `/linked-ratings/${user._id}`,
+              }}
+            >
               {user.firstName} {user.lastName}
             </Link>
           </div>
@@ -71,7 +75,7 @@ const LinkedUsers = () => {
     >
       <ButtonDiv className="d-flex justify-content-center h-25 w-100 mb-3">
         <Button
-          className="btn btn-secondary "
+          className="btn btn-secondary shadow-sm"
           data-bs-toggle="modal"
           data-bs-target={`#sendLinkCodeModal`}
         >
@@ -79,7 +83,7 @@ const LinkedUsers = () => {
         </Button>
 
         <Button
-          className="btn btn-primary "
+          className="btn btn-primary shadow-sm"
           data-bs-toggle="modal"
           data-bs-target={`#enterLinkCodeModal`}
         >

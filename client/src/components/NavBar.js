@@ -16,7 +16,7 @@ const NavBar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon">thing</span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
@@ -29,7 +29,7 @@ const NavBar = () => {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href="/ratings"
+                href="/ratings/"
               >
                 Your Ratings
               </a>

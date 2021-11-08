@@ -8,6 +8,7 @@ import SignUp from "./components/SignUp";
 import AccountDetails from "./components/AccountDetails";
 import LinkEmailForm from "./components/LinkEmailForm";
 import LinkedUsers from "./components/LinkedUsers";
+import LinkedAccountRatings from "./components/LinkedAccountRatings";
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
         <Route path="/account" component={withAuth(AccountDetails)} />
         <Route path="/email" component={LinkEmailForm} />
         <Route path="/linked" component={withAuth(LinkedUsers)} />
+        {/* <Route
+          path="/linked-ratings"
+          render={(props) => withAuth(LinkedAccountRatings, { ...props })()}
+        /> */}
+        <Route
+          path="/linked-ratings/:id"
+          component={withAuth(LinkedAccountRatings)}
+        />
       </Router>
     </div>
   );

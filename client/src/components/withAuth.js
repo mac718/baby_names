@@ -1,17 +1,17 @@
 import { Redirect } from "react-router";
 import { useState, useEffect } from "react";
 
-export function withAuth(ComponentToProtect) {
-  return function () {
+export const withAuth = (ComponentToProtect) => {
+  return function (props) {
     const [loading, setLoading] = useState(true);
     const [redirect, setRedirect] = useState(false);
     const [errMessage, setErrMessage] = useState("");
-
     useEffect(() => {
       fetch("http://localhost:3001/api/v1/users/checkToken", {
         credentials: "include",
       })
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             setLoading(false);
           } else {
@@ -40,6 +40,6 @@ export function withAuth(ComponentToProtect) {
         <Redirect to={{ pathname: "/login", state: { error: errMessage } }} />
       );
     }
-    return <ComponentToProtect />;
+    return <ComponentToProtect {...props} />;
   };
-}
+};
