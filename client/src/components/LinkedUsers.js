@@ -1,10 +1,29 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SendLinkCodeModal from "./SendLinkCodeModal";
 import EnterLinkCodeModal from "./EnterLinkCodeModal";
+import styled from "styled-components";
 
+const ButtonDiv = styled.div`
+  display: flex;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+`;
+
+const Button = styled.button`
+  width: 25%;
+  height: 100%;
+  margin-left: 10px;
+  margin-righ: 10px;
+  @media (max-width: 500px) {
+    width: 90vw;
+    height: 50%;
+    margin-bottom: 5px;
+  }
+`;
 const LinkedUsers = () => {
   const [users, setUsers] = useState([]);
   let userCards = <p className="fs-1">No linked users yet!</p>;
@@ -50,21 +69,23 @@ const LinkedUsers = () => {
       w-90
       vh-100"
     >
-      <button
-        className="btn btn-secondary btn-large"
-        data-bs-toggle="modal"
-        data-bs-target={`#sendLinkCodeModal`}
-      >
-        <FontAwesomeIcon icon={faPlus} /> Send Link Code!
-      </button>
+      <ButtonDiv className="d-flex justify-content-center h-25 w-100 mb-3">
+        <Button
+          className="btn btn-secondary "
+          data-bs-toggle="modal"
+          data-bs-target={`#sendLinkCodeModal`}
+        >
+          <FontAwesomeIcon icon={faPlus} /> Send Link Code!
+        </Button>
 
-      <button
-        className="btn btn-primary btn-large"
-        data-bs-toggle="modal"
-        data-bs-target={`#enterLinkCodeModal`}
-      >
-        <FontAwesomeIcon icon={faPlus} /> Enter Link Code!
-      </button>
+        <Button
+          className="btn btn-primary "
+          data-bs-toggle="modal"
+          data-bs-target={`#enterLinkCodeModal`}
+        >
+          <FontAwesomeIcon icon={faCheck} /> Enter Link Code!
+        </Button>
+      </ButtonDiv>
 
       <SendLinkCodeModal />
       <EnterLinkCodeModal />

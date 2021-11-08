@@ -45,7 +45,7 @@ const NavBar = () => {
             </li>
             <li className="nav-item">
               <Link
-                to="/account"
+                to="/linked"
                 className="nav-link active"
                 aria-current="page"
               >
