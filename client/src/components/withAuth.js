@@ -11,7 +11,6 @@ export const withAuth = (ComponentToProtect) => {
         credentials: "include",
       })
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             setLoading(false);
           } else {

@@ -100,7 +100,7 @@ const LinkedAccountRatings = (props) => {
               <NameInfoModal name={name} />
             </div>
 
-            <div className="col">
+            {/* <div className="col">
               <FontAwesomeIcon
                 icon={faEdit}
                 className="float-end m-2"
@@ -123,7 +123,7 @@ const LinkedAccountRatings = (props) => {
                   </div>
                 </RadioButtons>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </li>

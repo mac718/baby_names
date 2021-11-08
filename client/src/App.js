@@ -22,10 +22,6 @@ function App() {
         <Route path="/account" component={withAuth(AccountDetails)} />
         <Route path="/email" component={LinkEmailForm} />
         <Route path="/linked" component={withAuth(LinkedUsers)} />
-        {/* <Route
-          path="/linked-ratings"
-          render={(props) => withAuth(LinkedAccountRatings, { ...props })()}
-        /> */}
         <Route
           path="/linked-ratings/:id"
           component={withAuth(LinkedAccountRatings)}
