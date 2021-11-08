@@ -85,7 +85,11 @@ const getLinkedUsers = asyncWrapper(async (req, res, next) => {
   const userInfo = req.user;
 
   const user = await User.findOne({ _id: userInfo.id });
-  const linkedUsers = user.linkedUsers;
+  const linkedUsersIds = user.linkedUsers;
+  let linkedUsers = await User.find({ _id: { $in: linkedUsersIds } });
+
+  console.log(linkedUsers);
+
   res.json({ linkedUsers });
 });
 
@@ -96,19 +100,21 @@ const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
 
   const recipient = await User.findOne({ email });
   const sender = await User.findOne({ _id: userInfo.id });
-  await sender.update({
-    pendingLinkedUserSent: [
-      ...sender.pendingLinkedUserSent,
-      [recipient._id, linkCode],
-    ],
-  });
-  await recipient.update({
-    pendingLinkedUserReceived: [
-      ...recipient.pendingLinkedUserReceived,
-      [sender._id, linkCode],
-    ],
-  });
-  console.log("sender recip", sender, recipient);
+  // await sender.update({
+  //   pendingLinkedUserSent: [
+  //     ...sender.pendingLinkedUserSent,
+  //     [recipient._id, linkCode],
+  //   ],
+  // });
+  // await recipient.update({
+  //   pendingLinkedUserReceived: [
+  //     ...recipient.pendingLinkedUserReceived,
+  //     [sender._id, linkCode],
+  //   ],
+  // });
+  // console.log("sender recip", sender, recipient);
+  let code = new LinkCode({ sender, recipient, code: linkCode });
+  await code.save();
   res.sendStatus(200);
 });
 
@@ -118,12 +124,12 @@ const addLinkedUser = asyncWrapper(async (req, res, next) => {
 
   const recipient = await User.findOne({ _id: userInfo.id });
   const pendingLink = await LinkCode.findOne({ code });
-  const sender = await User.findOne({ _id: pendingLink.user });
+  const sender = await User.findOne({ _id: pendingLink.sender });
 
-  await recipient.update({
+  await recipient.updateOne({
     linkedUsers: [...recipient.linkedUsers, sender._id],
   });
-  await sender.update({
+  await sender.updateOne({
     linkedUsers: [...sender.linkedUsers, recipient._id],
   });
   res.sendStatus(200);
