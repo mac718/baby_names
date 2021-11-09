@@ -49,6 +49,10 @@ const NameBox = styled.div`
 
 const TopNameDiv = styled.div`
   height: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
 `;
 
 const NameDiv = styled.div`
@@ -167,7 +171,7 @@ const BabyNameCard = () => {
               : "lightPink";
           setShowNoNamesMessage(false);
           setNames(namesToBeRated);
-          setCurrentName(namesToBeRated[randomIndex]["name"]);
+          setCurrentName(namesToBeRated[randomIndex]);
           setCardColor(color);
         }
       })
@@ -193,7 +197,7 @@ const BabyNameCard = () => {
     fetch("http://localhost:3001/api/v1/ratings", {
       method: "POST",
       body: JSON.stringify({
-        name: currentName,
+        name: currentName.name,
         score: currentRating,
       }),
       credentials: "include",
@@ -231,7 +235,7 @@ const BabyNameCard = () => {
         } else {
           setTimeout(() => {
             setNames(namesToBeRated);
-            setCurrentName(namesToBeRated[randomIndex]["name"]);
+            setCurrentName(namesToBeRated[randomIndex]);
             setDisabled(true);
             setCardColor(color);
           }, 700);
@@ -277,8 +281,10 @@ const BabyNameCard = () => {
       <Filters fetchNames={fetchNames} className="position-fixed" />
       <Container className="container" style={{ height: "100vh" }}>
         <NameBox className="shadow" color={cardColor}>
-          <TopNameDiv></TopNameDiv>
-          <NameDiv>{currentName}</NameDiv>
+          <TopNameDiv className="text-muted">
+            <em>origin: {currentName.origin}</em>
+          </TopNameDiv>
+          <NameDiv>{currentName.name}</NameDiv>
           <BottomNameDiv>
             <RadioBox className="input-group">
               {ratingButtons}
