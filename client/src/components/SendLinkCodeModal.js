@@ -4,13 +4,26 @@ const SendLinkCodeModal = () => {
   const [email, setEmail] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/emails", {
+    fetch("http://localhost:3001/api/v1/users/request-link", {
       method: "POST",
       body: JSON.stringify({ email }),
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
+    }).then((res) => {
+      if (res.status !== 200) {
+        alert(res.error);
+      } else {
+        fetch("http://localhost:3001/api/v1/emails", {
+          method: "POST",
+          body: JSON.stringify({ email }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+      }
     });
   };
 

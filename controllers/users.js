@@ -101,6 +101,7 @@ const getLinkedUsers = asyncWrapper(async (req, res, next) => {
 
 const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
   const userInfo = req.user;
+  console.log(userInfo);
   const { email } = req.body;
   const linkCode = randomString.generate(6);
 
@@ -109,7 +110,7 @@ const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
     throw new NotFoundError("No user with this emaul exists.");
   }
   const sender = await User.findOne({ _id: userInfo.id });
-  if (!user) {
+  if (!sender) {
     throw new UnauthorizedError("Not authorized. Please log in.");
   }
   let code = new LinkCode({ sender, recipient, code: linkCode });
