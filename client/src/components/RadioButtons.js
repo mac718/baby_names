@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-const { useState } = require("react");
 
 const RadioBox = styled.div`
   display: flex;
@@ -25,6 +24,14 @@ const RadioButtons = ({ name, fetchRatings }) => {
   const [disabled, setDisabled] = useState(true);
   const ratingButtons = [];
 
+  const handleClick = (e) => {
+    let rating = e.target.value;
+    console.log(rating);
+
+    setNewRating(rating);
+    setDisabled(false);
+  };
+
   for (let i = 0; i < 10; i += 1) {
     ratingButtons.push(
       <RatingButtonContainer key={i}>
@@ -34,14 +41,7 @@ const RadioButtons = ({ name, fetchRatings }) => {
           id={i + 1}
           value={i + 1}
           name="rating"
-          onClick={(e) => {
-            e.preventDefault();
-            let rating = e.target.value;
-            console.log(rating);
-
-            setNewRating(rating);
-            setDisabled(false);
-          }}
+          onClick={handleClick}
         />
         <label htmlFor={i + 1} style={{ fontSize: "0.85rem" }}>
           {i + 1}

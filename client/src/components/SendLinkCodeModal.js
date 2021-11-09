@@ -4,7 +4,7 @@ const SendLinkCodeModal = () => {
   const [email, setEmail] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users/request-link", {
+    fetch("http://localhost:3001/api/v1/emails", {
       method: "POST",
       body: JSON.stringify({ email }),
       headers: {

@@ -8,7 +8,12 @@ const randomString = require("randomstring");
 //   createCustomError,
 // } = require("../errors/customAPIError");
 
-const { BadRequestError } = require("../errors");
+const {
+  BadRequestError,
+  UnauthorizedError,
+  NotFoundError,
+} = require("../errors");
+const { StatusCodes } = require("http-status-codes");
 
 const createUser = asyncWrapper(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
@@ -37,7 +42,7 @@ const login = asyncWrapper(async (req, res, next) => {
   }
   const payload = { id: user._id, email };
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
-  res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+  res.cookie("token", token, { httpOnly: true }).sendStatus(StatusCodes.OK);
 });
 
 const getUser = asyncWrapper(async (req, res) => {
@@ -45,7 +50,7 @@ const getUser = asyncWrapper(async (req, res) => {
   const user = await User.findOne({ _id: userInfo.id });
   const { firstName, lastName, email, password } = user;
 
-  res.status(200).json({ firstName, lastName, email, password });
+  res.status(StatusCodes.OK).json({ firstName, lastName, email, password });
 });
 
 const updatePassword = async (userInfo, body, next) => {
@@ -78,19 +83,20 @@ const updateUser = asyncWrapper(async (req, res, next) => {
       { new: true, useFindAndModify: false }
     );
   }
-  res.sendStatus(200);
+  res.sendStatus(StatusCodes.OK);
 });
 
 const getLinkedUsers = asyncWrapper(async (req, res, next) => {
   const userInfo = req.user;
 
   const user = await User.findOne({ _id: userInfo.id });
+  if (!user) {
+    throw new UnauthorizedError("Not authorized. Please log in.");
+  }
   const linkedUsersIds = user.linkedUsers;
   let linkedUsers = await User.find({ _id: { $in: linkedUsersIds } });
 
-  console.log(linkedUsers);
-
-  res.json({ linkedUsers });
+  res.status(StatusCodes.OK).json({ linkedUsers });
 });
 
 const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
@@ -99,23 +105,16 @@ const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
   const linkCode = randomString.generate(6);
 
   const recipient = await User.findOne({ email });
+  if (!recipient) {
+    throw new NotFoundError("No user with this emaul exists.");
+  }
   const sender = await User.findOne({ _id: userInfo.id });
-  // await sender.update({
-  //   pendingLinkedUserSent: [
-  //     ...sender.pendingLinkedUserSent,
-  //     [recipient._id, linkCode],
-  //   ],
-  // });
-  // await recipient.update({
-  //   pendingLinkedUserReceived: [
-  //     ...recipient.pendingLinkedUserReceived,
-  //     [sender._id, linkCode],
-  //   ],
-  // });
-  // console.log("sender recip", sender, recipient);
+  if (!user) {
+    throw new UnauthorizedError("Not authorized. Please log in.");
+  }
   let code = new LinkCode({ sender, recipient, code: linkCode });
   await code.save();
-  res.sendStatus(200);
+  res.sendStatus(StatusCodes.OK);
 });
 
 const addLinkedUser = asyncWrapper(async (req, res, next) => {
@@ -132,7 +131,7 @@ const addLinkedUser = asyncWrapper(async (req, res, next) => {
   await sender.updateOne({
     linkedUsers: [...sender.linkedUsers, recipient._id],
   });
-  res.sendStatus(200);
+  res.sendStatus(StatusCodes.OK);
 });
 
 module.exports = {
