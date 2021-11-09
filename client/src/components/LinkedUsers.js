@@ -49,7 +49,7 @@ const LinkedUsers = () => {
   if (users.length > 0) {
     userCards = users.map((user) => {
       return (
-        <div className="card shadow-sm h-10 w-10">
+        <div className="card shadow-sm m-2" style={{ width: "20%" }}>
           <img
             src="..."
             class="card-img-top w-25 h-25 rounded-circle"
@@ -80,15 +80,15 @@ const LinkedUsers = () => {
     >
       <ButtonDiv className="d-flex justify-content-center h-25 w-100 mb-3">
         <Button
-          className="btn btn-secondary shadow-sm"
+          className="btn btn-secondary shadow-sm fs-3"
           data-bs-toggle="modal"
           data-bs-target={`#sendLinkCodeModal`}
         >
-          <FontAwesomeIcon icon={faPlus} /> Send Link Code!
+          <FontAwesomeIcon icon={faPlus} /> Send link request!
         </Button>
 
         <Button
-          className="btn btn-primary shadow-sm"
+          className="btn btn-primary shadow-sm fs-3"
           data-bs-toggle="modal"
           data-bs-target={`#enterLinkCodeModal`}
         >
@@ -98,8 +98,8 @@ const LinkedUsers = () => {
 
       <SendLinkCodeModal />
       <EnterLinkCodeModal />
-      <div>
-        <div className="d-flex">{userCards}</div>
+      <div className="w-100">
+        <div className="d-flex justify-content-center">{userCards}</div>
       </div>
     </div>
   );

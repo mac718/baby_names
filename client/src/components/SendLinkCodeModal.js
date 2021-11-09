@@ -49,7 +49,7 @@ const SendLinkCodeModal = () => {
               aria-label="Close"
             ></button>
           </div>
-          <div className="modal-body bg-light">
+          <div className="modal-body bg-secondary">
             <form onSubmit={handleSubmit}>
               <label htmlFor="email">Enter recipient email</label>
               <div className="d-flex">
