@@ -4,11 +4,16 @@ const EmailService = require("../services/email");
 const User = require("../models/user");
 
 const sendLinkEmail = asyncWrapper(async (req, res) => {
-  const { email } = req.body;
+  const { email, code, sender } = req.body;
   const userInfo = req.user;
   //const user = await User.findOne({ _id: userInfo.id });
 
-  let message = "Here is the code you requested for Baby Name Ranker.";
+  let message = `You've been invited to link your baby ranker account with ${sender}.
+                  Log in to your account and enter this code: ${code} on your 'linked accounts' 
+                  page to confirm your link with ${
+                    sender.split(" ")[0]
+                  }. Otherwise, just ignore
+                  this email :)\n\nHappy ranking!`;
   const options = {
     from: process.env.EMAIL_USER,
     to: email,

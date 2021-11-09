@@ -11,20 +11,24 @@ const SendLinkCodeModal = () => {
         "Content-Type": "application/json",
       },
       credentials: "include",
-    }).then((res) => {
-      if (res.status !== 200) {
-        alert(res.error);
-      } else {
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          alert(res.error);
+        } else {
+          return res.json();
+        }
+      })
+      .then((json) => {
         fetch("http://localhost:3001/api/v1/emails", {
           method: "POST",
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email, code: json.code, sender: json.sender }),
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
         });
-      }
-    });
+      });
   };
 
   const handleEmailChange = (e) => {
