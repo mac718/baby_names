@@ -14,7 +14,7 @@ const UserSchema = new Schema(
     password: {
       type: String,
       required: [true, "Must enter a password"],
-      minLength: 5,
+      minlength: 5,
     },
     pendingLinkedUserSent: [],
     pendingLinkedUserReceived: [],

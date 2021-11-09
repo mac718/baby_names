@@ -55,11 +55,12 @@ const LinkedUsers = () => {
             class="card-img-top w-25 h-25 rounded-circle"
             alt="..."
           />
-          <div className="card-body">
+          <div className="card-body d-flex justify-content-center">
             <Link
               to={{
                 pathname: `/linked-ratings/${user._id}`,
               }}
+              className="text-decoration-none text-dark"
             >
               {user.firstName} {user.lastName}
             </Link>

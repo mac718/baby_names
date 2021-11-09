@@ -18,7 +18,6 @@ const SignUp = () => {
 
     setFirstName(value);
     if (value && value !== "") {
-      console.log("fn");
       setEnteredFname(true);
     } else {
       setEnteredFname(false);
@@ -40,7 +39,9 @@ const SignUp = () => {
     let value = e.target.value;
 
     setEmail(value);
-    if (value && value !== "") {
+    const emailValidator = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+    if (emailValidator.test(value)) {
       setEnteredEmail(true);
     } else {
       setEnteredEmail(false);
@@ -49,8 +50,9 @@ const SignUp = () => {
 
   const handlePasswordChange = (e) => {
     let value = e.target.value;
+    const MINIMUM_PASSWORD_LENGTH = 5;
     setPassword(value);
-    if (value && value !== "") {
+    if (value.length >= MINIMUM_PASSWORD_LENGTH) {
       setEnteredPassword(true);
     } else {
       setEnteredPassword(false);

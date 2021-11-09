@@ -7,12 +7,13 @@ const asyncWrapper = (fn) => {
     try {
       await fn(req, res, next);
     } catch (error) {
-      console.log("snarf", error);
-      // if (error.name) {
-      //   next(createCustomError(error.message, 500));
-      // } else {
-      //   next(error);
-      // }
+      console.log("snarf", error.message);
+      if (error.name === "MongoError") {
+        //next(createCustomError(error.code, 500));
+        next(error);
+      } else {
+        next(error);
+      }
       next(error);
     }
   };
