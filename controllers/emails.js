@@ -10,7 +10,7 @@ const sendLinkEmail = asyncWrapper(async (req, res) => {
 
   let message = "Here is the code you requested for Baby Name Ranker.";
   const options = {
-    from: userInfo.email,
+    from: process.env.EMAIL_USER,
     to: email,
     subject: "Baby Names",
     text: message,

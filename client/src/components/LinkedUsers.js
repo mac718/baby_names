@@ -49,7 +49,12 @@ const LinkedUsers = () => {
   if (users.length > 0) {
     userCards = users.map((user) => {
       return (
-        <div className="card shadow-sm">
+        <div className="card shadow-sm h-10 w-10">
+          <img
+            src="..."
+            class="card-img-top w-25 h-25 rounded-circle"
+            alt="..."
+          />
           <div className="card-body">
             <Link
               to={{
