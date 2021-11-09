@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 const LogIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [redirect, setRedirect] = useState(false);
-  const [error, setError] = useState(props.location.state.error);
+  const [error, setError] = useState(
+    props.location.state ? props.location.state.error : null
+  );
 
   const handleEmailChange = (e) => {
     let value = e.target.value;
@@ -91,6 +94,12 @@ const LogIn = (props) => {
           >
             Log In
           </button>
+        </div>
+        <div className="mt-2 text-center">
+          Don't have an account? Sign up{" "}
+          <Link to="/sign-up" class="text-decoration-none fw-bold">
+            here!
+          </Link>
         </div>
       </form>
     </div>
