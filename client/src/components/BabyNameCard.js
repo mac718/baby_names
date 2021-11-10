@@ -40,6 +40,7 @@ const RatingOverlay = styled.div`
 const NameBox = styled.div`
   width: 400px;
   height: 400px;
+  max-width: 90%;
   border-radius: 2%;
   border: 1px solid black;
   background-color: ${(props) => props.color};

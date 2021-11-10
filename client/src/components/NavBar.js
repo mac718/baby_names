@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+
+const DropdownMenu = styled.li`
+  @media only screen and (max-width: 500px) {
+    & > button:after {
+      float: left;
+    }
+  }
+`;
 
 const NavBar = () => {
   return (
@@ -36,16 +43,16 @@ const NavBar = () => {
                 Your Ratings
               </a>
             </li>
-            <li class="nav-item dropdown">
-              <FontAwesomeIcon
-                icon={faBars}
-                class="nav-link dropdown-toggle"
-                style={{ width: "10%" }}
+            <DropdownMenu class="nav-item dropdown">
+              <button
+                class="nav-link dropdown-toggle btn btn-link"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-              />
+              >
+                More
+              </button>
 
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li className="dropdown-item">
@@ -75,7 +82,7 @@ const NavBar = () => {
                   </a>
                 </li>
               </ul>
-            </li>
+            </DropdownMenu>
           </ul>
         </div>
       </div>
