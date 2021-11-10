@@ -1,3 +1,4 @@
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,6 +11,16 @@ const DropdownMenu = styled.li`
 `;
 
 const NavBar = () => {
+  const history = useHistory();
+  const handleSignOut = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3001/api/v1/users/sign-out", {
+      method: "DELETE",
+      credentials: "include",
+    })
+      .then(() => history.push("/login"))
+      .catch((err) => console.log(err));
+  };
   return (
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
@@ -77,8 +88,8 @@ const NavBar = () => {
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#">
-                    Something else here
+                  <a class="dropdown-item" href="#" onClick={handleSignOut}>
+                    Sign Out
                   </a>
                 </li>
               </ul>

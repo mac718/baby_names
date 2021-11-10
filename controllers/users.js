@@ -160,6 +160,11 @@ const deleteLinkedUser = asyncWrapper(async (req, res, next) => {
   res.sendStatus(StatusCodes.OK);
 });
 
+const signOut = asyncWrapper(async (req, res) => {
+  res.clearCookie("token");
+  res.sendStatus(StatusCodes.OK);
+});
+
 module.exports = {
   createUser,
   login,
@@ -169,4 +174,5 @@ module.exports = {
   addPendingLinkedUserSent,
   addLinkedUser,
   deleteLinkedUser,
+  signOut,
 };
