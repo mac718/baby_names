@@ -46,10 +46,30 @@ const LinkedUsers = () => {
     getLinkedUsers();
   }, []);
 
+  const handleDeleteLink = (e, id) => {
+    e.preventDefault();
+    console.log("hello");
+    fetch(`http://localhost:3001/api/v1/users/delete-link/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).catch((err) => console.log(err));
+  };
+
   if (users.length > 0) {
     userCards = users.map((user) => {
       return (
         <div className="card shadow-sm m-2" style={{ width: "20%" }}>
+          <div className="card-title">
+            <button
+              className="btn btn-info btn-sm"
+              onClick={(e) => handleDeleteLink(e, user._id)}
+            >
+              Delete account link
+            </button>
+          </div>
           <img
             src="..."
             class="card-img-top w-25 h-25 rounded-circle"

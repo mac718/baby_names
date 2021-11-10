@@ -138,6 +138,28 @@ const addLinkedUser = asyncWrapper(async (req, res, next) => {
   res.sendStatus(StatusCodes.OK);
 });
 
+const deleteLinkedUser = asyncWrapper(async (req, res, next) => {
+  console.log("hello");
+  const userInfo = req.user;
+  const userToUnlinkId = req.params.id;
+
+  let currentUser = await User.findOne({ _id: userInfo.id });
+  let userToUnlink = await User.findOne({ _id: userToUnlinkId });
+
+  const currentUserlinkedUsersIdx =
+    currentUser.linkedUsers.indexOf(userToUnlinkId);
+  const userToUnlinkLinkedUsersIdx = userToUnlink.linkedUsers.indexOf(
+    userInfo.id
+  );
+
+  currentUser.linkedUsers.splice(currentUserlinkedUsersIdx, 1);
+  await currentUser.save();
+
+  userToUnlink.linkedUsers.splice(userToUnlinkLinkedUsersIdx, 1);
+  await userToUnlink.save();
+  res.sendStatus(StatusCodes.OK);
+});
+
 module.exports = {
   createUser,
   login,
@@ -146,4 +168,5 @@ module.exports = {
   getLinkedUsers,
   addPendingLinkedUserSent,
   addLinkedUser,
+  deleteLinkedUser,
 };

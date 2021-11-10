@@ -8,6 +8,7 @@ const {
   getLinkedUsers,
   addPendingLinkedUserSent,
   addLinkedUser,
+  deleteLinkedUser,
 } = require("../controllers/users");
 const checkToken = require("../middleware/auth");
 
@@ -18,6 +19,7 @@ router.route("/getUser").get(checkToken, getUser);
 router.route("/linked").get(checkToken, getLinkedUsers);
 router.route("/confirm-link").post(checkToken, addLinkedUser);
 router.route("/").patch(checkToken, updateUser);
+router.route("/delete-link/:id").delete(checkToken, deleteLinkedUser);
 router.get("/checkToken", checkToken, (req, res) => {
   res.sendStatus(200);
 });
