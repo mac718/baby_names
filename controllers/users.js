@@ -115,9 +115,10 @@ const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
   }
   let code = new LinkCode({ sender, recipient, code: linkCode });
   await code.save();
+
   res
     .status(StatusCodes.OK)
-    .json({ code, sender: `${sender.firstName} ${sender.lastName}` });
+    .json({ linkCode, sender: `${sender.firstName} ${sender.lastName}` });
 });
 
 const addLinkedUser = asyncWrapper(async (req, res, next) => {

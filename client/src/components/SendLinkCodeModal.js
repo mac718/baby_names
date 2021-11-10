@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 
 const SendLinkCodeModal = () => {
   const [email, setEmail] = useState();
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [error, setError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch("http://localhost:3001/api/v1/users/request-link", {
@@ -22,13 +25,31 @@ const SendLinkCodeModal = () => {
       .then((json) => {
         fetch("http://localhost:3001/api/v1/emails", {
           method: "POST",
-          body: JSON.stringify({ email, code: json.code, sender: json.sender }),
+          body: JSON.stringify({
+            email,
+            code: json.linkCode,
+            sender: json.sender,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
-        });
-      });
+        })
+          .then((res) => {
+            if (res.status === 200) {
+              setSuccessMessage(true);
+            } else {
+              return res.json();
+            }
+          })
+          .then((json) => {
+            if (json.msg) {
+              setError(json.msg);
+            }
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleEmailChange = (e) => {
@@ -70,6 +91,10 @@ const SendLinkCodeModal = () => {
             </form>
           </div>
           <div className="modal-footer">
+            {successMessage && (
+              <div className="text-success">Link code sent!</div>
+            )}
+            {error && <div className="text-dange">{error}</div>}
             <button
               type="button"
               className="btn btn-primary"
