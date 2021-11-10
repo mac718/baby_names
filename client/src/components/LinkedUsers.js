@@ -60,7 +60,7 @@ const LinkedUsers = () => {
               to={{
                 pathname: `/linked-ratings/${user._id}`,
               }}
-              className="text-decoration-none text-dark"
+              className="text-decoration-none text-dark fw-bold"
             >
               {user.firstName} {user.lastName}
             </Link>
@@ -81,7 +81,7 @@ const LinkedUsers = () => {
     >
       <ButtonDiv className="d-flex justify-content-center h-25 w-100 mb-3">
         <Button
-          className="btn btn-secondary shadow-sm fs-3"
+          className="btn btn-secondary shadow fs-3"
           data-bs-toggle="modal"
           data-bs-target={`#sendLinkCodeModal`}
         >
@@ -89,7 +89,7 @@ const LinkedUsers = () => {
         </Button>
 
         <Button
-          className="btn btn-primary shadow-sm fs-3"
+          className="btn btn-primary shadow fs-3"
           data-bs-toggle="modal"
           data-bs-target={`#enterLinkCodeModal`}
         >

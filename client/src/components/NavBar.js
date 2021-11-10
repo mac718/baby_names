@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
   return (
@@ -34,23 +36,45 @@ const NavBar = () => {
                 Your Ratings
               </a>
             </li>
-            <li className="nav-item">
-              <Link
-                to="/account"
-                className="nav-link active"
-                aria-current="page"
-              >
-                Account
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/linked"
-                className="nav-link active"
-                aria-current="page"
-              >
-                Linked Account Ratings
-              </Link>
+            <li class="nav-item dropdown">
+              <FontAwesomeIcon
+                icon={faBars}
+                class="nav-link dropdown-toggle"
+                style={{ width: "10%" }}
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              />
+
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li className="dropdown-item">
+                  <Link
+                    to="/account"
+                    className="nav-link active"
+                    aria-current="page"
+                  >
+                    Account
+                  </Link>
+                </li>
+                <li className="dropdown-item">
+                  <Link
+                    to="/linked"
+                    className="nav-link active"
+                    aria-current="page"
+                  >
+                    Linked Account Ratings
+                  </Link>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Something else here
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
