@@ -54,7 +54,7 @@ const NavBar = () => {
                 Your Ratings
               </a>
             </li>
-            <DropdownMenu class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <button
                 class="nav-link dropdown-toggle btn btn-link"
                 id="navbarDropdown"
@@ -65,7 +65,10 @@ const NavBar = () => {
                 More
               </button>
 
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <ul
+                class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                aria-labelledby="navbarDropdown"
+              >
                 <li className="dropdown-item">
                   <Link
                     to="/account"
@@ -93,7 +96,7 @@ const NavBar = () => {
                   </a>
                 </li>
               </ul>
-            </DropdownMenu>
+            </li>
           </ul>
         </div>
       </div>

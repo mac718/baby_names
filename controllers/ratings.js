@@ -10,6 +10,8 @@ const saveRating = asyncWrapper(async (req, res) => {
   let { name, score } = req.body;
   let userInfo = req.user;
 
+  console.log("name", name);
+
   let user = await User.findOne({ _id: userInfo.id });
 
   if (!user) {
@@ -30,19 +32,19 @@ const saveRating = asyncWrapper(async (req, res) => {
   res.status(StatusCodes.CREATED).json({ unratedNames });
 });
 
-const groupRatings = (ratings) => {
-  let groupDivs = [];
+// const groupRatings = (ratings) => {
+//   let groupDivs = [];
 
-  for (let score = 10; score >= 1; score -= 1) {
-    let groupRatings = ratings.filter(
-      (rating) => Number(rating.score) === score
-    );
-    let group = groupRatings.map((rating) => rating.name);
-    groupDivs.push(group);
-  }
+//   for (let score = 10; score >= 1; score -= 1) {
+//     let groupRatings = ratings.filter(
+//       (rating) => Number(rating.score) === score
+//     );
+//     let group = groupRatings.map((rating) => rating.name);
+//     groupDivs.push(group);
+//   }
 
-  return groupDivs;
-};
+//   return groupDivs;
+// };
 
 const getRatings = asyncWrapper(async (req, res) => {
   let userInfo;
@@ -59,8 +61,8 @@ const getRatings = asyncWrapper(async (req, res) => {
   }
 
   let ratings = await Rating.find({ user: user._id });
-  let groupDivs = groupRatings(ratings);
-  res.status(StatusCodes.OK).json({ groupDivs });
+  //let groupDivs = groupRatings(ratings);
+  res.status(StatusCodes.OK).json({ ratings });
 });
 
 const updateRating = asyncWrapper(async (req, res) => {

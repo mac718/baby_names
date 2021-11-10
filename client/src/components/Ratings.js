@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import RadioButtons from "./RadioButtons";
+import Filters from "./Filters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import NameInfoModal from "./NameInfoModal";
@@ -30,6 +31,20 @@ const Ratings = () => {
   //solution to get rid of "cannot update state on unmounted component" error
   let _isMounted = useRef(true);
 
+  const groupRatings = (ratings) => {
+    let groupDivs = [];
+
+    for (let score = 10; score >= 1; score -= 1) {
+      let groupRatings = ratings.filter(
+        (rating) => Number(rating.score) === score
+      );
+      let group = groupRatings.map((rating) => rating.name);
+      groupDivs.push(group);
+    }
+
+    return groupDivs;
+  };
+
   const fetchRatings = (isMounted) => {
     fetch("http://localhost:3001/api/v1/ratings/id", {
       method: "GET",
@@ -45,7 +60,8 @@ const Ratings = () => {
       .then((json) => {
         if (isMounted.current) {
           setCurrentButtonsDivId(null);
-          setRatings(json.groupDivs);
+          let groupDivs = groupRatings(json.ratings);
+          setRatings(groupDivs);
           setRatingsLoading(false);
         }
       })
@@ -94,14 +110,14 @@ const Ratings = () => {
 
   let groupDivs = ratings.map((group, idx) => {
     let names = group.map((name) => (
-      <ResponsiveListItem className="list-group-item" key={name}>
+      <ResponsiveListItem className="list-group-item" key={name.name}>
         <div className="col col-sm"></div>
         <div
           className="col col-sm text-muted"
           data-bs-toggle="modal"
-          data-bs-target={`#${name}`}
+          data-bs-target={`#${name.name}`}
         >
-          <NameSpan>{name}</NameSpan>
+          <NameSpan>{name.name}</NameSpan>
           <NameInfoModal name={name} />
         </div>
 
@@ -160,6 +176,7 @@ const Ratings = () => {
   );
   return (
     <div className="container">
+      <Filters fetchFn={fetchRatings} />
       <div className="container mt-2">
         {ratingsLoading ? loadingDiv : groupDivs}
       </div>

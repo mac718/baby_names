@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-const Filters = ({ fetchNames }) => {
+const Filters = ({ fetchFn }) => {
+  console.log(fetchFn);
   const [selectedGender, setSelectedGender] = useState("All");
   const [selectedOrigin, setSelectedOrigin] = useState("All");
 
@@ -15,7 +16,7 @@ const Filters = ({ fetchNames }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchNames(selectedGender, selectedOrigin); //passed from BabyNameCard
+    fetchFn(selectedGender, selectedOrigin); //passed from BabyNameCard
   };
   return (
     <form

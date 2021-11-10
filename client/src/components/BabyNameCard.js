@@ -198,7 +198,7 @@ const BabyNameCard = () => {
     fetch("http://localhost:3001/api/v1/ratings", {
       method: "POST",
       body: JSON.stringify({
-        name: currentName.name,
+        name: currentName,
         score: currentRating,
       }),
       credentials: "include",
@@ -279,7 +279,7 @@ const BabyNameCard = () => {
   }
   return (
     <div>
-      <Filters fetchNames={fetchNames} className="position-fixed" />
+      <Filters fetchFn={fetchNames} className="position-fixed" />
       <Container className="container" style={{ height: "100vh" }}>
         <NameBox className="shadow" color={cardColor}>
           <TopNameDiv className="text-muted">
