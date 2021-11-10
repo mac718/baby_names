@@ -28,21 +28,22 @@ const LinkedUsers = () => {
   const [users, setUsers] = useState([]);
   let userCards = <p className="fs-1">No linked users yet!</p>;
 
-  useEffect(() => {
-    const getLinkedUsers = () => {
-      fetch("http://localhost:3001/api/v1/users/linked", {
-        credentials: "include",
+  const getLinkedUsers = () => {
+    fetch("http://localhost:3001/api/v1/users/linked", {
+      credentials: "include",
+    })
+      .then((res) => {
+        return res.json();
       })
-        .then((res) => {
-          return res.json();
-        })
-        .then((json) => {
-          setUsers(json.linkedUsers);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+      .then((json) => {
+        setUsers(json.linkedUsers);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
     getLinkedUsers();
   }, []);
 
@@ -55,7 +56,9 @@ const LinkedUsers = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    }).catch((err) => console.log(err));
+    })
+      .then(() => getLinkedUsers())
+      .catch((err) => console.log(err));
   };
 
   if (users.length > 0) {
@@ -118,7 +121,7 @@ const LinkedUsers = () => {
       </ButtonDiv>
 
       <SendLinkCodeModal />
-      <EnterLinkCodeModal />
+      <EnterLinkCodeModal getLinkedUsers={getLinkedUsers} />
       <div className="w-100">
         <div className="d-flex justify-content-center">{userCards}</div>
       </div>

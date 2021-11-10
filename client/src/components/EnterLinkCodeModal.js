@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const SendLinkCodeModal = () => {
+const SendLinkCodeModal = ({ getLinkedUsers }) => {
   const [code, setCode] = useState();
   const [successMessage, setSuccessMessage] = useState(false);
   const [error, setError] = useState("");
@@ -13,7 +13,12 @@ const SendLinkCodeModal = () => {
         "Content-Type": "application/json",
       },
       credentials: "include",
-    });
+    })
+      .then(() => getLinkedUsers())
+      .catch((err) => {
+        console.log(err);
+        setError(err);
+      });
   };
 
   const handleCodeChange = (e) => {
