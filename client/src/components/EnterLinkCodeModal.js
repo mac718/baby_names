@@ -2,6 +2,8 @@ import { useState } from "react";
 
 const SendLinkCodeModal = () => {
   const [code, setCode] = useState();
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [error, setError] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch("http://localhost:3001/api/v1/users/confirm-link", {
@@ -17,10 +19,16 @@ const SendLinkCodeModal = () => {
   const handleCodeChange = (e) => {
     setCode(e.target.value);
   };
+  const handleModalClose = () => {
+    setSuccessMessage(false);
+    setError("");
+  };
   return (
     <div
       className="modal fade"
       id="enterLinkCodeModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       tabIndex="-1"
       aria-labelledby={"enterLinkCodeModalLabel"}
       aria-hidden="true"
@@ -34,6 +42,7 @@ const SendLinkCodeModal = () => {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              onClick={handleModalClose}
             ></button>
           </div>
           <div className="modal-body bg-light">
@@ -53,10 +62,21 @@ const SendLinkCodeModal = () => {
             </form>
           </div>
           <div className="modal-footer">
+            {successMessage && (
+              <div className="text-success text-center fw-bold w-100">
+                Link code sent!
+              </div>
+            )}
+            {error && (
+              <div className="text-danger text-center fw-bold w-100">
+                {error}
+              </div>
+            )}
             <button
               type="button"
               className="btn btn-primary"
               data-bs-dismiss="modal"
+              onClick={handleModalClose}
             >
               Close
             </button>

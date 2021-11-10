@@ -55,10 +55,16 @@ const SendLinkCodeModal = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
+  const handleModalClose = () => {
+    setSuccessMessage(false);
+    setError("");
+  };
   return (
     <div
       className="modal fade"
       id="sendLinkCodeModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       tabIndex="-1"
       aria-labelledby={"sendLinkCodeModalLabel"}
       aria-hidden="true"
@@ -72,6 +78,7 @@ const SendLinkCodeModal = () => {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              onClick={handleModalClose}
             ></button>
           </div>
           <div className="modal-body bg-secondary">
@@ -92,13 +99,20 @@ const SendLinkCodeModal = () => {
           </div>
           <div className="modal-footer">
             {successMessage && (
-              <div className="text-success">Link code sent!</div>
+              <div className="text-success text-center fw-bold w-100">
+                Link code sent!
+              </div>
             )}
-            {error && <div className="text-dange">{error}</div>}
+            {error && (
+              <div className="text-danger text-center fw-bold w-100">
+                {error}
+              </div>
+            )}
             <button
               type="button"
               className="btn btn-primary"
               data-bs-dismiss="modal"
+              onClick={handleModalClose}
             >
               Close
             </button>
