@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
-import RadioButtons from "./RadioButtons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import NameInfoModal from "./NameInfoModal";
+import Filters from "./Filters";
 import styled from "styled-components";
 
 const NameSpan = styled.div`
@@ -18,12 +16,53 @@ const LinkedAccountRatings = (props) => {
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
   const [ratingsLoading, setRatingsLoading] = useState(true);
+  const [selectedGender, setSelectedGender] = useState("All");
+  const [selectedOrigin, setSelectedOrigin] = useState("All");
   let params = useParams();
 
   //solution to get rid of "cannot update state on unmounted component" error
   let _isMounted = useRef(true);
 
-  const fetchRatings = (isMounted) => {
+  const groupRatings = (ratings) => {
+    let groupDivs = [];
+
+    for (let score = 10; score >= 1; score -= 1) {
+      let groupRatings = ratings.filter(
+        (rating) => Number(rating.score) === score
+      );
+      let group = groupRatings.map((rating) => rating.name);
+      groupDivs.push(group);
+    }
+
+    return groupDivs;
+  };
+
+  const filterRatingsToBeShown = (genderFilter, originFilter, ratings) => {
+    if (genderFilter !== "All") {
+      if (genderFilter === "Male") {
+        ratings = ratings.filter((rating) => rating.name.gender === "m");
+      } else if (genderFilter === "Female") {
+        ratings = ratings.filter((rating) => rating.name.gender === "f");
+      } else {
+        ratings = ratings.filter((rating) => rating.name.gender === "b");
+      }
+    }
+
+    if (originFilter !== "All") {
+      if (originFilter === "USA") {
+        ratings = ratings.filter((rating) => rating.name.origin === "USA");
+      } else if (originFilter === "Europe") {
+        ratings = ratings.filter((rating) => rating.name.origin === "Europe");
+      } else if (originFilter === "Africa") {
+        ratings = ratings.filter((rating) => rating.name.origin === "Africa");
+      } else {
+        ratings = ratings.filter((rating) => rating.name.origin === "Asia");
+      }
+    }
+    return ratings;
+  };
+
+  const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
     fetch(`http://localhost:3001/api/v1/ratings/${params.id}`, {
       method: "GET",
       credentials: "include",
@@ -37,8 +76,16 @@ const LinkedAccountRatings = (props) => {
       })
       .then((json) => {
         if (isMounted.current) {
+          setSelectedGender(genderFilter);
+          setSelectedOrigin(originFilter);
+          let ratingsToBeShown = filterRatingsToBeShown(
+            genderFilter,
+            originFilter,
+            json.ratings
+          );
           setCurrentButtonsDivId(null);
-          setRatings(json.groupDivs);
+          let groupDivs = groupRatings(ratingsToBeShown);
+          setRatings(groupDivs);
           setRatingsLoading(false);
         }
       })
@@ -47,7 +94,7 @@ const LinkedAccountRatings = (props) => {
 
   useEffect(() => {
     _isMounted.current = true;
-    fetchRatings(_isMounted);
+    fetchRatings(selectedGender, selectedOrigin, _isMounted);
     return () => {
       _isMounted.current = false;
     };
@@ -160,6 +207,7 @@ const LinkedAccountRatings = (props) => {
   );
   return (
     <div className="container">
+      <Filters fetchFn={fetchRatings} />
       <div className="container mt-2">
         {ratingsLoading ? loadingDiv : groupDivs}
       </div>
