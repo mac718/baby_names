@@ -26,7 +26,8 @@ const Ratings = () => {
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
   const [ratingsLoading, setRatingsLoading] = useState(true);
-  const [nameRecord, setNameRecord] = useState();
+  const [selectedGender, setSelectedGender] = useState("All");
+  const [selectedOrigin, setSelectedOrigin] = useState("All");
 
   //solution to get rid of "cannot update state on unmounted component" error
   let _isMounted = useRef(true);
@@ -45,7 +46,32 @@ const Ratings = () => {
     return groupDivs;
   };
 
-  const fetchRatings = (isMounted) => {
+  const filterRatingsToBeShown = (genderFilter, originFilter, ratings) => {
+    if (genderFilter !== "All") {
+      if (genderFilter === "Male") {
+        ratings = ratings.filter((rating) => rating.name.gender === "m");
+      } else if (genderFilter === "Female") {
+        ratings = ratings.filter((rating) => rating.name.gender === "f");
+      } else {
+        ratings = ratings.filter((rating) => rating.name.gender === "b");
+      }
+    }
+
+    if (originFilter !== "All") {
+      if (originFilter === "USA") {
+        ratings = ratings.filter((rating) => rating.name.origin === "USA");
+      } else if (originFilter === "Europe") {
+        ratings = ratings.filter((rating) => rating.name.origin === "Europe");
+      } else if (originFilter === "Africa") {
+        ratings = ratings.filter((rating) => rating.name.origin === "Africa");
+      } else {
+        ratings = ratings.filter((rating) => rating.name.origin === "Asia");
+      }
+    }
+    return ratings;
+  };
+
+  const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
     fetch("http://localhost:3001/api/v1/ratings/id", {
       method: "GET",
       credentials: "include",
@@ -59,8 +85,15 @@ const Ratings = () => {
       })
       .then((json) => {
         if (isMounted.current) {
+          setSelectedGender(genderFilter);
+          setSelectedOrigin(originFilter);
+          let ratingsToBeShown = filterRatingsToBeShown(
+            genderFilter,
+            originFilter,
+            json.ratings
+          );
           setCurrentButtonsDivId(null);
-          let groupDivs = groupRatings(json.ratings);
+          let groupDivs = groupRatings(ratingsToBeShown);
           setRatings(groupDivs);
           setRatingsLoading(false);
         }
@@ -70,7 +103,7 @@ const Ratings = () => {
 
   useEffect(() => {
     _isMounted.current = true;
-    fetchRatings(_isMounted);
+    fetchRatings(selectedGender, selectedOrigin, _isMounted);
     return () => {
       _isMounted.current = false;
     };
