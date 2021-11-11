@@ -13,8 +13,6 @@ const NameSpan = styled.div`
 
 const LinkedAccountRatings = (props) => {
   const [ratings, setRatings] = useState([]);
-  const [hidden, setHidden] = useState(true);
-  const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
   const [ratingsLoading, setRatingsLoading] = useState(true);
   const [selectedGender, setSelectedGender] = useState("All");
   const [selectedOrigin, setSelectedOrigin] = useState("All");
@@ -83,7 +81,6 @@ const LinkedAccountRatings = (props) => {
             originFilter,
             json.ratings
           );
-          setCurrentButtonsDivId(null);
           let groupDivs = groupRatings(ratingsToBeShown);
           setRatings(groupDivs);
           setRatingsLoading(false);
