@@ -100,27 +100,6 @@ const LinkedAccountRatings = (props) => {
     };
   }, []);
 
-  const handleDeleteRating = (e) => {
-    e.preventDefault();
-    let name = e.target.parentElement.parentElement.children[1].innerHTML;
-    fetch("http://localhost:3001/api/v1/ratings", {
-      method: "DELETE",
-      credentials: "include",
-      body: JSON.stringify({
-        name,
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).catch((err) => alert(err));
-  };
-
-  const handleShowRadioButtons = (e, name) => {
-    e.preventDefault();
-    setHidden(!hidden);
-    setCurrentButtonsDivId(currentButtonsDivId ? null : name);
-  };
-
   const setRatingNumberColor = (idx) => {
     let rating = 11 - (idx + 1);
     if (rating >= 7) {
@@ -146,31 +125,6 @@ const LinkedAccountRatings = (props) => {
               <NameSpan>{name}</NameSpan>
               <NameInfoModal name={name} />
             </div>
-
-            {/* <div className="col">
-              <FontAwesomeIcon
-                icon={faEdit}
-                className="float-end m-2"
-                onClick={(e) => handleShowRadioButtons(e, name)}
-                cursor="pointer"
-              />
-              <FontAwesomeIcon
-                icon={faTrash}
-                className="float-end m-2"
-                onClick={handleDeleteRating}
-                cursor="pointer"
-              />
-              <div
-                hidden={currentButtonsDivId === name ? false : true}
-                id={name}
-              >
-                <RadioButtons name={name} fetchRatings={fetchRatings}>
-                  <div>
-                    <button className="btn btn-secondary">Submit Rating</button>
-                  </div>
-                </RadioButtons>
-              </div>
-            </div> */}
           </div>
         </div>
       </li>
