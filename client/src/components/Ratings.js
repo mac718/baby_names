@@ -142,41 +142,50 @@ const Ratings = () => {
   };
 
   let groupDivs = ratings.map((group, idx) => {
-    let names = group.map((name) => (
-      <ResponsiveListItem className="list-group-item" key={name.name}>
-        <div className="col col-sm"></div>
-        <div
-          className="col col-sm text-muted"
-          data-bs-toggle="modal"
-          data-bs-target={`#${name.name}`}
-        >
-          <NameSpan>{name.name}</NameSpan>
-          <NameInfoModal name={name} />
-        </div>
-
-        <div className="col col-sm">
-          <FontAwesomeIcon
-            icon={faEdit}
-            className="float-end m-2"
-            onClick={(e) => handleShowRadioButtons(e, name)}
-            cursor="pointer"
-          />
-          <FontAwesomeIcon
-            icon={faTrash}
-            className="float-end m-2"
-            onClick={handleDeleteRating}
-            cursor="pointer"
-          />
-          <div hidden={currentButtonsDivId === name ? false : true} id={name}>
-            <RadioButtons name={name} fetchRatings={fetchRatings}>
-              <div>
-                <button className="btn btn-secondary">Submit Rating</button>
-              </div>
-            </RadioButtons>
+    let names = group.map((name) => {
+      let nameColor;
+      name.gender === "m"
+        ? (nameColor = "lightBlue")
+        : (nameColor = "lightPink");
+      return (
+        <ResponsiveListItem className="list-group-item" key={name.name}>
+          <div className="col col-sm"></div>
+          <div className="col col-sm text-muted">
+            <NameSpan
+              className="d-inline-block"
+              style={{ color: nameColor }}
+              data-bs-toggle="modal"
+              data-bs-target={`#${name.name}`}
+            >
+              {name.name}
+            </NameSpan>
+            <NameInfoModal name={name} />
           </div>
-        </div>
-      </ResponsiveListItem>
-    ));
+
+          <div className="col col-sm">
+            <FontAwesomeIcon
+              icon={faEdit}
+              className="float-end m-2"
+              onClick={(e) => handleShowRadioButtons(e, name)}
+              cursor="pointer"
+            />
+            <FontAwesomeIcon
+              icon={faTrash}
+              className="float-end m-2"
+              onClick={handleDeleteRating}
+              cursor="pointer"
+            />
+            <div hidden={currentButtonsDivId === name ? false : true} id={name}>
+              <RadioButtons name={name} fetchRatings={fetchRatings}>
+                <div>
+                  <button className="btn btn-secondary">Submit Rating</button>
+                </div>
+              </RadioButtons>
+            </div>
+          </div>
+        </ResponsiveListItem>
+      );
+    });
     let color = setRatingNumberColor(idx);
     return (
       <div

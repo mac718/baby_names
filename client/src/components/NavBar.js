@@ -66,7 +66,7 @@ const NavBar = () => {
               </button>
 
               <ul
-                className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start bg-light"
                 aria-labelledby="navbarDropdown"
               >
                 <li className="dropdown-item">

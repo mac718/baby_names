@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const NameSpan = styled.div`
   &:hover {
-    font-weight: bold;
+    font-weight: bolder;
   }
   cursor: pointer;
 `;
@@ -110,22 +110,35 @@ const LinkedAccountRatings = (props) => {
   };
 
   let groupDivs = ratings.map((group, idx) => {
-    let names = group.map((name) => (
-      <li className="list-group-item d-flex justify-content-between" key={name}>
-        <div className="container">
-          <div className="text-center">
-            <div
-              className="col text-muted"
-              data-bs-toggle="modal"
-              data-bs-target={`#${name.name}`}
-            >
-              <NameSpan>{name.name}</NameSpan>
-              <NameInfoModal name={name} />
+    let names = group.map((name) => {
+      let nameColor;
+      name.gender === "m"
+        ? (nameColor = "lightBlue")
+        : (nameColor = "lightPink");
+      return (
+        <li
+          className="list-group-item d-flex justify-content-between"
+          key={name}
+        >
+          <div className="container">
+            <div className="text-center">
+              <div className="col">
+                <NameSpan
+                  className="d-inline-block"
+                  style={{ color: nameColor }}
+                  data-bs-toggle="modal"
+                  data-bs-target={`#${name.name}`}
+                >
+                  {name.name}
+                </NameSpan>
+
+                <NameInfoModal name={name} />
+              </div>
             </div>
           </div>
-        </div>
-      </li>
-    ));
+        </li>
+      );
+    });
     let color = setRatingNumberColor(idx);
     return (
       <div
