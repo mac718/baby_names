@@ -54,9 +54,9 @@ const NavBar = () => {
                 Your Ratings
               </a>
             </li>
-            <li class="nav-item dropdown">
+            <li className="nav-item dropdown">
               <button
-                class="nav-link dropdown-toggle btn btn-link"
+                className="nav-link dropdown-toggle btn btn-link"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -66,7 +66,7 @@ const NavBar = () => {
               </button>
 
               <ul
-                class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
+                className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
                 aria-labelledby="navbarDropdown"
               >
                 <li className="dropdown-item">

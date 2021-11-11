@@ -82,6 +82,7 @@ const LinkedAccountRatings = (props) => {
             json.ratings
           );
           let groupDivs = groupRatings(ratingsToBeShown);
+          console.log(groupDivs);
           setRatings(groupDivs);
           setRatingsLoading(false);
         }
@@ -112,14 +113,13 @@ const LinkedAccountRatings = (props) => {
     let names = group.map((name) => (
       <li className="list-group-item d-flex justify-content-between" key={name}>
         <div className="container">
-          <div className="row">
-            <div className="col"></div>
+          <div className="text-center">
             <div
               className="col text-muted"
               data-bs-toggle="modal"
-              data-bs-target={`#${name}`}
+              data-bs-target={`#${name.name}`}
             >
-              <NameSpan>{name}</NameSpan>
+              <NameSpan>{name.name}</NameSpan>
               <NameInfoModal name={name} />
             </div>
           </div>

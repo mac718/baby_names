@@ -26,7 +26,7 @@ const Button = styled.button`
 `;
 const LinkedUsers = () => {
   const [users, setUsers] = useState([]);
-  let userCards = <p className="fs-1">No linked users yet!</p>;
+  let userCards = <p className="fs-1">No linked users!</p>;
 
   const getLinkedUsers = () => {
     fetch("http://localhost:3001/api/v1/users/linked", {
@@ -64,7 +64,11 @@ const LinkedUsers = () => {
   if (users.length > 0) {
     userCards = users.map((user) => {
       return (
-        <div className="card shadow-sm m-2" style={{ width: "20%" }}>
+        <div
+          className="card shadow-sm m-2"
+          style={{ width: "20%" }}
+          key={user._id}
+        >
           <div className="card-title">
             <button
               className="btn btn-info btn-sm"
