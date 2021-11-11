@@ -38,7 +38,10 @@ const EditLastName = ({ currentLastName, getCurrentUser }) => {
               defaultValue={currentLastName}
               onChange={handleLastNameChange}
             />
-            <button className="btn btn-success ms-2" onClick={handleSubmit}>
+            <button
+              className="btn btn-outline-info ms-2"
+              onClick={handleSubmit}
+            >
               Save Last Name
             </button>
           </div>

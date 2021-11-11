@@ -40,7 +40,10 @@ const EditFirstName = ({ currentFirstName, getCurrentUser }) => {
               onChange={handleFirstNameChange}
               className="min-vw-50"
             />
-            <button className="btn btn-success ms-2" onClick={handleSubmit}>
+            <button
+              className="btn btn-outline-info ms-2"
+              onClick={handleSubmit}
+            >
               Save First Name
             </button>
           </div>
