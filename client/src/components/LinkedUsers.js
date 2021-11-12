@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import SendLinkCodeModal from "./SendLinkCodeModal";
 import EnterLinkCodeModal from "./EnterLinkCodeModal";
 import styled from "styled-components";
+import DeleteLinkedUserModal from "./DeleteLinkedUserModal";
 
 const ButtonDiv = styled.div`
   display: flex;
@@ -85,10 +86,16 @@ const LinkedUsers = () => {
           <div className="card-title justify-center">
             <button
               className="btn btn-warning btn-sm m-2 text-white"
-              onClick={(e) => handleDeleteLink(e, user._id)}
+              data-bs-toggle="modal"
+              data-bs-target={`#deleteLinkedUserModal${user._id}`}
+              //onClick={(e) => handleDeleteLink(e, user._id)}
             >
               Delete account link
             </button>
+            <DeleteLinkedUserModal
+              id={user._id}
+              handleDeleteLink={handleDeleteLink}
+            />
           </div>
           <div
             className={
