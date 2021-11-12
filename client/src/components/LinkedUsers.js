@@ -77,11 +77,7 @@ const LinkedUsers = () => {
               Delete account link
             </button>
           </div>
-          <img
-            src="..."
-            class="card-img-top w-25 h-25 rounded-circle"
-            alt="..."
-          />
+          <img src={user.pic} class="card-img-top rounded-circle" alt="..." />
           <div className="card-body d-flex justify-content-center">
             <Link
               to={{
