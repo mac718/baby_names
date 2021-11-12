@@ -51,39 +51,44 @@ const AccountDetails = () => {
         <li className="list-group-item">
           <EditEmail currentEmail={email} getCurrentUser={getCurrentUser} />
         </li>
+        <li className="list-group-item ">
+          <div className="fw-bold">Profile Photo</div>
+          <div className="d-flex justify-content-between">
+            <form
+              className="form-control w-75 h-50"
+              enctype="multipart/form-data"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const files = e.target.firstChild.files;
+                let formData = new FormData();
+                formData.append("photo", files[0]);
+                fetch("http://localhost:3001/api/v1/users/upload", {
+                  method: "POST",
+                  credentials: "include",
+                  body: formData,
+                })
+                  .then((res) => res.json())
+                  .then((json) => console.log(json))
+                  .catch((err) => console.log(err));
+              }}
+            >
+              <input className="form-control" type="file" name="photo" />
+              <div className="text-center">
+                <button className="btn btn-info mt-2 w-25" type="submit">
+                  upload
+                </button>
+              </div>
+            </form>
+
+            <img
+              src={pic}
+              style={{ width: "5rem", height: "5rem" }}
+              className="rounded"
+            />
+          </div>
+        </li>
         <li className="list-group-item">
           <EditPassword getCurrentUser={getCurrentUser} />
-        </li>
-        <li>
-          <form
-            enctype="multipart/form-data"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const files = e.target.firstChild.files;
-              console.log("files", files);
-              let formData = new FormData();
-              formData.append("photo", files[0]);
-              fetch("http://localhost:3001/api/v1/users/upload", {
-                method: "POST",
-                credentials: "include",
-                // headers: {
-                //   "Content-Type": "multipart/form-data",
-                // },
-                body: formData,
-              })
-                .then((res) => res.json())
-                .then((json) => console.log(json))
-                .catch((err) => console.log(err));
-            }}
-          >
-            <input type="file" name="photo" />
-            <button className="btn" type="submit">
-              upload
-            </button>
-          </form>
-          <div>
-            <img src={pic} />
-          </div>
         </li>
       </ul>
     </div>
