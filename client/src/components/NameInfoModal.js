@@ -14,7 +14,7 @@ const NameInfoModal = ({ name }) => {
   // useEffect(() => fetchName(), []);
   return (
     <div
-      className="modal fade"
+      className="modal"
       id={name.name}
       tabIndex="-1"
       aria-labelledby={`${name.name}label`}

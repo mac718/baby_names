@@ -24,6 +24,21 @@ const Button = styled.button`
     margin-bottom: 5px;
   }
 `;
+
+const LinkedUserCardContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+`;
+
+const LinkedUserCard = styled.div`
+  width: 20%;
+  @media (max-width: 500px) {
+    width: 90%;
+  }
+`;
 const LinkedUsers = () => {
   const [users, setUsers] = useState([]);
   let userCards = <p className="fs-1">No linked users!</p>;
@@ -64,12 +79,8 @@ const LinkedUsers = () => {
   if (users.length > 0) {
     userCards = users.map((user) => {
       return (
-        <div
-          className="card shadow-sm m-2"
-          style={{ width: "20%" }}
-          key={user._id}
-        >
-          <div className="card-title">
+        <LinkedUserCard className="card shadow-sm m-2" key={user._id}>
+          <div className="card-title justify-center">
             <button
               className="btn btn-info btn-sm"
               onClick={(e) => handleDeleteLink(e, user._id)}
@@ -77,7 +88,9 @@ const LinkedUsers = () => {
               Delete account link
             </button>
           </div>
-          <img src={user.pic} class="card-img-top rounded-circle" alt="..." />
+          <div className="d-flex justify-content-center m-2 w-50 h-100 m-auto">
+            <img src={user.pic} class="card-img-top rounded-circle" alt="..." />
+          </div>
           <div className="card-body d-flex justify-content-center">
             <Link
               to={{
@@ -88,42 +101,45 @@ const LinkedUsers = () => {
               {user.firstName} {user.lastName}
             </Link>
           </div>
-        </div>
+        </LinkedUserCard>
       );
     });
   }
   return (
-    <div
-      className="
+    <div>
+      <div className="fs-1 text-center mb-2">Linked Users</div>
+      <div
+        className="
       d-flex
       flex-column
       justify-content-center
       align-items-center
       w-90
-      vh-100"
-    >
-      <ButtonDiv className="d-flex justify-content-center h-25 w-100 mb-3">
-        <Button
-          className="btn btn-secondary shadow fs-3"
-          data-bs-toggle="modal"
-          data-bs-target={`#sendLinkCodeModal`}
-        >
-          <FontAwesomeIcon icon={faPlus} /> Send link request!
-        </Button>
+      vh-90"
+      >
+        <ButtonDiv className="d-flex justify-content-center h-25 w-100 mb-3">
+          <Button
+            className="btn btn-secondary shadow fs-4"
+            data-bs-toggle="modal"
+            data-bs-target={`#sendLinkCodeModal`}
+          >
+            <FontAwesomeIcon icon={faPlus} /> Send link request!
+          </Button>
 
-        <Button
-          className="btn btn-primary shadow fs-3"
-          data-bs-toggle="modal"
-          data-bs-target={`#enterLinkCodeModal`}
-        >
-          <FontAwesomeIcon icon={faCheck} /> Enter Link Code!
-        </Button>
-      </ButtonDiv>
+          <Button
+            className="btn btn-primary shadow fs-4"
+            data-bs-toggle="modal"
+            data-bs-target={`#enterLinkCodeModal`}
+          >
+            <FontAwesomeIcon icon={faCheck} /> Enter Link Code!
+          </Button>
+        </ButtonDiv>
 
-      <SendLinkCodeModal />
-      <EnterLinkCodeModal getLinkedUsers={getLinkedUsers} />
-      <div className="w-100">
-        <div className="d-flex justify-content-center">{userCards}</div>
+        <SendLinkCodeModal />
+        <EnterLinkCodeModal getLinkedUsers={getLinkedUsers} />
+        <div className="w-100">
+          <LinkedUserCardContainer>{userCards}</LinkedUserCardContainer>
+        </div>
       </div>
     </div>
   );
