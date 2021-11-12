@@ -77,18 +77,24 @@ const LinkedUsers = () => {
   };
 
   if (users.length > 0) {
+    let imgDivBg = "";
     userCards = users.map((user) => {
+      if (!user.pic) imgDivBg = "bg-dark";
       return (
-        <LinkedUserCard className="card shadow-sm m-2" key={user._id}>
+        <LinkedUserCard className="card shadow-sm m-2 bg-light" key={user._id}>
           <div className="card-title justify-center">
             <button
-              className="btn btn-info btn-sm"
+              className="btn btn-warning btn-sm m-2 text-white"
               onClick={(e) => handleDeleteLink(e, user._id)}
             >
               Delete account link
             </button>
           </div>
-          <div className="d-flex justify-content-center m-2 w-50 h-100 m-auto">
+          <div
+            className={
+              "d-flex justify-content-center m-2 w-50 h-100 m-auto" + imgDivBg
+            }
+          >
             <img src={user.pic} class="card-img-top rounded-circle" alt="..." />
           </div>
           <div className="card-body d-flex justify-content-center">
