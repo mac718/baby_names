@@ -19,6 +19,7 @@ const UserSchema = new Schema(
     pendingLinkedUserSent: [],
     pendingLinkedUserReceived: [],
     linkedUsers: [],
+    pic: String,
   },
 
   { timestamps: true }

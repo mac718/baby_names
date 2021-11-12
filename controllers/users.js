@@ -14,6 +14,7 @@ const {
   NotFoundError,
 } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
+const FileUploader = require("../services/photoUpload");
 
 const createUser = asyncWrapper(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
@@ -48,9 +49,11 @@ const login = asyncWrapper(async (req, res, next) => {
 const getUser = asyncWrapper(async (req, res) => {
   const userInfo = req.user;
   const user = await User.findOne({ _id: userInfo.id });
-  const { firstName, lastName, email, password } = user;
+  const { firstName, lastName, email, password, pic } = user;
 
-  res.status(StatusCodes.OK).json({ firstName, lastName, email, password });
+  res
+    .status(StatusCodes.OK)
+    .json({ firstName, lastName, email, password, pic });
 });
 
 const updatePassword = async (userInfo, body, next) => {
@@ -165,6 +168,23 @@ const signOut = asyncWrapper(async (req, res) => {
   res.sendStatus(StatusCodes.OK);
 });
 
+const uploadProfilePic = asyncWrapper(async (req, res, next) => {
+  const userInfo = req.user;
+  console.log("jnjnjjn", req);
+  const photo = await FileUploader.upload({
+    data: req.file.buffer,
+    name: req.file.originalname,
+    mimetype: req.file.mimetype,
+  }).catch((err) => {
+    console.log(err);
+    next();
+  });
+
+  const user = await User.findOne({ _id: userInfo.id });
+  await user.update({ pic: photo.url });
+  res.sendStatus(StatusCodes.OK);
+});
+
 module.exports = {
   createUser,
   login,
@@ -175,4 +195,5 @@ module.exports = {
   addLinkedUser,
   deleteLinkedUser,
   signOut,
+  uploadProfilePic,
 };

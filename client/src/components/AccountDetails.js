@@ -9,6 +9,7 @@ const AccountDetails = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [pic, setPic] = useState("");
 
   const getCurrentUser = () => {
     fetch("http://localhost:3001/api/v1/users/getUser", {
@@ -21,6 +22,8 @@ const AccountDetails = () => {
         setLastName(json.lastName);
         setEmail(json.email);
         setPassword(json.password);
+        setPic(json.pic);
+        console.log(json.pic);
       })
       .catch((err) => console.log(err));
   };
@@ -50,6 +53,37 @@ const AccountDetails = () => {
         </li>
         <li className="list-group-item">
           <EditPassword getCurrentUser={getCurrentUser} />
+        </li>
+        <li>
+          <form
+            enctype="multipart/form-data"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const files = e.target.firstChild.files;
+              console.log("files", files);
+              let formData = new FormData();
+              formData.append("photo", files[0]);
+              fetch("http://localhost:3001/api/v1/users/upload", {
+                method: "POST",
+                credentials: "include",
+                // headers: {
+                //   "Content-Type": "multipart/form-data",
+                // },
+                body: formData,
+              })
+                .then((res) => res.json())
+                .then((json) => console.log(json))
+                .catch((err) => console.log(err));
+            }}
+          >
+            <input type="file" name="photo" />
+            <button className="btn" type="submit">
+              upload
+            </button>
+          </form>
+          <div>
+            <img src={pic} />
+          </div>
         </li>
       </ul>
     </div>

@@ -10,8 +10,11 @@ const {
   addLinkedUser,
   deleteLinkedUser,
   signOut,
+  uploadProfilePic,
 } = require("../controllers/users");
 const checkToken = require("../middleware/auth");
+const FileUpload = require("../services/photoUpload");
+const mw = FileUpload.single("photo");
 
 router.route("/register").post(createUser);
 router.route("/login").post(login);
@@ -22,6 +25,7 @@ router.route("/confirm-link").post(checkToken, addLinkedUser);
 router.route("/").patch(checkToken, updateUser);
 router.route("/delete-link/:id").delete(checkToken, deleteLinkedUser);
 router.route("/sign-out").delete(signOut);
+router.route("/upload").post(checkToken, mw, uploadProfilePic);
 router.get("/checkToken", checkToken, (req, res) => {
   res.sendStatus(200);
 });
