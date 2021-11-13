@@ -30,7 +30,7 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
   };
   return (
     <div
-      className="modal fade"
+      className="modal"
       id="enterLinkCodeModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
@@ -41,7 +41,7 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="enterLinkCodeModal"></h5>
+            <div className="fs-5 modal-title">Enter link code from email</div>
             <button
               type="button"
               className="btn-close"
@@ -50,7 +50,7 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
               onClick={handleModalClose}
             ></button>
           </div>
-          <div className="modal-body bg-light">
+          <div className="modal-body">
             <form onSubmit={handleSubmit}>
               <label htmlFor="email">Enter link code from email</label>
               <div className="d-flex">

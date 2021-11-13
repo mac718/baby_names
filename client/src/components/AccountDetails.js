@@ -67,7 +67,10 @@ const AccountDetails = () => {
                   credentials: "include",
                   body: formData,
                 })
-                  .then((res) => res.json())
+                  .then((res) => {
+                    getCurrentUser();
+                    return res.json();
+                  })
                   .then((json) => console.log(json))
                   .catch((err) => console.log(err));
               }}

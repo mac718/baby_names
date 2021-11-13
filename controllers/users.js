@@ -15,6 +15,7 @@ const {
 } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 const FileUploader = require("../services/photoUpload");
+const faker = require("faker");
 
 const createUser = asyncWrapper(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
@@ -28,6 +29,8 @@ const createUser = asyncWrapper(async (req, res, next) => {
 });
 
 const login = asyncWrapper(async (req, res, next) => {
+  let person = faker.name.gender();
+  console.log("person", person);
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
