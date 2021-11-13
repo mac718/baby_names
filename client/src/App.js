@@ -9,13 +9,15 @@ import AccountDetails from "./components/AccountDetails";
 import LinkEmailForm from "./components/LinkEmailForm";
 import LinkedUsers from "./components/LinkedUsers";
 import LinkedAccountRatings from "./components/LinkedAccountRatings";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   return (
     <div className="container">
       <Router>
         <NavBar />
-        <Route path="/" exact component={withAuth(BabyNameCard)} />
+        <Route path="/" exact component={LandingPage} />
+        <Route path="/cards" exact component={withAuth(BabyNameCard)} />
         <Route path="/login" render={(props) => <LogIn {...props} />} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/ratings" component={withAuth(Ratings)} />

@@ -25,7 +25,15 @@ const NavBar = () => {
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          Baby Names
+          <span
+            style={{
+              background: "linear-gradient(lightPink, blue)",
+              color: "white",
+            }}
+            className="rounded p-2"
+          >
+            Nominfans
+          </span>
         </a>
         <button
           className="navbar-toggler"
@@ -41,7 +49,7 @@ const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
+              <a className="nav-link active" aria-current="page" href="/cards">
                 Rank Names
               </a>
             </li>
@@ -49,7 +57,7 @@ const NavBar = () => {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href="/ratings/"
+                href="/ratings"
               >
                 Your Ratings
               </a>
@@ -99,6 +107,9 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
+        <Link to="/login">
+          <button className="btn btn-primary float-right">Login</button>
+        </Link>
       </div>
     </nav>
   );
