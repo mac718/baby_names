@@ -9,7 +9,6 @@ const { StatusCodes } = require("http-status-codes");
 
 const getNames = asyncWrapper(async (req, res) => {
   let userInfo = req.user;
-  console.log(userInfo);
 
   let user = await User.findOne({ _id: userInfo.id });
 
@@ -22,7 +21,9 @@ const getNames = asyncWrapper(async (req, res) => {
   let ratedNames = userRatings.map((rating) => rating.name);
   let unratedNames = names.filter((name) => !ratedNames.includes(name.name));
 
-  res.status(StatusCodes.OK).json({ names: unratedNames });
+  res
+    .status(StatusCodes.OK)
+    .json({ names: unratedNames, username: user.firstName });
 });
 
 const getSingleName = asyncWrapper(async (req, res) => {

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -10,8 +11,10 @@ const DropdownMenu = styled.li`
   }
 `;
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   const history = useHistory();
+  const [currentUser, setCurrentUser] = useState(null);
+
   const handleSignOut = (e) => {
     e.preventDefault();
     fetch("http://localhost:3001/api/v1/users/sign-out", {
@@ -21,6 +24,15 @@ const NavBar = () => {
       .then(() => history.push("/login"))
       .catch((err) => console.log(err));
   };
+
+  // useEffect(() => {
+  //   console.log("hello");
+  //   fetch("http://localhost:3001/api/v1/users/getUser")
+  //     .then((res) => res.json())
+  //     .then((json) => setCurrentUser(json.firstName))
+  //     .catch((err) => console.log(err));
+  // }, []);
+
   return (
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
@@ -96,10 +108,10 @@ const NavBar = () => {
                   </Link>
                 </li>
                 <li>
-                  <hr class="dropdown-divider" />
+                  <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#" onClick={handleSignOut}>
+                  <a className="dropdown-item" href="#" onClick={handleSignOut}>
                     Sign Out
                   </a>
                 </li>
@@ -107,9 +119,13 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-        <Link to="/login">
-          <button className="btn btn-primary float-right">Login</button>
-        </Link>
+        {user ? (
+          <div>Hi, {user}!</div>
+        ) : (
+          <Link to="/login">
+            <button className="btn btn-primary float-right">Login</button>
+          </Link>
+        )}
       </div>
     </nav>
   );

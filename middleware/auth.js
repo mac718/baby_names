@@ -4,8 +4,10 @@ const asyncWrapper = require("../middleware/async");
 
 const checkToken = asyncWrapper(async (req, res, next) => {
   const token = req.cookies.token;
+  console.log("token", token);
 
   if (!token) {
+    console.log("what?");
     //next(createCustomError("Unauthorized: please log in.", 401));
     throw new UnauthorizedError("Unauthorized: please log in.");
   }
@@ -16,6 +18,7 @@ const checkToken = asyncWrapper(async (req, res, next) => {
       throw new UnauthorizedError("Unauthorized: please log in.");
     }
     let verifiedUser = decoded;
+
     if (!verifiedUser) {
       //next(createCustomError("Unauthorized: please log in.", 401));
       throw new UnauthorizedError("Unauthorized: please log in.");

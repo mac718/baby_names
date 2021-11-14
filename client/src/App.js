@@ -1,3 +1,4 @@
+import { useState } from "react";
 import LogIn from "./components/LogIn";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Ratings from "./components/Ratings";
@@ -12,12 +13,22 @@ import LinkedAccountRatings from "./components/LinkedAccountRatings";
 import LandingPage from "./components/LandingPage";
 
 function App() {
+  const [user, setUser] = useState("");
+  const getCurrentUser = (name) => {
+    setUser(name);
+  };
   return (
     <div className="container">
       <Router>
-        <NavBar />
+        <NavBar user={user} />
         <Route path="/" exact component={LandingPage} />
-        <Route path="/cards" exact component={withAuth(BabyNameCard)} />
+        <Route
+          path="/cards"
+          exact
+          component={(props) =>
+            withAuth(BabyNameCard)({ ...props, getCurrentUser: getCurrentUser })
+          }
+        />
         <Route path="/login" render={(props) => <LogIn {...props} />} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/ratings" component={withAuth(Ratings)} />

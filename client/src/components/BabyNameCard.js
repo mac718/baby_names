@@ -98,7 +98,7 @@ const RatingButtonContainer = styled.div`
   color: gray;
 `;
 
-const BabyNameCard = () => {
+const BabyNameCard = ({ getCurrentUser }) => {
   const [names, setNames] = useState([]);
   const [currentName, setCurrentName] = useState("");
   const [currentRating, setCurrentRating] = useState(1);
@@ -154,6 +154,7 @@ const BabyNameCard = () => {
       .then((json) => {
         setSelectedGender(genderFilter);
         setSelectedOrigin(originFilter);
+        getCurrentUser(json.username);
 
         const namesToBeRated = filterNamesToBeRated(
           genderFilter,

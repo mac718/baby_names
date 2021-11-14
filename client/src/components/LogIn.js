@@ -52,7 +52,7 @@ const LogIn = (props) => {
   };
 
   if (redirect) {
-    return <Redirect to="/" />;
+    return <Redirect to="/cards" />;
   }
   return (
     <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
