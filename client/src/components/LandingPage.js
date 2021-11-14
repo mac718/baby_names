@@ -1,6 +1,55 @@
+import { useState, useRef, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
+import styled, { keyframes, css } from "styled-components";
+
+const squishExpand = keyframes`
+	0% {
+		transform: scale(0, .025);
+	}
+	50% {
+		transform: scale(1, .025);
+	}
+`;
+
+const FeaturesSection = styled.div`
+  background: orange;
+  animation: ${(props) =>
+    props.animate &&
+    css`
+      ${squishExpand} 1s linear
+    `};
+`;
 
 const LandingPage = () => {
+  const [animate, setAnimate] = useState(false);
+  const features = useRef(null);
+  console.log(features.current);
+  // const observer = new IntersectionObserver((entries) => {
+  //   entries.forEach((entry) => {
+  //     if (entry.isIntersecting) {
+  //       setAnimate(true);
+  //     }
+  //   });
+  // });
+  // console.log(document.querySelector(".features"));
+  // observer.observe(features);
+  // const handleScroll = (e, observer) => {
+  //   console.log(animate);
+  // };
+  let topPosition;
+  useLayoutEffect(() => {
+    topPosition = features.current.getBoundingClientRect().top;
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const onScroll = () => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    if (topPosition < scrollPosition) {
+      setAnimate(true);
+    }
+  };
+
   return (
     <div>
       <div
@@ -27,6 +76,15 @@ const LandingPage = () => {
           </Link>
         </button>
       </div>
+      <FeaturesSection
+        className="row "
+        ref={features}
+        animate={animate}
+        onScroll={onScroll}
+      >
+        <div className="fs-1 col-6 features">Hi</div>
+        <div className="fs-1 col-6">Yo</div>
+      </FeaturesSection>
     </div>
   );
 };

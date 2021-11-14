@@ -10,8 +10,6 @@ const saveRating = asyncWrapper(async (req, res) => {
   let { name, score } = req.body;
   let userInfo = req.user;
 
-  console.log("name", name);
-
   let user = await User.findOne({ _id: userInfo.id });
 
   if (!user) {
