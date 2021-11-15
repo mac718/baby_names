@@ -4,6 +4,7 @@ import styled, { keyframes, css } from "styled-components";
 import card from "../pics/card.png";
 import filter from "../pics/filter.png";
 import ratings from "../pics/ratings.png";
+import linked from "../pics/linked.png";
 
 const squishExpand = keyframes`
 	0% {
@@ -44,14 +45,26 @@ const FeaturesSectionRatings = styled.div`
     `};
 `;
 
+const FeaturesSectionLinked = styled.div`
+  background: white;
+  height: 30em;
+  animation: ${(props) =>
+    props.animate &&
+    css`
+      ${squishExpand} 1s linear
+    `};
+`;
+
 const LandingPage = () => {
   const [animateCard, setAnimateCard] = useState(false);
   const [animateFilter, setAnimateFilter] = useState(false);
   const [animateRatings, setAnimateRatings] = useState(false);
+  const [animateLinked, setAnimateLinked] = useState(false);
 
   const featuresCard = useRef(null);
   const featuresFilter = useRef(null);
   const featuresRatings = useRef(null);
+  const featuresLinked = useRef(null);
 
   // const observer = new IntersectionObserver((entries) => {
   //   entries.forEach((entry) => {
@@ -68,19 +81,24 @@ const LandingPage = () => {
   let topPositionCard;
   let topPositionFilter;
   let topPositionRatings;
+  let topPositionLinked;
+
   useLayoutEffect(() => {
     topPositionCard = featuresCard.current.getBoundingClientRect().top;
     topPositionFilter = featuresFilter.current.getBoundingClientRect().top;
     topPositionRatings = featuresRatings.current.getBoundingClientRect().top;
+    topPositionLinked = featuresLinked.current.getBoundingClientRect().top;
 
     window.addEventListener("scroll", onScrollCard);
     window.addEventListener("scroll", onScrollFilter);
     window.addEventListener("scroll", onScrollRatings);
+    window.addEventListener("scroll", onScrollLinked);
 
     return () => {
       window.removeEventListener("scroll", onScrollCard);
       window.removeEventListener("scroll", onScrollFilter);
       window.removeEventListener("scroll", onScrollRatings);
+      window.removeEventListener("scroll", onScrollLinked);
     };
   }, []);
 
@@ -100,6 +118,12 @@ const LandingPage = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
     if (topPositionRatings < scrollPosition) {
       setAnimateRatings(true);
+    }
+  };
+  const onScrollLinked = () => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    if (topPositionLinked < scrollPosition) {
+      setAnimateLinked(true);
     }
   };
 
@@ -169,6 +193,22 @@ const LandingPage = () => {
         </div>
         <div className="fs-1 col-6 h-100 d-flex justify-content-end align-items-center">
           <img src={ratings} className="w-100 " />
+        </div>
+      </FeaturesSectionRatings>
+      <FeaturesSectionRatings
+        className="row"
+        ref={featuresLinked}
+        animate={animateLinked}
+        onScroll={onScrollLinked}
+      >
+        <div className="fs-1 col-6 h-100 d-flex justify-content-end align-items-center">
+          <img src={linked} className="w-100 " />
+        </div>
+        <div className="fs-4 col-6 d-flex justify-content-center align-items-center text-muted h-100">
+          <p>
+            Link your account with friends and family to share each others'
+            ratings!
+          </p>
         </div>
       </FeaturesSectionRatings>
     </div>
