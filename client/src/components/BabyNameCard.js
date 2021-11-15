@@ -110,6 +110,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
   const [selectedGender, setSelectedGender] = useState("All");
   const [selectedOrigin, setSelectedOrigin] = useState("All");
   const [showNoNamesMessage, setShowNoNamesMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const filterNamesToBeRated = (genderFilter, originFilter, namesToBeRated) => {
     if (genderFilter !== "All") {
@@ -156,6 +157,9 @@ const BabyNameCard = ({ getCurrentUser }) => {
       credentials: "include",
     })
       .then((res) => {
+        if (isMounted.current) {
+          setIsLoading(true);
+        }
         return res.json();
       })
       .then((json) => {
@@ -183,6 +187,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
             setNames(namesToBeRated);
             setCurrentName(namesToBeRated[randomIndex]);
             setCardColor(color);
+            setIsLoading(false);
           }
         }
       })
@@ -295,27 +300,31 @@ const BabyNameCard = ({ getCurrentUser }) => {
     <div>
       <Filters fetchFn={fetchNames} className="position-fixed" />
       <Container className="container" style={{ height: "100vh" }}>
-        <NameBox className="shadow" color={cardColor}>
-          <TopNameDiv className="text-muted">
-            <em>origin: {currentName.origin}</em>
-          </TopNameDiv>
-          <NameDiv>{currentName.name}</NameDiv>
-          <BottomNameDiv>
-            <RadioBox className="input-group">
-              {ratingButtons}
-              <div className="input-group justify-content-center mt-1">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleSubmitRating}
-                  disabled={disabled}
-                >
-                  Submit Rating
-                </button>
-              </div>
-            </RadioBox>
-          </BottomNameDiv>
-        </NameBox>
+        {isLoading ? (
+          <div>...laoding</div>
+        ) : (
+          <NameBox className="shadow" color={cardColor}>
+            <TopNameDiv className="text-muted">
+              <em>origin: {currentName.origin}</em>
+            </TopNameDiv>
+            <NameDiv>{currentName.name}</NameDiv>
+            <BottomNameDiv>
+              <RadioBox className="input-group">
+                {ratingButtons}
+                <div className="input-group justify-content-center mt-1">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleSubmitRating}
+                    disabled={disabled}
+                  >
+                    Submit Rating
+                  </button>
+                </div>
+              </RadioBox>
+            </BottomNameDiv>
+          </NameBox>
+        )}
         <RatingOverlay animate={animate} hidden={hidden}>
           {currentRating}
         </RatingOverlay>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
 import card from "../pics/card.png";
 import filter from "../pics/filter.png";
+import ratings from "../pics/ratings.png";
 
 const squishExpand = keyframes`
 	0% {
@@ -33,12 +34,25 @@ const FeaturesSectionFilter = styled.div`
     `};
 `;
 
+const FeaturesSectionRatings = styled.div`
+  background: white;
+  height: 30em;
+  animation: ${(props) =>
+    props.animate &&
+    css`
+      ${squishExpand} 1s linear
+    `};
+`;
+
 const LandingPage = () => {
   const [animateCard, setAnimateCard] = useState(false);
   const [animateFilter, setAnimateFilter] = useState(false);
+  const [animateRatings, setAnimateRatings] = useState(false);
 
   const featuresCard = useRef(null);
   const featuresFilter = useRef(null);
+  const featuresRatings = useRef(null);
+
   // const observer = new IntersectionObserver((entries) => {
   //   entries.forEach((entry) => {
   //     if (entry.isIntersecting) {
@@ -53,15 +67,20 @@ const LandingPage = () => {
   // };
   let topPositionCard;
   let topPositionFilter;
+  let topPositionRatings;
   useLayoutEffect(() => {
     topPositionCard = featuresCard.current.getBoundingClientRect().top;
     topPositionFilter = featuresFilter.current.getBoundingClientRect().top;
+    topPositionRatings = featuresRatings.current.getBoundingClientRect().top;
+
     window.addEventListener("scroll", onScrollCard);
     window.addEventListener("scroll", onScrollFilter);
+    window.addEventListener("scroll", onScrollRatings);
 
     return () => {
       window.removeEventListener("scroll", onScrollCard);
       window.removeEventListener("scroll", onScrollFilter);
+      window.removeEventListener("scroll", onScrollRatings);
     };
   }, []);
 
@@ -75,6 +94,12 @@ const LandingPage = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
     if (topPositionFilter < scrollPosition) {
       setAnimateFilter(true);
+    }
+  };
+  const onScrollRatings = () => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    if (topPositionRatings < scrollPosition) {
+      setAnimateRatings(true);
     }
   };
 
@@ -130,6 +155,22 @@ const LandingPage = () => {
           <p>Use filters to select which names to see.</p>
         </div>
       </FeaturesSectionFilter>
+      <FeaturesSectionRatings
+        className="row"
+        ref={featuresRatings}
+        animate={animateRatings}
+        onScroll={onScrollRatings}
+      >
+        <div className="fs-4 col-6 d-flex justify-content-center align-items-center text-muted h-100">
+          <p>
+            Easily view, edit, or delete your ratings and filter them by gender
+            and/or origin.
+          </p>
+        </div>
+        <div className="fs-1 col-6 h-100 d-flex justify-content-end align-items-center">
+          <img src={ratings} className="w-100 " />
+        </div>
+      </FeaturesSectionRatings>
     </div>
   );
 };
