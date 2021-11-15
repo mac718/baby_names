@@ -110,7 +110,7 @@ const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
 
   const recipient = await User.findOne({ email });
   if (!recipient) {
-    throw new NotFoundError("No user with this emaul exists.");
+    throw new NotFoundError("No user with this email exists.");
   }
   const sender = await User.findOne({ _id: userInfo.id });
   if (!sender) {

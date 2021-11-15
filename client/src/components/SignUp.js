@@ -88,7 +88,7 @@ const SignUp = () => {
   };
 
   if (redirect) {
-    return <Redirect to="/" />;
+    return <Redirect to="/cards" />;
   }
 
   return (

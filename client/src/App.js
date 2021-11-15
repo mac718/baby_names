@@ -17,6 +17,7 @@ function App() {
   const getCurrentUser = (name) => {
     setUser(name);
   };
+
   return (
     <div className="container">
       <Router>

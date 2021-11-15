@@ -16,38 +16,38 @@ const SendLinkCodeModal = () => {
       credentials: "include",
     })
       .then((res) => {
-        if (res.status !== 200) {
-          alert(res.error);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((json) => {
-        fetch("http://localhost:3001/api/v1/emails", {
-          method: "POST",
-          body: JSON.stringify({
-            email,
-            code: json.linkCode,
-            sender: json.sender,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        })
-          .then((res) => {
-            if (res.status === 200) {
-              setSuccessMessage(true);
-            } else {
-              return res.json();
-            }
+        if (json.msg) {
+          setError(json.msg);
+        } else {
+          fetch("http://localhost:3001/api/v1/emails", {
+            method: "POST",
+            body: JSON.stringify({
+              email,
+              code: json.linkCode,
+              sender: json.sender,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
           })
-          .then((json) => {
-            if (json.msg) {
-              setError(json.msg);
-            }
-          })
-          .catch((err) => console.log(err));
+            .then((res) => {
+              if (res.status === 200) {
+                setSuccessMessage(true);
+              } else {
+                return res.json();
+              }
+            })
+            .then((json) => {
+              if (json.msg) {
+                setError(json.msg);
+              }
+            })
+            .catch((err) => console.log(err));
+        }
       })
       .catch((err) => console.log(err));
   };

@@ -120,7 +120,9 @@ const NavBar = ({ user }) => {
           </ul>
         </div>
         {user ? (
-          <div>Hi, {user}!</div>
+          <div>
+            Hi, <Link to="/account">{user}</Link>!
+          </div>
         ) : (
           <Link to="/login">
             <button className="btn btn-primary float-right">Login</button>
