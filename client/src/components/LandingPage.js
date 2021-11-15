@@ -1,6 +1,8 @@
 import { useState, useRef, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
+import card from "../pics/card.png";
+import filter from "../pics/filter.png";
 
 const squishExpand = keyframes`
 	0% {
@@ -11,8 +13,19 @@ const squishExpand = keyframes`
 	}
 `;
 
-const FeaturesSection = styled.div`
-  background: orange;
+const FeaturesSectionCard = styled.div`
+  background: white;
+  height: 30em;
+  animation: ${(props) =>
+    props.animate &&
+    css`
+      ${squishExpand} 1s linear
+    `};
+`;
+
+const FeaturesSectionFilter = styled.div`
+  background: white;
+  height: 30em;
   animation: ${(props) =>
     props.animate &&
     css`
@@ -21,9 +34,11 @@ const FeaturesSection = styled.div`
 `;
 
 const LandingPage = () => {
-  const [animate, setAnimate] = useState(false);
-  const features = useRef(null);
-  console.log(features.current);
+  const [animateCard, setAnimateCard] = useState(false);
+  const [animateFilter, setAnimateFilter] = useState(false);
+
+  const featuresCard = useRef(null);
+  const featuresFilter = useRef(null);
   // const observer = new IntersectionObserver((entries) => {
   //   entries.forEach((entry) => {
   //     if (entry.isIntersecting) {
@@ -36,17 +51,30 @@ const LandingPage = () => {
   // const handleScroll = (e, observer) => {
   //   console.log(animate);
   // };
-  let topPosition;
+  let topPositionCard;
+  let topPositionFilter;
   useLayoutEffect(() => {
-    topPosition = features.current.getBoundingClientRect().top;
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    topPositionCard = featuresCard.current.getBoundingClientRect().top;
+    topPositionFilter = featuresFilter.current.getBoundingClientRect().top;
+    window.addEventListener("scroll", onScrollCard);
+    window.addEventListener("scroll", onScrollFilter);
+
+    return () => {
+      window.removeEventListener("scroll", onScrollCard);
+      window.removeEventListener("scroll", onScrollFilter);
+    };
   }, []);
 
-  const onScroll = () => {
+  const onScrollCard = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
-    if (topPosition < scrollPosition) {
-      setAnimate(true);
+    if (topPositionCard < scrollPosition) {
+      setAnimateCard(true);
+    }
+  };
+  const onScrollFilter = () => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    if (topPositionFilter < scrollPosition) {
+      setAnimateFilter(true);
     }
   };
 
@@ -76,15 +104,32 @@ const LandingPage = () => {
           </Link>
         </button>
       </div>
-      <FeaturesSection
-        className="row "
-        ref={features}
-        animate={animate}
-        onScroll={onScroll}
+      <FeaturesSectionCard
+        className="row"
+        ref={featuresCard}
+        animate={animateCard}
+        onScroll={onScrollCard}
       >
-        <div className="fs-1 col-6 features">Hi</div>
-        <div className="fs-1 col-6">Yo</div>
-      </FeaturesSection>
+        <div className="fs-4 col-6 d-flex justify-content-center align-items-center text-muted h-100">
+          <p>Rate names on a scale of 1-10.</p>
+        </div>
+        <div className="fs-1 col-6 h-100 d-flex justify-content-end align-items-center">
+          <img src={card} className="w-100 " />
+        </div>
+      </FeaturesSectionCard>
+      <FeaturesSectionFilter
+        className="row"
+        ref={featuresFilter}
+        animate={animateFilter}
+        onScroll={onScrollFilter}
+      >
+        <div className="fs-1 col-6 h-100 d-flex justify-content-end align-items-center">
+          <img src={filter} className="w-100 " />
+        </div>
+        <div className="fs-4 col-6 d-flex justify-content-center align-items-center text-muted h-100">
+          <p>Use filters to select which names to see.</p>
+        </div>
+      </FeaturesSectionFilter>
     </div>
   );
 };
