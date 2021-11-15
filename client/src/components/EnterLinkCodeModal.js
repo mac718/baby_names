@@ -14,7 +14,14 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
       },
       credentials: "include",
     })
-      .then(() => getLinkedUsers())
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.msg) {
+          setError(json.msg);
+        } else {
+          getLinkedUsers();
+        }
+      })
       .catch((err) => {
         console.log(err);
         setError(err);

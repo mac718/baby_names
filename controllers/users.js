@@ -130,6 +130,9 @@ const addLinkedUser = asyncWrapper(async (req, res, next) => {
 
   const recipient = await User.findOne({ _id: userInfo.id });
   const pendingLink = await LinkCode.findOne({ code });
+  if (!pendingLink) {
+    throw new NotFoundError("Link code not valid");
+  }
   const sender = await User.findOne({ _id: pendingLink.sender });
 
   await recipient.updateOne({
