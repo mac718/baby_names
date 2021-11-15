@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
 import Filters from "./Filters";
@@ -143,7 +143,14 @@ const BabyNameCard = ({ getCurrentUser }) => {
     return namesToBeRated;
   };
 
-  const fetchNames = (genderFilter = "All", originFilter = "All") => {
+  //solution to get rid of "cannot update state on unmounted component" error
+  let _isMounted = useRef(true);
+
+  const fetchNames = (
+    genderFilter = "All",
+    originFilter = "All",
+    isMounted = _isMounted
+  ) => {
     fetch("http://localhost:3001/api/v1/names", {
       method: "GET",
       credentials: "include",
@@ -152,36 +159,42 @@ const BabyNameCard = ({ getCurrentUser }) => {
         return res.json();
       })
       .then((json) => {
-        setSelectedGender(genderFilter);
-        setSelectedOrigin(originFilter);
-        getCurrentUser(json.username);
+        if (isMounted.current) {
+          setSelectedGender(genderFilter);
+          setSelectedOrigin(originFilter);
+          getCurrentUser(json.username);
 
-        const namesToBeRated = filterNamesToBeRated(
-          genderFilter,
-          originFilter,
-          json.names
-        );
+          const namesToBeRated = filterNamesToBeRated(
+            genderFilter,
+            originFilter,
+            json.names
+          );
 
-        if (namesToBeRated.length === 0) {
-          setShowNoNamesMessage(true);
-        } else {
-          let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
-          let color;
-          color =
-            namesToBeRated[randomIndex]["gender"] === "m"
-              ? "lightBlue"
-              : "lightPink";
-          setShowNoNamesMessage(false);
-          setNames(namesToBeRated);
-          setCurrentName(namesToBeRated[randomIndex]);
-          setCardColor(color);
+          if (namesToBeRated.length === 0) {
+            setShowNoNamesMessage(true);
+          } else {
+            let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
+            let color;
+            color =
+              namesToBeRated[randomIndex]["gender"] === "m"
+                ? "lightBlue"
+                : "lightPink";
+            setShowNoNamesMessage(false);
+            setNames(namesToBeRated);
+            setCurrentName(namesToBeRated[randomIndex]);
+            setCardColor(color);
+          }
         }
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    fetchNames();
+    _isMounted.current = true;
+    fetchNames(selectedGender, selectedOrigin, _isMounted);
+    return () => {
+      _isMounted.current = false;
+    };
   }, []);
 
   const handleRatingButtonClick = (e) => {
