@@ -9,7 +9,7 @@ const sendLinkEmail = asyncWrapper(async (req, res) => {
   const userInfo = req.user;
   //const user = await User.findOne({ _id: userInfo.id });
 
-  let message = `You've been invited to link your baby ranker account with ${sender}.
+  let message = `Hi! You've been invited to link your baby ranker account with ${sender}.
                   Log in to your account and enter this code: ${code} on your 'linked accounts' 
                   page to confirm your link with ${
                     sender.split(" ")[0]
@@ -20,10 +20,24 @@ const sendLinkEmail = asyncWrapper(async (req, res) => {
     to: email,
     subject: "Baby Names",
     text: message,
-    html: `<p>${message}</p>`,
+    html: `<p>Hi!,
+    
+    You've been invited to link your baby ranker account with ${sender}.
+    Log in to your account and enter this code: 
+    
+    <div style="text-alignment: center; font-weight: bold; font-size: 24px; border: 1px solid; background: lightGray; margin-bottom: 20px;">${code}</div>
+    
+    on your 'linked accounts' 
+    page to confirm your link with ${
+      sender.split(" ")[0]
+    }. Otherwise, just ignore
+    this email :)
+    
+    Happy ranking!
+    </p>`,
   };
 
-  await EmailService.send(options);
+  EmailService.send(options);
 
   res.status(StatusCodes.OK).send();
 });
