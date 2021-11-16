@@ -211,6 +211,23 @@ const LandingPage = () => {
           </p>
         </div>
       </FeaturesSectionRatings>
+      <div
+        className="fs-1 d-flex flex-column justify-content-center align-items-center text-white w-100 rounded"
+        style={{
+          height: "15em",
+          background: "linear-gradient(lightPink, lightBlue)",
+        }}
+      >
+        <p>Ready to start ranking?</p>
+        <Link to="/sign-up">
+          <button
+            className="btn btn-primary fs-4 shadow-sm"
+            style={{ width: "10em", height: "5em" }}
+          >
+            Sign up today!
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
