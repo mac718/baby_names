@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import LogIn from "./components/LogIn";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Ratings from "./components/Ratings";
@@ -7,29 +6,18 @@ import NavBar from "./components/NavBar";
 import { withAuth } from "./components/withAuth";
 import SignUp from "./components/SignUp";
 import AccountDetails from "./components/AccountDetails";
-import LinkEmailForm from "./components/LinkEmailForm";
 import LinkedUsers from "./components/LinkedUsers";
 import LinkedAccountRatings from "./components/LinkedAccountRatings";
 import LandingPage from "./components/LandingPage";
-
-export const userContext = React.createContext();
+import { UserContextProvider } from "./components/contexts/UserContext";
 
 function App() {
-  const [user, setUser] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:3001/api/v1/users/getUser", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => setUser(json.firstName))
-      .catch((err) => console.log(err));
-  });
-
   return (
     <div className="container">
       <Router>
-        <NavBar user={user} />
+        <UserContextProvider>
+          <NavBar />
+        </UserContextProvider>
 
         <Route path="/" exact component={LandingPage} />
         <Route
