@@ -166,7 +166,6 @@ const BabyNameCard = ({ getCurrentUser }) => {
         if (isMounted.current) {
           setSelectedGender(genderFilter);
           setSelectedOrigin(originFilter);
-          getCurrentUser(json.username);
 
           const namesToBeRated = filterNamesToBeRated(
             genderFilter,
