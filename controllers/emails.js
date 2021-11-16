@@ -6,10 +6,11 @@ const { StatusCodes } = require("http-status-codes");
 
 const sendLinkEmail = asyncWrapper(async (req, res) => {
   const { email, code, sender } = req.body;
-  const userInfo = req.user;
-  //const user = await User.findOne({ _id: userInfo.id });
+  const recipient = User.findOne({ email });
 
-  let message = `Hi! You've been invited to link your baby ranker account with ${sender}.
+  let message = `Hi, ${
+    recipient.firstName
+  }! You've been invited to link your baby ranker account with ${sender}.
                   Log in to your account and enter this code: ${code} on your 'linked accounts' 
                   page to confirm your link with ${
                     sender.split(" ")[0]
@@ -20,7 +21,7 @@ const sendLinkEmail = asyncWrapper(async (req, res) => {
     to: email,
     subject: "Baby Names",
     text: message,
-    html: `<p>Hi!,
+    html: `<p>Hi! ${recipient.firstName},
     
     You've been invited to link your baby ranker account with ${sender}.
     Log in to your account and enter this code: 

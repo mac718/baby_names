@@ -40,7 +40,7 @@ const LinkedUserCard = styled.div`
     width: 90%;
   }
 `;
-const LinkedUsers = () => {
+const LinkedUsers = ({ user }) => {
   const [users, setUsers] = useState([]);
   let userCards = <p className="fs-1">No linked users!</p>;
 
@@ -148,7 +148,7 @@ const LinkedUsers = () => {
           </Button>
         </ButtonDiv>
 
-        <SendLinkCodeModal />
+        <SendLinkCodeModal user={user} />
         <EnterLinkCodeModal getLinkedUsers={getLinkedUsers} />
         <div className="w-100">
           <LinkedUserCardContainer>{userCards}</LinkedUserCardContainer>

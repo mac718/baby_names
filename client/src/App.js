@@ -45,10 +45,7 @@ function App() {
         <Route path="/sign-up" component={SignUp} />
         <Route path="/ratings" component={withAuth(Ratings)} />
         <Route path="/account" component={withAuth(AccountDetails)} />
-        <Route
-          path="/linked"
-          component={(props) => withAuth(LinkedUsers)({ ...props, user })}
-        />
+        <Route path="/linked" component={withAuth(LinkedUsers)} />
         <Route
           path="/linked-ratings/:id"
           component={withAuth(LinkedAccountRatings)}
