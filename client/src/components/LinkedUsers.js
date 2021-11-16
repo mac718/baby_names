@@ -40,7 +40,7 @@ const LinkedUserCard = styled.div`
     width: 90%;
   }
 `;
-const LinkedUsers = ({ user }) => {
+const LinkedUsers = ({ getCurrentUser }) => {
   const [users, setUsers] = useState([]);
   let userCards = <p className="fs-1">No linked users!</p>;
 
@@ -53,6 +53,7 @@ const LinkedUsers = ({ user }) => {
       })
       .then((json) => {
         setUsers(json.linkedUsers);
+        getCurrentUser(json.username);
       })
       .catch((err) => {
         console.log(err);
@@ -148,7 +149,7 @@ const LinkedUsers = ({ user }) => {
           </Button>
         </ButtonDiv>
 
-        <SendLinkCodeModal user={user} />
+        <SendLinkCodeModal />
         <EnterLinkCodeModal getLinkedUsers={getLinkedUsers} />
         <div className="w-100">
           <LinkedUserCardContainer>{userCards}</LinkedUserCardContainer>

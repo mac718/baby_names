@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { UserContext, userContext } from "./contexts/UserContext";
+import { UserContext } from "./contexts/UserContext";
 
 const DropdownMenu = styled.li`
   @media only screen and (max-width: 500px) {
@@ -12,10 +12,8 @@ const DropdownMenu = styled.li`
   }
 `;
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   const history = useHistory();
-  const [currentUser, setCurrentUser] = useState(null);
-  const user = useContext(UserContext);
 
   const handleSignOut = (e) => {
     e.preventDefault();
@@ -27,13 +25,9 @@ const NavBar = () => {
       .catch((err) => console.log(err));
   };
 
-  // useEffect(() => {
-  //   console.log("hello");
-  //   fetch("http://localhost:3001/api/v1/users/getUser")
-  //     .then((res) => res.json())
-  //     .then((json) => setCurrentUser(json.firstName))
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    console.log("rendered");
+  }, []);
 
   return (
     <nav className="navbar navbar-expand navbar-light">
@@ -122,8 +116,12 @@ const NavBar = () => {
           </ul>
         </div>
         {user ? (
-          <div>
-            Hi, <Link to="/account">{user}</Link>!
+          <div className="text-decoration-none fw-bold">
+            Hi,{" "}
+            <Link to="/account" className="text-decoration-none">
+              {user}
+            </Link>
+            !
           </div>
         ) : (
           <Link to="/login">

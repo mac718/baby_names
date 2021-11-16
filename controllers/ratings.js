@@ -60,7 +60,7 @@ const getRatings = asyncWrapper(async (req, res) => {
 
   let ratings = await Rating.find({ user: user._id });
   //let groupDivs = groupRatings(ratings);
-  res.status(StatusCodes.OK).json({ ratings });
+  res.status(StatusCodes.OK).json({ ratings, username: user.firstName });
 });
 
 const updateRating = asyncWrapper(async (req, res) => {

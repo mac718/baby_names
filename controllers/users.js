@@ -99,7 +99,7 @@ const getLinkedUsers = asyncWrapper(async (req, res, next) => {
   const linkedUsersIds = user.linkedUsers;
   let linkedUsers = await User.find({ _id: { $in: linkedUsersIds } });
 
-  res.status(StatusCodes.OK).json({ linkedUsers });
+  res.status(StatusCodes.OK).json({ linkedUsers, username: user.firstName });
 });
 
 const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {

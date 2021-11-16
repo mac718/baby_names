@@ -21,7 +21,7 @@ const ResponsiveListItem = styled.li`
   }
 `;
 
-const Ratings = () => {
+const Ratings = ({ getCurrentUser }) => {
   const [ratings, setRatings] = useState([]);
   const [hidden, setHidden] = useState(true);
   const [currentButtonsDivId, setCurrentButtonsDivId] = useState(null);
@@ -96,6 +96,7 @@ const Ratings = () => {
           let groupDivs = groupRatings(ratingsToBeShown);
           setRatings(groupDivs);
           setRatingsLoading(false);
+          getCurrentUser(json.username);
         }
       })
       .catch((err) => console.log(err));

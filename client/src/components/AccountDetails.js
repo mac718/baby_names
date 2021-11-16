@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import EditEmail from "./EditEmail";
 import EditFirstName from "./EditFirstName";
 import EditLastName from "./EditLastName";
 import EditPassword from "./EditPassword";
 
-const AccountDetails = () => {
+const AccountDetails = ({ currentUser }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,6 +23,7 @@ const AccountDetails = () => {
         setEmail(json.email);
         setPassword(json.password);
         setPic(json.pic);
+        currentUser(json.firstName);
         console.log(json.pic);
       })
       .catch((err) => console.log(err));

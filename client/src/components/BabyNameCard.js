@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
 import Filters from "./Filters";
 import AllNamesRanked from "./AllNamesRanked";
+import { UserContext } from "./contexts/UserContext";
 
 const pop = keyframes`
   from {
@@ -111,6 +112,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
   const [selectedOrigin, setSelectedOrigin] = useState("All");
   const [showNoNamesMessage, setShowNoNamesMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [userName, setUserName] = useState(null);
 
   const filterNamesToBeRated = (genderFilter, originFilter, namesToBeRated) => {
     if (genderFilter !== "All") {
@@ -187,6 +189,8 @@ const BabyNameCard = ({ getCurrentUser }) => {
             setCurrentName(namesToBeRated[randomIndex]);
             setCardColor(color);
             setIsLoading(false);
+            getCurrentUser(json.username);
+            setUserName(json.userName);
           }
         }
       })
