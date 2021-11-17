@@ -45,7 +45,7 @@ const LinkedUsers = ({ getCurrentUser }) => {
   let userCards = <p className="fs-1">No linked users!</p>;
 
   const getLinkedUsers = () => {
-    fetch("api/v1/users/linked", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users/linked", {
       credentials: "include",
     })
       .then((res) => {
@@ -67,13 +67,16 @@ const LinkedUsers = ({ getCurrentUser }) => {
   const handleDeleteLink = (e, id) => {
     e.preventDefault();
     console.log("hello");
-    fetch(`api/v1/users/delete-link/${id}`, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `https://rocky-temple-34078.herokuapp.com/api/v1/users/delete-link/${id}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then(() => getLinkedUsers())
       .catch((err) => console.log(err));
   };

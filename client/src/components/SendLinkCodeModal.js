@@ -7,14 +7,17 @@ const SendLinkCodeModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("api/v1/users/request-link", {
-      method: "POST",
-      body: JSON.stringify({ email }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    })
+    fetch(
+      "https://rocky-temple-34078.herokuapp.com/api/v1/users/request-link",
+      {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    )
       .then((res) => {
         return res.json();
       })

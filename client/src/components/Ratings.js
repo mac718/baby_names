@@ -72,7 +72,7 @@ const Ratings = ({ getCurrentUser }) => {
   };
 
   const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
-    fetch("api/v1/ratings/id", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/ratings/id", {
       method: "GET",
       credentials: "include",
     })
@@ -113,7 +113,7 @@ const Ratings = ({ getCurrentUser }) => {
   const handleDeleteRating = (e) => {
     e.preventDefault();
     let name = e.target.parentElement.parentElement.children[1].innerHTML;
-    fetch("api/v1/ratings", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/ratings", {
       method: "DELETE",
       credentials: "include",
       body: JSON.stringify({

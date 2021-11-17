@@ -61,10 +61,13 @@ const LinkedAccountRatings = (props) => {
   };
 
   const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
-    fetch(`api/v1/ratings/${params.id}`, {
-      method: "GET",
-      credentials: "include",
-    })
+    fetch(
+      `https://rocky-temple-34078.herokuapp.com/api/v1/ratings/${params.id}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    )
       .then((res) => {
         if (isMounted.current) {
           setRatingsLoading(true);

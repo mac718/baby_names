@@ -52,7 +52,7 @@ const RadioButtons = ({ name, fetchRatings }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("api/v1/ratings", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/ratings", {
       method: "PATCH",
       body: JSON.stringify({
         name: name,

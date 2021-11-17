@@ -7,9 +7,12 @@ export const withAuth = (ComponentToProtect) => {
     const [redirect, setRedirect] = useState(false);
     const [errMessage, setErrMessage] = useState("");
     useEffect(() => {
-      fetch("api/v1/users/checkToken", {
-        credentials: "include",
-      })
+      fetch(
+        "https://rocky-temple-34078.herokuapp.com/api/v1/users/checkToken",
+        {
+          credentials: "include",
+        }
+      )
         .then((res) => {
           if (res.status === 200) {
             setLoading(false);
