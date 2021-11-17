@@ -249,10 +249,13 @@ const BabyNameCard = ({ getCurrentUser }) => {
 
         let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
         let color;
-        color =
-          namesToBeRated[randomIndex]["gender"] === "m"
-            ? "lightBlue"
-            : "lightPink";
+        if (amesToBeRated[randomIndex]["gender"] === "m") {
+          color = "lightBlue";
+        } else if (amesToBeRated[randomIndex]["gender"] === "f") {
+          color = "lightPink";
+        } else {
+          color = "purple";
+        }
         if (namesToBeRated.length === 0) {
           setShowNoNamesMessage(true);
         } else {
