@@ -217,7 +217,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     setHidden(!hidden);
 
     setAnimate(!animate);
-    fetch("https://rocky-temple-34078.herokuapp.com//api/v1/ratings", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/ratings", {
       method: "POST",
       body: JSON.stringify({
         name: currentName,
