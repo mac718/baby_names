@@ -154,7 +154,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     originFilter = "All",
     isMounted = _isMounted
   ) => {
-    fetch("api/v1/names", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/names", {
       method: "GET",
       credentials: "include",
     })
@@ -217,7 +217,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     setHidden(!hidden);
 
     setAnimate(!animate);
-    fetch("/api/v1/ratings", {
+    fetch("https://rocky-temple-34078.herokuapp.com//api/v1/ratings", {
       method: "POST",
       body: JSON.stringify({
         name: currentName,

@@ -61,7 +61,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/api/v1/users/register", {
+    fetch("http://localhost:5000/api/v1/users/register", {
       method: "POST",
       body: JSON.stringify({ firstName, lastName, email, password }),
       credentials: "include",
@@ -73,6 +73,7 @@ const SignUp = () => {
         if (res.status === 200) {
           setRedirect(true);
         } else {
+          console.log(res);
           return res.json();
         }
       })
@@ -83,7 +84,7 @@ const SignUp = () => {
       })
       .catch((err) => {
         console.log(err);
-        setError(err);
+        setError(err.message);
       });
   };
 
