@@ -40,6 +40,10 @@ app.use(`${baseUrl}emails`, emails);
 
 app.use(errorHandlerMiddlerware);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 const port = process.env.PORT || 3001;
 
 app.listen(port, "0.0.0.0");
