@@ -8,6 +8,7 @@ const names = require("./routes/names");
 const ratings = require("./routes/ratings");
 const emails = require("./routes/emails");
 const errorHandlerMiddlerware = require("./middleware/errorHandler");
+const path = require("path");
 require("dotenv").config();
 
 mongoose.set("useCreateIndex", true);

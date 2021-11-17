@@ -3,8 +3,9 @@ const mongooseeder = require("mongooseeder");
 const models = require("../models");
 const fs = require("fs");
 const path = require("path");
+require("dotenv").config();
 
-const mongodbUrl = "mongodb://localhost/baby_names_development";
+const mongodbUrl = process.env.MONGODB_URI; //"mongodb://localhost/baby_names_development";
 
 mongooseeder.seed({
   mongodbUrl: mongodbUrl,
