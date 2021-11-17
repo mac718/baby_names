@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://rocky-temple-34078.herokuapp.com/",
     credentials: true,
   })
 );
