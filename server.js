@@ -31,6 +31,7 @@ app.use(express.json());
 
 const baseUrl = "/api/v1/";
 
+app.use("/");
 app.use(`${baseUrl}users`, user);
 app.use(`${baseUrl}ratings`, ratings);
 app.use(`${baseUrl}names`, names);
@@ -43,6 +44,10 @@ app.use(errorHandlerMiddlerware);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
+
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 
 const port = process.env.PORT || 3001;
 
