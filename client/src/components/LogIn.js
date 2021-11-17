@@ -25,7 +25,7 @@ const LogIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/v1/users/login", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       credentials: "include",

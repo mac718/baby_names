@@ -61,7 +61,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/v1/users/register", {
+    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users/register", {
       method: "POST",
       body: JSON.stringify({ firstName, lastName, email, password }),
       credentials: "include",
