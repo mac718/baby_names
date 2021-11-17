@@ -31,7 +31,6 @@ app.use(express.json());
 
 const baseUrl = "/api/v1/";
 
-app.use("/");
 app.use(`${baseUrl}users`, user);
 app.use(`${baseUrl}ratings`, ratings);
 app.use(`${baseUrl}names`, names);
