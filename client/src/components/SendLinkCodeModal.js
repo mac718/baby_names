@@ -7,7 +7,7 @@ const SendLinkCodeModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users/request-link", {
+    fetch("api/v1/users/request-link", {
       method: "POST",
       body: JSON.stringify({ email }),
       headers: {
@@ -22,7 +22,7 @@ const SendLinkCodeModal = () => {
         if (json.msg) {
           setError(json.msg);
         } else {
-          fetch("http://localhost:3001/api/v1/emails", {
+          fetch("api/v1/emails", {
             method: "POST",
             body: JSON.stringify({
               email,

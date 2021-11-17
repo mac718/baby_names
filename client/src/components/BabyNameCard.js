@@ -154,7 +154,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     originFilter = "All",
     isMounted = _isMounted
   ) => {
-    fetch("http://localhost:3001/api/v1/names", {
+    fetch("api/v1/names", {
       method: "GET",
       credentials: "include",
     })
@@ -217,7 +217,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     setHidden(!hidden);
 
     setAnimate(!animate);
-    fetch("http://localhost:3001/api/v1/ratings", {
+    fetch("api/v1/ratings", {
       method: "POST",
       body: JSON.stringify({
         name: currentName,

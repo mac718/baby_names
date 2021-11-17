@@ -6,7 +6,7 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users/confirm-link", {
+    fetch("api/v1/users/confirm-link", {
       method: "POST",
       body: JSON.stringify({ code }),
       headers: {

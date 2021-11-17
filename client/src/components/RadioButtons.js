@@ -52,7 +52,7 @@ const RadioButtons = ({ name, fetchRatings }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/ratings", {
+    fetch("api/v1/ratings", {
       method: "PATCH",
       body: JSON.stringify({
         name: name,

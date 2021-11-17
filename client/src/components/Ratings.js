@@ -72,7 +72,7 @@ const Ratings = ({ getCurrentUser }) => {
   };
 
   const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
-    fetch("http://localhost:3001/api/v1/ratings/id", {
+    fetch("api/v1/ratings/id", {
       method: "GET",
       credentials: "include",
     })
@@ -113,7 +113,7 @@ const Ratings = ({ getCurrentUser }) => {
   const handleDeleteRating = (e) => {
     e.preventDefault();
     let name = e.target.parentElement.parentElement.children[1].innerHTML;
-    fetch("http://localhost:3001/api/v1/ratings", {
+    fetch("api/v1/ratings", {
       method: "DELETE",
       credentials: "include",
       body: JSON.stringify({

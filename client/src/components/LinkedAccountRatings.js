@@ -61,7 +61,7 @@ const LinkedAccountRatings = (props) => {
   };
 
   const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
-    fetch(`http://localhost:3001/api/v1/ratings/${params.id}`, {
+    fetch(`api/v1/ratings/${params.id}`, {
       method: "GET",
       credentials: "include",
     })

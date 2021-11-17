@@ -12,7 +12,7 @@ const AccountDetails = ({ currentUser }) => {
   const [pic, setPic] = useState("");
 
   const getCurrentUser = () => {
-    fetch("http://localhost:3001/api/v1/users/getUser", {
+    fetch("api/v1/users/getUser", {
       method: "GET",
       credentials: "include",
     })
@@ -63,7 +63,7 @@ const AccountDetails = ({ currentUser }) => {
                 const files = e.target.firstChild.files;
                 let formData = new FormData();
                 formData.append("photo", files[0]);
-                fetch("http://localhost:3001/api/v1/users/upload", {
+                fetch("api/v1/users/upload", {
                   method: "POST",
                   credentials: "include",
                   body: formData,

@@ -25,7 +25,7 @@ const LogIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users/login", {
+    fetch("api/v1/users/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       credentials: "include",

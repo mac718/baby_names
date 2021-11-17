@@ -13,7 +13,7 @@ const EditFirstName = ({ currentFirstName, getCurrentUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users", {
+    fetch("api/v1/users", {
       method: "PATCH",
       body: JSON.stringify({ property: "firstName", firstName: newFirstName }),
       headers: {

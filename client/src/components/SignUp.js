@@ -61,7 +61,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users/register", {
+    fetch("api/v1/users/register", {
       method: "POST",
       body: JSON.stringify({ firstName, lastName, email, password }),
       credentials: "include",

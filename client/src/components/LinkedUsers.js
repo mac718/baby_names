@@ -45,7 +45,7 @@ const LinkedUsers = ({ getCurrentUser }) => {
   let userCards = <p className="fs-1">No linked users!</p>;
 
   const getLinkedUsers = () => {
-    fetch("http://localhost:3001/api/v1/users/linked", {
+    fetch("api/v1/users/linked", {
       credentials: "include",
     })
       .then((res) => {
@@ -67,7 +67,7 @@ const LinkedUsers = ({ getCurrentUser }) => {
   const handleDeleteLink = (e, id) => {
     e.preventDefault();
     console.log("hello");
-    fetch(`http://localhost:3001/api/v1/users/delete-link/${id}`, {
+    fetch(`api/v1/users/delete-link/${id}`, {
       method: "DELETE",
       credentials: "include",
       headers: {

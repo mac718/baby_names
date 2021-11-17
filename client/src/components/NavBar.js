@@ -17,7 +17,7 @@ const NavBar = ({ user }) => {
 
   const handleSignOut = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/api/v1/users/sign-out", {
+    fetch("api/v1/users/sign-out", {
       method: "DELETE",
       credentials: "include",
     })
