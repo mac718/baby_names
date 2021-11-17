@@ -121,7 +121,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
       } else if (genderFilter === "Female") {
         namesToBeRated = namesToBeRated.filter((name) => name.gender === "f");
       } else {
-        namesToBeRated = namesToBeRated.filter((name) => name.gender === "b");
+        namesToBeRated = namesToBeRated.filter((name) => name.gender === "n");
       }
     }
 

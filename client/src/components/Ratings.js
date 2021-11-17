@@ -53,7 +53,7 @@ const Ratings = ({ getCurrentUser }) => {
       } else if (genderFilter === "Female") {
         ratings = ratings.filter((rating) => rating.name.gender === "f");
       } else {
-        ratings = ratings.filter((rating) => rating.name.gender === "b");
+        ratings = ratings.filter((rating) => rating.name.gender === "n");
       }
     }
 
