@@ -217,7 +217,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     setHidden(!hidden);
 
     setAnimate(!animate);
-    fetch("api/v1/ratings", {
+    fetch("/api/v1/ratings", {
       method: "POST",
       body: JSON.stringify({
         name: currentName,
