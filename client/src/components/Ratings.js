@@ -153,9 +153,13 @@ const Ratings = ({ getCurrentUser }) => {
   let groupDivs = ratings.map((group, idx) => {
     let names = group.map((name) => {
       let nameColor;
-      name.gender === "m"
-        ? (nameColor = "lightBlue")
-        : (nameColor = "lightPink");
+      if (name["gender"] === "m") {
+        nameColor = "lightBlue";
+      } else if (name["gender"] === "f") {
+        nameColor = "lightPink";
+      } else {
+        nameColor = "purple";
+      }
       return (
         <ResponsiveListItem className="list-group-item" key={name.name}>
           <div className="col col-sm"></div>
