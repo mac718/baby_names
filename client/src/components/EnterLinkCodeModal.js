@@ -22,6 +22,7 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
           setError(json.msg);
         } else {
           getLinkedUsers();
+          setSuccessMessage(true);
         }
       })
       .catch((err) => {
@@ -78,7 +79,7 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
           <div className="modal-footer">
             {successMessage && (
               <div className="text-success text-center fw-bold w-100">
-                Link code sent!
+                Linked user added!
               </div>
             )}
             {error && (
