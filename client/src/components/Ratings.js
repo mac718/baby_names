@@ -71,7 +71,11 @@ const Ratings = ({ getCurrentUser }) => {
     return ratings;
   };
 
-  const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
+  const fetchRatings = (
+    genderFilter = selectedGender,
+    originFilter = selectedOrigin,
+    isMounted = _isMounted
+  ) => {
     fetch("/api/v1/ratings/id", {
       method: "GET",
       credentials: "include",
