@@ -238,10 +238,9 @@ const BabyNameCard = ({ getCurrentUser }) => {
     })
       .then((res) => {
         setAnimate(!animate);
-        setTimeout(() => {
-          setHidden(true);
-          setAnimate(false);
-        }, 500);
+
+        setHidden(true);
+        setAnimate(false);
 
         if (res.status === 401) {
           setRedirect(true);
@@ -262,12 +261,10 @@ const BabyNameCard = ({ getCurrentUser }) => {
         if (namesToBeRated.length === 0) {
           setShowNoNamesMessage(true);
         } else {
-          setTimeout(() => {
-            setNames(namesToBeRated);
-            setCurrentName(namesToBeRated[randomIndex]);
-            setDisabled(true);
-            setCardColor(color);
-          }, 0);
+          setNames(namesToBeRated);
+          setCurrentName(namesToBeRated[randomIndex]);
+          setDisabled(true);
+          setCardColor(color);
         }
       })
       .catch((err) => {
