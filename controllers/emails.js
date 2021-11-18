@@ -6,7 +6,7 @@ const { StatusCodes } = require("http-status-codes");
 
 const sendLinkEmail = asyncWrapper(async (req, res) => {
   const { email, code, sender } = req.body;
-  const recipient = User.findOne({ email });
+  const recipient = await User.findOne({ email });
 
   let message = `Hi, ${
     recipient.firstName

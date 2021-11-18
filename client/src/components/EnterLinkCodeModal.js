@@ -14,7 +14,9 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
       },
       credentials: "include",
     })
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((json) => {
         if (json.msg) {
           setError(json.msg);
@@ -23,7 +25,7 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setError(err);
       });
   };

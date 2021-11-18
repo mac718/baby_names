@@ -141,7 +141,7 @@ const addLinkedUser = asyncWrapper(async (req, res, next) => {
   await sender.updateOne({
     linkedUsers: [...sender.linkedUsers, recipient._id],
   });
-  res.sendStatus(StatusCodes.OK);
+  res.status(StatusCodes.OK).json({ code });
 });
 
 const deleteLinkedUser = asyncWrapper(async (req, res, next) => {
