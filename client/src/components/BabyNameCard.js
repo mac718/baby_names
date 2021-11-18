@@ -225,7 +225,6 @@ const BabyNameCard = ({ getCurrentUser }) => {
     e.preventDefault();
     setHidden(!hidden);
 
-    setAnimate(!animate);
     fetch(`/api/v1/ratings`, {
       method: "POST",
       body: JSON.stringify({
@@ -238,10 +237,11 @@ const BabyNameCard = ({ getCurrentUser }) => {
       },
     })
       .then((res) => {
+        setAnimate(!animate);
         setTimeout(() => {
           setHidden(true);
           setAnimate(false);
-        }, 100);
+        }, 500);
 
         if (res.status === 401) {
           setRedirect(true);
