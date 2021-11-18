@@ -7,17 +7,14 @@ const SendLinkCodeModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(
-      "https://rocky-temple-34078.herokuapp.com/api/v1/users/request-link",
-      {
-        method: "POST",
-        body: JSON.stringify({ email }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    )
+    fetch("/api/v1/users/request-link", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
       .then((res) => {
         return res.json();
       })
@@ -25,7 +22,7 @@ const SendLinkCodeModal = () => {
         if (json.msg) {
           setError(json.msg);
         } else {
-          fetch("api/v1/emails", {
+          fetch("/api/v1/emails", {
             method: "POST",
             body: JSON.stringify({
               email,

@@ -4,7 +4,7 @@ const LinkEmailForm = () => {
   const [email, setEmail] = useState();
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users/link", {
+    fetch("/api/v1/users/link", {
       method: "POST",
       body: JSON.stringify({ email }),
       headers: {

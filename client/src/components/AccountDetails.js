@@ -12,7 +12,7 @@ const AccountDetails = ({ currentUser }) => {
   const [pic, setPic] = useState("");
 
   const getCurrentUser = () => {
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users/getUser", {
+    fetch("/api/v1/users/getUser", {
       method: "GET",
       credentials: "include",
     })

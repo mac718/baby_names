@@ -11,6 +11,13 @@ const LogIn = (props) => {
     props.location.state ? props.location.state.error : null
   );
 
+  const host =
+    process.env.NODE_ENV === "production"
+      ? "https://rocky-temple-34078.herokuapp.com"
+      : "http://localhost:3001";
+
+  console.log(host);
+
   const handleEmailChange = (e) => {
     let value = e.target.value;
     setEmail(value);
@@ -25,7 +32,7 @@ const LogIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users/login", {
+    fetch(`${host}/api/v1/users/login`, {
       method: "POST",
       body: JSON.stringify({ email, password }),
       credentials: "include",
@@ -97,7 +104,7 @@ const LogIn = (props) => {
         </div>
         <div className="mt-2 text-center">
           Don't have an account? Sign up{" "}
-          <Link to="/sign-up" class="text-decoration-none fw-bold">
+          <Link to="/sign-up" className="text-decoration-none fw-bold">
             here!
           </Link>
         </div>

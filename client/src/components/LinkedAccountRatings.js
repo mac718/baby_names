@@ -11,7 +11,7 @@ const NameSpan = styled.div`
   cursor: pointer;
 `;
 
-const LinkedAccountRatings = (props) => {
+const LinkedAccountRatings = () => {
   const [ratings, setRatings] = useState([]);
   const [ratingsLoading, setRatingsLoading] = useState(true);
   const [selectedGender, setSelectedGender] = useState("All");
@@ -61,13 +61,10 @@ const LinkedAccountRatings = (props) => {
   };
 
   const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
-    fetch(
-      `https://rocky-temple-34078.herokuapp.com/api/v1/ratings/${params.id}`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    )
+    fetch(`/api/v1/ratings/${params.id}`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((res) => {
         if (isMounted.current) {
           setRatingsLoading(true);

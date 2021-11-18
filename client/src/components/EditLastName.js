@@ -12,7 +12,7 @@ const EditLastName = ({ currentLastName, getCurrentUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users", {
+    fetch("/api/v1/users", {
       method: "PATCH",
       body: JSON.stringify({ property: "lastName", lastName: newLastName }),
       headers: {

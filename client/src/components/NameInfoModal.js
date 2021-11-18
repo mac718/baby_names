@@ -1,17 +1,4 @@
-import { useState, useEffect } from "react";
-
 const NameInfoModal = ({ name }) => {
-  // const [nameRecord, setNameRecord] = useState("");
-  // const fetchName = () => {
-  //   fetch(`http://localhost:3001/api/v1/names/${name}`, {
-  //     credentials: "include",
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => setNameRecord(json.name))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // useEffect(() => fetchName(), []);
   return (
     <div
       className="modal"

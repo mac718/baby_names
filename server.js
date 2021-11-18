@@ -22,7 +22,10 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: "https://rocky-temple-34078.herokuapp.com/",
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://rocky-temple-34078.herokuapp.com/"
+        : "http://localhost:3000",
     credentials: true,
   })
 );
@@ -36,8 +39,6 @@ app.use(`${baseUrl}users`, user);
 app.use(`${baseUrl}ratings`, ratings);
 app.use(`${baseUrl}names`, names);
 app.use(`${baseUrl}emails`, emails);
-
-//app.use("/", user);
 
 app.use(errorHandlerMiddlerware);
 

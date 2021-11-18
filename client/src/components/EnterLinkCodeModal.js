@@ -6,17 +6,14 @@ const SendLinkCodeModal = ({ getLinkedUsers }) => {
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(
-      "https://rocky-temple-34078.herokuapp.com/api/v1/users/confirm-link",
-      {
-        method: "POST",
-        body: JSON.stringify({ code }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    )
+    fetch("/api/v1/users/confirm-link", {
+      method: "POST",
+      body: JSON.stringify({ code }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((json) => {
         if (json.msg) {

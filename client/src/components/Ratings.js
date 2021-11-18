@@ -72,7 +72,7 @@ const Ratings = ({ getCurrentUser }) => {
   };
 
   const fetchRatings = (genderFilter, originFilter, isMounted = _isMounted) => {
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/ratings/id", {
+    fetch("/api/v1/ratings/id", {
       method: "GET",
       credentials: "include",
     })

@@ -114,6 +114,11 @@ const BabyNameCard = ({ getCurrentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userName, setUserName] = useState(null);
 
+  const host =
+    process.env.NODE_ENV === "production"
+      ? "https://rocky-temple-34078.herokuapp.com"
+      : "http://localhost:3001";
+
   const filterNamesToBeRated = (genderFilter, originFilter, namesToBeRated) => {
     if (genderFilter !== "All") {
       if (genderFilter === "Male") {
@@ -146,6 +151,18 @@ const BabyNameCard = ({ getCurrentUser }) => {
     return namesToBeRated;
   };
 
+  const getCardColor = (names, index) => {
+    let color;
+    if (names[index]["gender"] === "m") {
+      color = "lightBlue";
+    } else if (names[index]["gender"] === "f") {
+      color = "lightPink";
+    } else {
+      color = "purple";
+    }
+    return color;
+  };
+
   //solution to get rid of "cannot update state on unmounted component" error
   let _isMounted = useRef(true);
 
@@ -154,7 +171,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     originFilter = "All",
     isMounted = _isMounted
   ) => {
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/names", {
+    fetch(`/api/v1/names`, {
       method: "GET",
       credentials: "include",
     })
@@ -179,11 +196,14 @@ const BabyNameCard = ({ getCurrentUser }) => {
             setShowNoNamesMessage(true);
           } else {
             let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
-            let color;
-            color =
-              namesToBeRated[randomIndex]["gender"] === "m"
-                ? "lightBlue"
-                : "lightPink";
+            let color = getCardColor(namesToBeRated, randomIndex);
+            // if (namesToBeRated[randomIndex]["gender"] === "m") {
+            //   color = "lightBlue";
+            // } else if (namesToBeRated[randomIndex]["gender"] === "f") {
+            //   color = "lightPink";
+            // } else {
+            //   color = "purple";
+            // }
             setShowNoNamesMessage(false);
             setNames(namesToBeRated);
             setCurrentName(namesToBeRated[randomIndex]);
@@ -217,7 +237,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     setHidden(!hidden);
 
     setAnimate(!animate);
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/ratings", {
+    fetch(`/api/v1/ratings`, {
       method: "POST",
       body: JSON.stringify({
         name: currentName,
@@ -232,7 +252,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
         setTimeout(() => {
           setHidden(true);
           setAnimate(false);
-        }, 900);
+        }, 500);
 
         if (res.status === 401) {
           setRedirect(true);
@@ -248,14 +268,14 @@ const BabyNameCard = ({ getCurrentUser }) => {
         );
 
         let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
-        let color;
-        if (amesToBeRated[randomIndex]["gender"] === "m") {
-          color = "lightBlue";
-        } else if (amesToBeRated[randomIndex]["gender"] === "f") {
-          color = "lightPink";
-        } else {
-          color = "purple";
-        }
+        let color = getCardColor(namesToBeRated, randomIndex);
+        // if (namesToBeRated[randomIndex]["gender"] === "m") {
+        //   color = "lightBlue";
+        // } else if (namesToBeRated[randomIndex]["gender"] === "f") {
+        //   color = "lightPink";
+        // } else {
+        //   color = "purple";
+        // }
         if (namesToBeRated.length === 0) {
           setShowNoNamesMessage(true);
         } else {
@@ -264,7 +284,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
             setCurrentName(namesToBeRated[randomIndex]);
             setDisabled(true);
             setCardColor(color);
-          }, 700);
+          }, 0);
         }
       })
       .catch((err) => {

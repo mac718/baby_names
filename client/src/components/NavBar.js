@@ -17,7 +17,7 @@ const NavBar = ({ user }) => {
 
   const handleSignOut = (e) => {
     e.preventDefault();
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/users/sign-out", {
+    fetch("/api/v1/users/sign-out", {
       method: "DELETE",
       credentials: "include",
     })

@@ -6,13 +6,15 @@ export const withAuth = (ComponentToProtect) => {
     const [loading, setLoading] = useState(true);
     const [redirect, setRedirect] = useState(false);
     const [errMessage, setErrMessage] = useState("");
+    const host =
+      process.env.NODE_ENV === "production"
+        ? "https://rocky-temple-34078.herokuapp.com"
+        : "http://localhost:3001";
+
     useEffect(() => {
-      fetch(
-        "https://rocky-temple-34078.herokuapp.com/api/v1/users/checkToken",
-        {
-          credentials: "include",
-        }
-      )
+      fetch(`/api/v1/users/checkToken`, {
+        credentials: "include",
+      })
         .then((res) => {
           if (res.status === 200) {
             setLoading(false);
