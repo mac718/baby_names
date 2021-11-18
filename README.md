@@ -13,3 +13,5 @@ with other users who can all see each others ratings.
 5. In another terminal window, enter `npm start` to start the front end.
 
 **N.B. You will have to provide your own jwt secret and email credentials to run locally**
+
+live on Heroku: (https://rocky-temple-34078.herokuapp.com/)[https://rocky-temple-34078.herokuapp.com/]
