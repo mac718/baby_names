@@ -114,11 +114,6 @@ const BabyNameCard = ({ getCurrentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userName, setUserName] = useState(null);
 
-  const host =
-    process.env.NODE_ENV === "production"
-      ? "https://rocky-temple-34078.herokuapp.com"
-      : "http://localhost:3001";
-
   const filterNamesToBeRated = (genderFilter, originFilter, namesToBeRated) => {
     if (genderFilter !== "All") {
       if (genderFilter === "Male") {
@@ -197,13 +192,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
           } else {
             let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
             let color = getCardColor(namesToBeRated, randomIndex);
-            // if (namesToBeRated[randomIndex]["gender"] === "m") {
-            //   color = "lightBlue";
-            // } else if (namesToBeRated[randomIndex]["gender"] === "f") {
-            //   color = "lightPink";
-            // } else {
-            //   color = "purple";
-            // }
+
             setShowNoNamesMessage(false);
             setNames(namesToBeRated);
             setCurrentName(namesToBeRated[randomIndex]);
@@ -252,7 +241,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
         setTimeout(() => {
           setHidden(true);
           setAnimate(false);
-        }, 500);
+        }, 100);
 
         if (res.status === 401) {
           setRedirect(true);
@@ -269,13 +258,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
 
         let randomIndex = Math.floor(Math.random() * namesToBeRated.length);
         let color = getCardColor(namesToBeRated, randomIndex);
-        // if (namesToBeRated[randomIndex]["gender"] === "m") {
-        //   color = "lightBlue";
-        // } else if (namesToBeRated[randomIndex]["gender"] === "f") {
-        //   color = "lightPink";
-        // } else {
-        //   color = "purple";
-        // }
+
         if (namesToBeRated.length === 0) {
           setShowNoNamesMessage(true);
         } else {

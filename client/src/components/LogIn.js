@@ -11,13 +11,6 @@ const LogIn = (props) => {
     props.location.state ? props.location.state.error : null
   );
 
-  const host =
-    process.env.NODE_ENV === "production"
-      ? "https://rocky-temple-34078.herokuapp.com"
-      : "http://localhost:3001";
-
-  console.log(host);
-
   const handleEmailChange = (e) => {
     let value = e.target.value;
     setEmail(value);
@@ -32,7 +25,7 @@ const LogIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`${host}/api/v1/users/login`, {
+    fetch(`/api/v1/users/login`, {
       method: "POST",
       body: JSON.stringify({ email, password }),
       credentials: "include",
