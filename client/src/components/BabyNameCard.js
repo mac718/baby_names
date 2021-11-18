@@ -292,6 +292,20 @@ const BabyNameCard = ({ getCurrentUser }) => {
       </RatingButtonContainer>
     );
   }
+
+  const loadingDiv = (
+    <div className="d-flex justify-content-center align-items-center w-100 vh-100">
+      <div className="spinner-grow text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+      <div className="spinner-grow text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+      <div className="spinner-grow text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
   if (redirect) {
     return <Redirect to="/login" />;
   }
@@ -310,7 +324,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
       <Filters fetchFn={fetchNames} className="position-fixed" />
       <Container className="container" style={{ height: "100vh" }}>
         {isLoading ? (
-          <div>...laoding</div>
+          loadingDiv
         ) : (
           <NameBox className="shadow" color={cardColor}>
             <TopNameDiv className="text-muted">

@@ -86,12 +86,14 @@ const updateRating = asyncWrapper(async (req, res) => {
 });
 
 const deleteRating = asyncWrapper(async (req, res) => {
+  console.log("he");
   let { name } = req.body;
   let userInfo = req.user;
-  let user = await User.findOne({ _id: userInfo.id });
-  await Rating.findOneAndDelete({ name, user: user._id }).catch((err) =>
-    console.log(err)
+
+  await Rating.findOneAndDelete({ "name.name": name, user: userInfo.id }).catch(
+    (err) => console.log(err)
   );
+  console.log(rating);
   res.status(StatusCodes.OK).json();
 });
 

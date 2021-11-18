@@ -116,8 +116,10 @@ const Ratings = ({ getCurrentUser }) => {
 
   const handleDeleteRating = (e) => {
     e.preventDefault();
-    let name = e.target.parentElement.parentElement.children[1].innerHTML;
-    fetch("https://rocky-temple-34078.herokuapp.com/api/v1/ratings", {
+    let name =
+      e.target.parentElement.parentElement.parentElement.children[1].firstChild
+        .innerHTML;
+    fetch("/api/v1/ratings", {
       method: "DELETE",
       credentials: "include",
       body: JSON.stringify({
@@ -126,7 +128,9 @@ const Ratings = ({ getCurrentUser }) => {
       headers: {
         "Content-type": "application/json",
       },
-    }).catch((err) => alert(err));
+    })
+      .then(() => fetchRatings(selectedGender, selectedOrigin))
+      .catch((err) => alert(err));
   };
 
   const handleShowRadioButtons = (e, name) => {
