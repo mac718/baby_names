@@ -24,7 +24,7 @@ function App() {
     <UserContextProvider>
       <div className="container">
         <Router>
-          <NavBar user={currentUser} />
+          <NavBar user={currentUser} getCurrentUser={getCurrentUser} />
 
           <Route path="/" exact component={LandingPage} />
           <Route

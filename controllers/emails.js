@@ -26,7 +26,7 @@ const sendLinkEmail = asyncWrapper(async (req, res) => {
     You've been invited to link your baby ranker account with ${sender}.
     Log in to your account and enter this code: 
     
-    <div style="text-alignment: center; font-weight: bold; font-size: 24px; border: 1px solid; background: lightGray; margin-bottom: 20px;">${code}</div>
+    <div style="text-alignment: center; font-weight: bold; font-size: 24px; border: 1px solid; background: lightGray; margin-bottom: 20px; width: auto;">${code}</div>
     
     on your 'linked accounts' 
     page to confirm your link with ${

@@ -12,7 +12,7 @@ const DropdownMenu = styled.li`
   }
 `;
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user, getCurrentUser }) => {
   const history = useHistory();
 
   const handleSignOut = (e) => {
@@ -21,7 +21,10 @@ const NavBar = ({ user }) => {
       method: "DELETE",
       credentials: "include",
     })
-      .then(() => history.push("/login"))
+      .then(() => {
+        getCurrentUser(null);
+        history.push("/login");
+      })
       .catch((err) => console.log(err));
   };
 
