@@ -94,7 +94,10 @@ const SignUp = () => {
 
   return (
     <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
-      <form className="mh-25 h-auto w-25 border border-secondary rounded p-3">
+      <form
+        className="mh-25 h-auto border border-secondary rounded p-3"
+        style={{ minWidth: "25vw", minHeight: "25vh" }}
+      >
         <div className="fs-2 text-center">Sign Up!</div>
         {error && (
           <div
