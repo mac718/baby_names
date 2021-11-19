@@ -15,6 +15,13 @@ const squishExpand = keyframes`
 	}
 `;
 
+const Hero = styled.div`
+  height: 100vh;
+  @media (max-width: 500px) {
+    height: auto;
+  }
+`;
+
 const FeaturesSectionCard = styled.div`
   background: white;
   height: 30em;
@@ -66,18 +73,6 @@ const LandingPage = () => {
   const featuresRatings = useRef(null);
   const featuresLinked = useRef(null);
 
-  // const observer = new IntersectionObserver((entries) => {
-  //   entries.forEach((entry) => {
-  //     if (entry.isIntersecting) {
-  //       setAnimate(true);
-  //     }
-  //   });
-  // });
-  // console.log(document.querySelector(".features"));
-  // observer.observe(features);
-  // const handleScroll = (e, observer) => {
-  //   console.log(animate);
-  // };
   let topPositionCard;
   let topPositionFilter;
   let topPositionRatings;
@@ -129,8 +124,8 @@ const LandingPage = () => {
 
   return (
     <div>
-      <div
-        className="container-fluid vh-100 rounded d-flex flex-column justify-content-center align-items-center"
+      <Hero
+        className="container-fluid rounded d-flex flex-column justify-content-center align-items-center"
         style={{ background: "linear-gradient(lightPink, lightBlue)" }}
       >
         <div
@@ -152,7 +147,7 @@ const LandingPage = () => {
             <span>Sign Up!</span>
           </Link>
         </button>
-      </div>
+      </Hero>
       <FeaturesSectionCard
         className="row"
         ref={featuresCard}
