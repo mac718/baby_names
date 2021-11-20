@@ -28,10 +28,6 @@ const NavBar = ({ user, getCurrentUser }) => {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    console.log("rendered");
-  }, []);
-
   return (
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">

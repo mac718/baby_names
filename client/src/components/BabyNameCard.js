@@ -166,13 +166,13 @@ const BabyNameCard = ({ getCurrentUser }) => {
     originFilter = "All",
     isMounted = _isMounted
   ) => {
+    setIsLoading(true);
     fetch(`/api/v1/names`, {
       method: "GET",
       credentials: "include",
     })
       .then((res) => {
         if (isMounted.current) {
-          setIsLoading(true);
         }
         return res.json();
       })
