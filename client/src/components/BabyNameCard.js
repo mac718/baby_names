@@ -230,6 +230,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
       body: JSON.stringify({
         name: currentName,
         score: currentRating,
+        unratedNames: names,
       }),
       credentials: "include",
       headers: {
