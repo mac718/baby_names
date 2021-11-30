@@ -9,20 +9,16 @@ const Filters = ({ fetchFn }) => {
     let value = e.target.innerHTML;
     console.log(value);
     setSelectedGender(value);
+    fetchFn(value, selectedOrigin);
   };
   const handleOriginChange = (e) => {
     let value = e.target.innerHTML;
     setSelectedOrigin(value);
+    fetchFn(selectedGender, value);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchFn(selectedGender, selectedOrigin); //passed from BabyNameCard
-  };
+
   return (
-    <form
-      className="d-flex flex-row m-3 justify-content-center"
-      onSubmit={handleSubmit}
-    >
+    <form className="d-flex flex-row m-3 justify-content-center">
       <div className="dropdown m-2">
         <a
           className="btn btn-outline-secondary dropdown-toggle"
@@ -107,11 +103,7 @@ const Filters = ({ fetchFn }) => {
         </ul>
         <div className="text-center">{selectedOrigin}</div>
       </div>
-      <div>
-        <button className="btn btn-outline-primary btn-sm m-2" type="submit">
-          Apply Filters
-        </button>
-      </div>
+      <div></div>
     </form>
   );
 };
