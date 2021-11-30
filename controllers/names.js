@@ -2,9 +2,7 @@ const asyncWrapper = require("../middleware/async");
 const Name = require("../models/name");
 const User = require("../models/user");
 const Rating = require("../models/rating");
-//const { createCustomError } = require("../errors/customAPIError");
 const { UnauthorizedError, NotFoundError } = require("../errors");
-const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
 
 const getNames = asyncWrapper(async (req, res) => {
@@ -14,7 +12,6 @@ const getNames = asyncWrapper(async (req, res) => {
 
   if (!user) {
     throw new UnauthorizedError("Not authorized. Please Log in.");
-    //return createCustomError("No user with that email found.", 404);
   }
   let names = await Name.find({});
   let userRatings = await Rating.find({ user: user._id });
@@ -33,7 +30,6 @@ const getSingleName = asyncWrapper(async (req, res) => {
 
   if (!name) {
     throw new NotFoundError("Name not found.");
-    //return createCustomError("Name not found.", 404);
   }
   res.status(StatusCodes.OK).json({ name });
 });

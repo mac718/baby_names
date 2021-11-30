@@ -3,10 +3,6 @@ const asyncWrapper = require("../middleware/async");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const randomString = require("randomstring");
-// const {
-//   CustomAPIError,
-//   createCustomError,
-// } = require("../errors/customAPIError");
 
 const {
   BadRequestError,
@@ -31,14 +27,10 @@ const login = asyncWrapper(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    //return next(createCustomError(`No user with email ${email}.`, 401));
     throw new BadRequestError(`No user with email ${email}.`);
   }
   const validPass = await bcrypt.compare(password, user.password);
   if (!validPass) {
-    // return next(
-    //   createCustomError(`Email and/or password is/are incorrect.`, 401)
-    // );
     throw new BadRequestError(`Email and/or password is/are incorrect.`);
   }
   const payload = { id: user._id, email };
@@ -61,13 +53,8 @@ const updatePassword = async (userInfo, body, next) => {
   const match = await bcrypt.compare(body.currentPassword, user.password);
   if (!match) {
     throw new BadRequestError("Current password is not correct");
-    //return next(createCustomError("Current password is not correct", 401));
   } else if (body.newPassword !== body.confirmPassword) {
     throw new BadRequestError("Confirm password does not match new password");
-    // return next(
-
-    //   createCustomError("Confirm password does not match new password", 401)
-    // );
   }
   const newPassword = await bcrypt.hash(body.newPassword, 10);
   await user.update({ password: newPassword });
@@ -104,7 +91,6 @@ const getLinkedUsers = asyncWrapper(async (req, res, next) => {
 
 const addPendingLinkedUserSent = asyncWrapper(async (req, res, next) => {
   const userInfo = req.user;
-  console.log(userInfo);
   const { email } = req.body;
   const linkCode = randomString.generate(6);
 

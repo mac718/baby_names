@@ -25,7 +25,6 @@ const saveRating = asyncWrapper(async (req, res) => {
   let userRatings = await Rating.find({ user: user._id });
   let ratedNameDocs = userRatings.map((rating) => rating.name);
   let ratedNames = ratedNameDocs.map((nameDoc) => nameDoc.name);
-  //let names = await Name.find({});
   unratedNames = unratedNames.filter((name) => !ratedNames.includes(name.name));
 
   res.status(StatusCodes.CREATED).json({ unratedNames });

@@ -1,5 +1,4 @@
 const asyncWrapper = require("../middleware/async");
-const { createCustomError } = require("../errors/customAPIError");
 const EmailService = require("../services/email");
 const User = require("../models/user");
 const { StatusCodes } = require("http-status-codes");
