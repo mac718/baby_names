@@ -3,7 +3,6 @@ import { useState } from "react";
 const EditFirstName = ({ currentFirstName, getCurrentUser }) => {
   const [newFirstName, setNewFirstName] = useState("");
   const [editFirstName, setEditFirstName] = useState(false);
-  console.log(editFirstName);
 
   const handleFirstNameChange = (e) => {
     let value = e.target.value;

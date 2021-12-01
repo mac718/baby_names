@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import LogIn from "./components/LogIn";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Ratings from "./components/Ratings";
@@ -7,7 +7,7 @@ import NavBar from "./components/NavBar";
 import { withAuth } from "./components/withAuth";
 import SignUp from "./components/SignUp";
 import AccountDetails from "./components/AccountDetails/AccountDetails";
-import LinkedUsers from "./components/LinkedUsers";
+import LinkedUsers from "./components/LinkedAccounts/LinkedUsers";
 import LinkedAccountRatings from "./components/LinkedAccountRatings";
 import LandingPage from "./components/LandingPage";
 import {

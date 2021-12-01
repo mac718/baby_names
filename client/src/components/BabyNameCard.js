@@ -308,7 +308,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
     return (
       <div>
         <div className="w-100 d-flex justify-content-center">
-          <Filters fetchNames={fetchNames} className="position-fixed" />
+          <Filters fetchFn={fetchNames} className="position-fixed" />
         </div>
         <AllNamesRanked />
       </div>
