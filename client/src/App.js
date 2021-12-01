@@ -6,7 +6,7 @@ import BabyNameCard from "./components/BabyNameCard";
 import NavBar from "./components/NavBar";
 import { withAuth } from "./components/withAuth";
 import SignUp from "./components/SignUp";
-import AccountDetails from "./components/AccountDetails";
+import AccountDetails from "./components/AccountDetails/AccountDetails";
 import LinkedUsers from "./components/LinkedUsers";
 import LinkedAccountRatings from "./components/LinkedAccountRatings";
 import LandingPage from "./components/LandingPage";
