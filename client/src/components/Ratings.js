@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import RadioButtons from "./RadioButtons";
-import Filters from "./Filters";
+import RadioButtons from "./UI/RadioButtons";
+import Filters from "./UI/Filters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import NameInfoModal from "./NameInfoModal";

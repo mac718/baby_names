@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
-import Filters from "./Filters";
+import Filters from "./UI/Filters";
 import AllNamesRanked from "./AllNamesRanked";
-import { UserContext } from "./contexts/UserContext";
 
 const pop = keyframes`
   from {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import NameInfoModal from "./NameInfoModal";
-import Filters from "./Filters";
+import Filters from "./UI/Filters";
 import styled from "styled-components";
 
 const NameSpan = styled.div`

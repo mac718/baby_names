@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { UserContext } from "./contexts/UserContext";
 
 const DropdownMenu = styled.li`
   @media only screen and (max-width: 500px) {
