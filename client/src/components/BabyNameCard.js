@@ -33,7 +33,7 @@ const RatingOverlay = styled.div`
   animation: ${(props) =>
     props.animate &&
     css`
-      ${pop} 0.8s linear 1
+      ${pop} 0.8s linear infinite
     `};
 `;
 
