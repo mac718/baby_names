@@ -215,6 +215,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
 
   const handleRatingButtonClick = (e) => {
     e.preventDefault();
+    e.target.focus();
     let rating = e.target.value;
     setCurrentRating(rating);
     setDisabled(false);
