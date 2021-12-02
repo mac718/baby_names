@@ -223,8 +223,8 @@ const BabyNameCard = ({ getCurrentUser }) => {
 
   const handleSubmitRating = (e) => {
     e.preventDefault();
-    setHidden(!hidden);
-    setAnimate(!animate);
+    setHidden(false);
+    setAnimate(true);
     fetch(`/api/v1/ratings`, {
       method: "POST",
       body: JSON.stringify({
