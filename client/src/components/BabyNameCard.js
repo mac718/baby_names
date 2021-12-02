@@ -238,9 +238,6 @@ const BabyNameCard = ({ getCurrentUser }) => {
       },
     })
       .then((res) => {
-        setHidden(true);
-        setAnimate(false);
-
         if (res.status === 401) {
           setRedirect(true);
         }
@@ -248,6 +245,8 @@ const BabyNameCard = ({ getCurrentUser }) => {
         return res.json();
       })
       .then((json) => {
+        setHidden(true);
+        setAnimate(false);
         const namesToBeRated = filterNamesToBeRated(
           selectedGender,
           selectedOrigin,
