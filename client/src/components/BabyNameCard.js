@@ -5,13 +5,13 @@ import Filters from "./UI/Filters";
 import AllNamesRanked from "./AllNamesRanked";
 
 const pop = keyframes`
-  from {
+  0% {
     opacity: 1;
     top: 0;
     font-size: 48px;
     color: black;
   }
-  to {
+  100% {
     opacity: 0;
     top: 0;
     font-size: 250px;
