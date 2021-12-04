@@ -266,6 +266,7 @@ const BabyNameCard = ({ getCurrentUser }) => {
         }
       })
       .catch((err) => {
+        console.log(err);
         setRedirect(true);
       });
   };

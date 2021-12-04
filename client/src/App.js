@@ -16,15 +16,15 @@ import {
 } from "./components/contexts/UserContext";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-  const getCurrentUser = (user) => {
-    setCurrentUser(user);
-  };
+  // const [currentUser, setCurrentUser] = useState(null);
+  // const getCurrentUser = (user) => {
+  //   setCurrentUser(user);
+  // };
   return (
     <UserContextProvider>
       <div className="container">
         <Router>
-          <NavBar user={currentUser} getCurrentUser={getCurrentUser} />
+          <NavBar />
 
           <Route path="/" exact component={LandingPage} />
           <Route
@@ -33,7 +33,7 @@ function App() {
             component={(props) =>
               withAuth(BabyNameCard)({
                 ...props,
-                getCurrentUser,
+                //getCurrentUser,
               })
             }
           />
@@ -41,24 +41,20 @@ function App() {
           <Route path="/sign-up" component={SignUp} />
           <Route
             path="/ratings"
-            component={(props) =>
-              withAuth(Ratings)({ ...props, getCurrentUser })
-            }
+            component={(props) => withAuth(Ratings)({ ...props })}
           />
           <Route
             path="/account"
             component={(props) =>
               withAuth(AccountDetails)({
                 ...props,
-                currentUser: getCurrentUser,
+                //currentUser: getCurrentUser,
               })
             }
           />
           <Route
             path="/linked"
-            component={(props) =>
-              withAuth(LinkedUsers)({ ...props, getCurrentUser })
-            }
+            component={(props) => withAuth(LinkedUsers)({ ...props })}
           />
           <Route
             path="/linked-ratings/:id"

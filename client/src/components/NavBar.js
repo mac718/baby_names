@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "./contexts/UserContext";
 
 const DropdownMenu = styled.li`
   @media only screen and (max-width: 500px) {
@@ -11,9 +12,9 @@ const DropdownMenu = styled.li`
   }
 `;
 
-const NavBar = ({ user, getCurrentUser }) => {
+const NavBar = () => {
   const history = useHistory();
-
+  const user = useContext(UserContext);
   const handleSignOut = (e) => {
     e.preventDefault();
     fetch("/api/v1/users/sign-out", {
@@ -21,7 +22,7 @@ const NavBar = ({ user, getCurrentUser }) => {
       credentials: "include",
     })
       .then(() => {
-        getCurrentUser(null);
+        //getCurrentUser(null);
         history.push("/login");
       })
       .catch((err) => console.log(err));
