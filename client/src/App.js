@@ -10,16 +10,9 @@ import AccountDetails from "./components/AccountDetails/AccountDetails";
 import LinkedUsers from "./components/LinkedAccounts/LinkedUsers";
 import LinkedAccountRatings from "./components/LinkedAccountRatings";
 import LandingPage from "./components/LandingPage";
-import {
-  UserContext,
-  UserContextProvider,
-} from "./components/contexts/UserContext";
+import { UserContextProvider } from "./components/contexts/UserContext";
 
 function App() {
-  // const [currentUser, setCurrentUser] = useState(null);
-  // const getCurrentUser = (user) => {
-  //   setCurrentUser(user);
-  // };
   return (
     <div className="container">
       <UserContextProvider>

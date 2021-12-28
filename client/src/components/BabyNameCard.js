@@ -13,7 +13,6 @@ const pop = keyframes`
   }
   100% {
     opacity: 0;
-    top: 0;
     font-size: 250px;
     color: white;
   }
@@ -245,8 +244,11 @@ const BabyNameCard = ({ getCurrentUser }) => {
         return res.json();
       })
       .then((json) => {
-        setHidden(true);
-        setAnimate(false);
+        setTimeout(() => {
+          setHidden(true);
+          setAnimate(false);
+        }, 1000);
+
         const namesToBeRated = filterNamesToBeRated(
           selectedGender,
           selectedOrigin,

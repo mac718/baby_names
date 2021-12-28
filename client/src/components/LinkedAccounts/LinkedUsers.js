@@ -89,7 +89,6 @@ const LinkedUsers = ({ getCurrentUser }) => {
               className="btn btn-warning btn-sm m-2 text-white"
               data-bs-toggle="modal"
               data-bs-target={`#deleteLinkedUserModal${user._id}`}
-              //onClick={(e) => handleDeleteLink(e, user._id)}
             >
               Delete account link
             </button>
