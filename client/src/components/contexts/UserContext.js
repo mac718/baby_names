@@ -9,7 +9,7 @@ const UserContextProvider = ({ children }) => {
 
   console.log("url", location);
   useEffect(() => {
-    fetch("http://localhost:3001/api/v1/users/getUser", {
+    fetch("/api/v1/users/getUser", {
       credentials: "include",
     })
       .then((res) => res.json())

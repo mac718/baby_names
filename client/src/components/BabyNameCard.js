@@ -97,7 +97,7 @@ const RatingButtonContainer = styled.div`
   color: gray;
 `;
 
-const BabyNameCard = ({ getCurrentUser }) => {
+const BabyNameCard = () => {
   const [names, setNames] = useState([]);
   const [currentName, setCurrentName] = useState("");
   const [currentRating, setCurrentRating] = useState(1);
@@ -110,7 +110,6 @@ const BabyNameCard = ({ getCurrentUser }) => {
   const [selectedOrigin, setSelectedOrigin] = useState("All");
   const [showNoNamesMessage, setShowNoNamesMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userName, setUserName] = useState(null);
 
   const filterNamesToBeRated = (genderFilter, originFilter, namesToBeRated) => {
     if (genderFilter !== "All") {
@@ -196,8 +195,6 @@ const BabyNameCard = ({ getCurrentUser }) => {
             setCurrentName(namesToBeRated[randomIndex]);
             setCardColor(color);
             setIsLoading(false);
-            getCurrentUser(json.username);
-            setUserName(json.userName);
           }
         }
       })

@@ -26,7 +26,6 @@ function App() {
         component={(props) =>
           withAuth(BabyNameCard)({
             ...props,
-            //getCurrentUser,
           })
         }
       />
@@ -41,7 +40,6 @@ function App() {
         component={(props) =>
           withAuth(AccountDetails)({
             ...props,
-            //currentUser: getCurrentUser,
           })
         }
       />
