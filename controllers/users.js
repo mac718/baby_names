@@ -14,8 +14,10 @@ const FileUploader = require("../services/photoUpload");
 
 const createUser = asyncWrapper(async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
+  console.log("body", req.body);
   let user = new User({ firstName, lastName, email, password });
   let registeredUser = await user.save({ runValidators: true });
+  console.log("registered", registeredUser);
 
   let payload = { id: registeredUser._id, email: registeredUser.name };
   let token = jwt.sign(payload, process.env.JWT_SECRET);
